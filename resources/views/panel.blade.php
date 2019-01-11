@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <title></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="css/style.css" rel="stylesheet">
-    </head>
-    <body>
-        <h1>Panel principal</h1>
-        <h2>Hola</h2>
-    </body>
-</html>
+@extends('layouts.base')
+
+@section('titulo','Panel')
+
+@section('contenido')
+
+    <br/>
+    <a href="#" class="btn btn-primary">Gestion de Usuarios </a><br/><br/>
+    <a href="#" class="btn btn-primary" >Gestion de Productos </a><br/><br/>
+    <a href="#" class="btn btn-primary">Gestion de Pedidos </a>
+@endsection
