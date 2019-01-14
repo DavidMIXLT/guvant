@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Providers;
+namespace AlaCartaYa\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Schema;
+use PrintErrors;
+use Blade;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -14,6 +16,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+        Schema::defaultStringLength(191);
+        
     }
 
     /**

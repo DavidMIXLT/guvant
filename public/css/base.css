@@ -1,17 +1,4 @@
 
-.footerBase{
-    background-color: #112F41;
-    color: #4FB99F;
-
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        padding: 1rem;
-        text-align: center;
-      
-}
-
 .navBarBase{
     background-color: #068587;
 }
@@ -23,8 +10,8 @@
 }
 
 body{
-    background-color: #4FB99F;
-    color: #ED553B;
+
+
     text-align: center;
 }
 

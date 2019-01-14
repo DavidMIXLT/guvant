@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => 'en',
+    'locale' => 'es',
 
     /*
     |--------------------------------------------------------------------------
@@ -169,11 +169,11 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        AlaCartaYa\Providers\AppServiceProvider::class,
+        AlaCartaYa\Providers\AuthServiceProvider::class,
+        // AlaCartaYa\Providers\BroadcastServiceProvider::class,
+        AlaCartaYa\Providers\EventServiceProvider::class,
+        AlaCartaYa\Providers\RouteServiceProvider::class,
 
     ],
 
