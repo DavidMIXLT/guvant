@@ -39,20 +39,24 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //Metodo llamado cuando se envia por POST se crea un nuevo producto y luego es guardado en la base de datos
-
+       
         $product = new Product;
+        //Se valida el producto
+        $product->validate($request);
+
+        //Se crea el producto y se guarda en la base de datos
+
         $product->name = ($request->Name);
         $product->description = ($request->Description);
         $product->stock = ($request->Stock);
         $alertaCreado =  $product->save();
+        
         //Si no se a podido crear el producto en la base de datos se aborta y se redirige el usuario a la pagina de error
          if(!$alertaCreado){
             App::abort(500,'Error');
          }
 
-        $products = Product::all();
-        
-
+         $products = Product::all();     
          return view('products',compact('products','alertaCreado'));
     }
 

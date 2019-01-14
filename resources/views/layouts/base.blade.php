@@ -21,7 +21,8 @@
     </nav>
    <!-- Fin Barra navegacion -->
 
-    <!-- Inicio Contenido -->
+    <!-- Inicio Contenido --><br/>
+<br/>
         <div class="container">
             @yield('content')
         </div>
