@@ -13,7 +13,7 @@
        <!-- Inicio Barra navegacion -->
        
     <nav class="navbar navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">A la carta Ya</a>
+        <a class="navbar-brand" href="{{route('panel')}}">A la carta Ya</a>
         <form class="form-inline my-2 my-lg-0">
          <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Search">
         <button class="boton btn" type="submit">Buscar</button>
@@ -29,11 +29,7 @@
    <!-- Fin Contenido -->
 
    <!-- Inicio footer -->
-    <footer class="page-footer font-small blue ">
-        <div class="footer-copyright text-center py-3 footerBase">© 2018 Copyright:
-            <p>A la carta ya Guvant 2019</p>
-        </div>
-    </footer>
+
      <!-- Fin footer -->
 </body>
 </html>
