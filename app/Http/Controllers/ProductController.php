@@ -4,6 +4,15 @@ namespace AlaCartaYa\Http\Controllers;
 
 use Illuminate\Http\Request;
 use AlaCartaYa\Product;
+
+/*
+    TO DO
+
+    Añadir listado de errores / mensaje cuando los productos son eliminados
+
+
+
+*/
 class ProductController extends Controller
 {
     /**
@@ -50,7 +59,7 @@ class ProductController extends Controller
         $product->description = ($request->Description);
         $product->stock = ($request->Stock);
         $alertaCreado =  $product->save();
-        
+
         //Si no se a podido crear el producto en la base de datos se aborta y se redirige el usuario a la pagina de error
          if(!$alertaCreado){
             App::abort(500,'Error');
@@ -68,6 +77,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
+        return "SHOW";
         //
     }
 
@@ -79,6 +89,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
+        return "EDIT";
         //
     }
 
@@ -100,8 +111,13 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
     public function destroy($id)
     {
-        //
+        //Borramos el producto que pasen por el $id
+        $alertaBorrado = Product::destroy($id);
+        $products = Product::all();     
+        return view('products',compact('products'));
     }
 }

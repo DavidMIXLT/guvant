@@ -4,7 +4,8 @@ namespace AlaCartaYa\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
-
+use PrintErrors;
+use Blade;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        
     }
 
     /**
