@@ -8,4 +8,6 @@ Route::get('/', function () {
 
 Route::get('/panel', function () {
     return view('panel');
-});
+})->name('panel');
+
+Route::resource('/panel/products', 'ProductController');
