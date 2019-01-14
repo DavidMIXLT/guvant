@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace AlaCartaYa\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Product;
+use AlaCartaYa\Product;
 class ProductController extends Controller
 {
     /**

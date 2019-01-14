@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace AlaCartaYa;
 
 use Illuminate\Database\Eloquent\Model;
 
