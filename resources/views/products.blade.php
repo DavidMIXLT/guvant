@@ -13,11 +13,11 @@
     @if (isset($alertaCreado))
         @if ($alertaCreado)
             <div class="alert alert-success" role="alert">
-                 Producto creado correctamente
+            @lang('messages.productCreated')
             </div>
         @else
             <div class="alert alert-danger" role="alert">
-                Producto no se ha podido crear
+            @lang('messages.productError')
            </div>
         @endif
     @endif
