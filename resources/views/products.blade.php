@@ -38,9 +38,9 @@
                     <label class="form-check-label" for="checkBoxAction"></label>
                 </div>
             </td>
-            <td>{{$product->id}}</td>
+            <td>{{$product->id}}</td>   
             <td>{{$product->name}}</td>
-            <td>{{$product->description}}</td>
+            <td>{{ substr($product->description, 0, 50)}}</td>
             <td>{{$product->stock}}</td>
             <td>{{$product->created_at}}</td>
 
@@ -62,7 +62,7 @@
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-          Acciones massivas
+          Acciones masivas
         </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <button type="button" class=" dropdown-item" id="deleteButton">Eliminacion de checkboxes</button>

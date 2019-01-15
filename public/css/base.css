@@ -1,21 +1,4 @@
 
-.navBarBase{
-    background-color: #068587;
-}
-
-.boton{
-    border-width: 2px;
-    color:#F2B134;
-    border-color: #F2B134;
-}
-
-body{
-
-
-    text-align: center;
-}
-
-.secion{
-    background-color: red;
-    width: 1000px;
+.navbar-dark .navbar-nav .nav-link{
+    color: white;
 }
