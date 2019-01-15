@@ -23,7 +23,7 @@
 
     <!-- Inicio Barra navegacion -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary text-warning">
-        <a class="navbar-brand" href="#">AlaCartaYa</a>
+        <a class="navbar-brand" href="{{route('panel')}}">AlaCartaYa</a>
         <ul class="navbar-nav mr-auto">
             <li class="navbar-nav">
                 <a class="nav-link" href="{{route('panel')}}">Panel</a>
