@@ -14,8 +14,8 @@ Editando producto - {{$product->name}}
 @endif
 <br/>
 
-<form method="POST" action="{{ route('products.index') }}">
-    @CSRF
+<form method="POST" action="{{route('products.update',$product->id)}}">
+    @CSRF @method('PUT')
     <div class="form-group row">
         <label for="Nombre" class="col-4 col-form-label">ID</label>
         <div class="col-8">

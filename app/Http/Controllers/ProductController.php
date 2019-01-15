@@ -101,7 +101,18 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        //Se valida el producto
+        $product->validate($request);
+
+        //Se crea el producto y se guarda en la base de datos
+        
+        $product->name = ($request->Name);
+        $product->description = ($request->Description);
+        $product->stock = ($request->Stock);
+        $alertaCreado = $product->save();
+        $products = Product::all();
+        return view('productsViews.products', compact('products'));
     }
 
     /**
@@ -121,12 +132,18 @@ class ProductController extends Controller
 
             $alertaBorrado = Product::destroy(collect($ids));
             $products = Product::all();
-            return view('productsViews.products', compact('products'));
+        
         } else {
             $alertaBorrado = Product::destroy($id);
             $products = Product::all();
-            return view('productsViews.products', compact('products'));
+        
         }
 
+        $products = Product::all();
+        return view('productsViews.products', compact('products'));
+
     }
+
+
+   
 }
