@@ -1,16 +1,15 @@
 @extends('layouts.base') 
 @section('title','Productos') 
-
-@section('subtitle')
-Gestion de productos
+@section('subtitle') Gestion de productos
 @endsection
-
+ 
 @section('content')
 
 
 <br/>
-<a href="{{route('products.create')}}" class="btn btn-primary">Crear producto</a>
+<a href="{{route('products.create')}}" class="btn btn-primary">@lang('products/productsIndex.createProduct')</a>
 <br/>
+<!-- Inicio mensajes de Alertas -->
 <br/> @if (isset($alertaCreado)) @if ($alertaCreado)
 <div class="alert alert-success" role="alert">
     @lang('messages.productCreated')
@@ -19,17 +18,17 @@ Gestion de productos
 <div class="alert alert-danger" role="alert">
     @lang('messages.productError')
 </div>
-@endif @endif @csrf @method('DELETE')
+@endif @endif
 <table class="table">
     <thead class="thead-dark">
         <tr>
             <th scope="col"></th>
-            <th onclick="test()" scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Descripcion</th>
-            <th scope="col">Stock</th>
-            <th scope="col">Fecha creado</th>
-            <th scope="col">Acciones</th>
+            <th scope="col">@lang('products/products.id')</th>
+            <th scope="col">@lang('products/products.name')</th>
+            <th scope="col">@lang('products/products.description')</th>
+            <th scope="col">@lang('products/products.Stock')</th>
+            <th scope="col">@lang('products/products.dateCreated')</th>
+            <th scope="col">@lang('products/productsIndex.actions')</th>
         </tr>
     </thead>
     <tbody>
@@ -43,16 +42,16 @@ Gestion de productos
                     <label class="form-check-label" for="checkBoxAction"></label>
                 </div>
             </td>
-            <td>{{$product->id}}</td>   
-        <td><a href="{{route('products.edit',$product->id)}}" >{{$product->name}}</a></td>
-            <td>{{ substr($product->description, 0, 50)}}</td>
-            <td>{{$product->stock}}</td>
-            <td>{{$product->created_at}}</td>
+            <td><a href="{{route('products.edit',$product->id)}}">{{$product->id}}</td>
+            <td><a href="{{route('products.edit',$product->id)}}">{{$product->name}}</a></td>
+            <td><a href="{{route('products.edit',$product->id)}}">{{ substr($product->description, 0, 500)}}</a></td>
+            <td><a href="{{route('products.edit',$product->id)}}">{{$product->stock}}</a></td>
+            <td><a href="{{route('products.edit',$product->id)}}">{{$product->created_at}}</a></td>
 
             <td>
                 <form action="{{route('products.destroy',$product->id)}}" method="POST">
                     @csrf @method('DELETE')
-                    <button name="submit" type="submit" class="btn btn-primary">Eliminar</button>
+                    <button name="submit" type="submit" class="btn btn-primary">@lang('products/productsIndex.delete')</button>
                 </form>
             </td>
         </tr>
@@ -67,10 +66,10 @@ Gestion de productos
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-          Aciones masivas
+        @lang('products/productsIndex.Massiveactions')
         </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <button type="button" class=" dropdown-item" id="deleteButton">Eliminacion de checkboxes</button>
+        <button type="button" class=" dropdown-item" id="deleteButton">@lang('products/productsIndex.deleteSelectedItems')</button>
         <button type="button" class=" dropdown-item" id="editButton">Editar</button>
 
 

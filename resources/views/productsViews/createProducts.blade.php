@@ -1,7 +1,7 @@
 @extends('layouts.base') 
 @section('title','Panel') 
 @section('subtitle')
-Crear producto nuevo
+@lang('products/productsCreate.createNewProduct')
 @endsection
 @section('content') @if ($errors->any())
 <div class="alert alert-danger">
@@ -13,16 +13,16 @@ Crear producto nuevo
 </div>
 @endif
 <br/>
-<form method="POST" action="{{ route('products.index') }}">
+<form method="POST" action="{{route('products.index') }}">
   @CSRF
   <div class="form-group row">
-    <label for="Nombre" class="col-4 col-form-label">Nombre</label>
+    <label for="Nombre" class="col-4 col-form-label">@lang('products/products.name')</label>
     <div class="col-8">
       <input id="Name" name="Name" type="text" class="form-control here" required="required">
     </div>
   </div>
   <div class="form-group row">
-    <label for="Descripcion" class="col-4 col-form-label">Descripcion</label>
+    <label for="Descripcion" class="col-4 col-form-label">@lang('products/products.description')</label>
     <div class="col-8">
       <textarea  required="required" id="Description" name="Description" cols="40" rows="5" class="form-control"></textarea>
     </div>
