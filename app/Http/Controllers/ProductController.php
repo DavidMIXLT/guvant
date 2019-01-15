@@ -22,7 +22,7 @@ class ProductController extends Controller
     {
         //
         $products = Product::all();
-        return view('products', compact('products'));
+        return view('productsViews.products', compact('products'));
     }
 
     /**
@@ -34,7 +34,7 @@ class ProductController extends Controller
     {
         //
 
-        return view('createProducts');
+        return view('productsViews.createProducts');
     }
 
     /**
@@ -64,7 +64,7 @@ class ProductController extends Controller
         }
 
         $products = Product::all();
-        return view('products', compact('products', 'alertaCreado'));
+        return view('productsViews.products', compact('products', 'alertaCreado'));
     }
 
     /**
@@ -87,7 +87,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        return "EDIT";
+        $product = Product::where('id',$id)->first();
+        return view('productsViews.editProducts',compact('product'));
         //
     }
 
@@ -120,11 +121,11 @@ class ProductController extends Controller
 
             $alertaBorrado = Product::destroy(collect($ids));
             $products = Product::all();
-            return view('products', compact('products'));
+            return view('productsViews.products', compact('products'));
         } else {
             $alertaBorrado = Product::destroy($id);
             $products = Product::all();
-            return view('products', compact('products'));
+            return view('productsViews.products', compact('products'));
         }
 
     }

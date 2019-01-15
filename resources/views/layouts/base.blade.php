@@ -30,13 +30,12 @@
             </li>
             <li class="nav-item dropdown">
                 <div class="btn-group nav-item">
-                <a href="{{route('products.index')}}" class="nav-link ">Gestion de productos</a>
-                    <button type="button" class="btn  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
+                    <a href="{{route('products.index')}}" class="nav-link ">Gestion de productos</a>
+                    <button type="button" class="btn  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
                     <div class="dropdown-menu">
-                    <a class="dropdown-item" href="{{route('products.create')}}">Crear producto</a>
+                        <a class="dropdown-item" href="{{route('products.create')}}">Crear producto</a>
                         <a class="dropdown-item" href="{{route('products.index')}}">Productos</a>
                     </div>
                 </div>
@@ -51,7 +50,8 @@
     <!-- Inicio Contenido --><br/>
     <br/>
     <div class="container">
-        @yield('content')
+        <h1 class="m-b-5">@yield('subtitle')</h1><br>
+         @yield('content')
     </div>
     <!-- Fin Contenido -->
 

@@ -1,5 +1,10 @@
 @extends('layouts.base') 
-@section('title','Panel') 
+@section('title','Productos') 
+
+@section('subtitle')
+Gestion de productos
+@endsection
+
 @section('content')
 
 
@@ -39,7 +44,7 @@
                 </div>
             </td>
             <td>{{$product->id}}</td>   
-            <td>{{$product->name}}</td>
+        <td><a href="{{route('products.edit',$product->id)}}" >{{$product->name}}</a></td>
             <td>{{ substr($product->description, 0, 50)}}</td>
             <td>{{$product->stock}}</td>
             <td>{{$product->created_at}}</td>
@@ -62,7 +67,7 @@
 <div class="dropdown">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-          Acciones masivas
+          Aciones masivas
         </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <button type="button" class=" dropdown-item" id="deleteButton">Eliminacion de checkboxes</button>

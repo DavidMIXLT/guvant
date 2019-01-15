@@ -1,5 +1,8 @@
 @extends('layouts.base') 
 @section('title','Panel') 
+@section('subtitle')
+Crear producto nuevo
+@endsection
 @section('content') @if ($errors->any())
 <div class="alert alert-danger">
   <ul>
@@ -21,7 +24,7 @@
   <div class="form-group row">
     <label for="Descripcion" class="col-4 col-form-label">Descripcion</label>
     <div class="col-8">
-      <textarea id="Description" name="Description" cols="40" rows="5" class="form-control"></textarea>
+      <textarea  required="required" id="Description" name="Description" cols="40" rows="5" class="form-control"></textarea>
     </div>
   </div>
   <div class="form-group row">
