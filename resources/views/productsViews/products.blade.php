@@ -26,7 +26,7 @@
             <th scope="col">@lang('products/products.id')</th>
             <th scope="col">@lang('products/products.name')</th>
             <th scope="col">@lang('products/products.description')</th>
-            <th scope="col">@lang('products/products.Stock')</th>
+            <th scope="col">@lang('products/products.stock')</th>
             <th scope="col">@lang('products/products.dateCreated')</th>
             <th scope="col">@lang('products/productsIndex.actions')</th>
         </tr>
