@@ -2,17 +2,15 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
-use Illuminate\Http\Request;
 use AlaCartaYa\Product;
+use Illuminate\Http\Request;
 
 /*
-    TO DO
+TO DO
 
-    Añadir listado de errores / mensaje cuando los productos son eliminados
+Añadir listado de errores / mensaje cuando los productos son eliminados
 
-
-
-*/
+ */
 class ProductController extends Controller
 {
     /**
@@ -24,7 +22,7 @@ class ProductController extends Controller
     {
         //
         $products = Product::all();
-        return view('products',compact('products'));
+        return view('products', compact('products'));
     }
 
     /**
@@ -48,7 +46,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //Metodo llamado cuando se envia por POST se crea un nuevo producto y luego es guardado en la base de datos
-       
+
         $product = new Product;
         //Se valida el producto
         $product->validate($request);
@@ -58,15 +56,15 @@ class ProductController extends Controller
         $product->name = ($request->Name);
         $product->description = ($request->Description);
         $product->stock = ($request->Stock);
-        $alertaCreado =  $product->save();
+        $alertaCreado = $product->save();
 
         //Si no se a podido crear el producto en la base de datos se aborta y se redirige el usuario a la pagina de error
-         if(!$alertaCreado){
-            App::abort(500,'Error');
-         }
+        if (!$alertaCreado) {
+            App::abort(500, 'Error');
+        }
 
-         $products = Product::all();     
-         return view('products',compact('products','alertaCreado'));
+        $products = Product::all();
+        return view('products', compact('products', 'alertaCreado'));
     }
 
     /**
@@ -112,12 +110,22 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
+        $alertaBorrado;
+
         //Borramos el producto que pasen por el $id
-        $alertaBorrado = Product::destroy($id);
-        $products = Product::all();     
-        return view('products',compact('products'));
+        if (isset($request->productsToDelete)) {
+            $ids = explode(' ', $request->productsToDelete);
+
+            $alertaBorrado = Product::destroy(collect($ids));
+            $products = Product::all();
+            return view('products', compact('products'));
+        } else {
+            $alertaBorrado = Product::destroy($id);
+            $products = Product::all();
+            return view('products', compact('products'));
+        }
+
     }
 }
