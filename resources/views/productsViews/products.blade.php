@@ -2,7 +2,7 @@
 @section('title','Productos') 
 @section('subtitle') Gestion de productos
 @endsection
- 
+
 @section('content')
 
 
