@@ -19,16 +19,16 @@
     @lang('messages.productError')
 </div>
 @endif @endif
-<table class="table">
+<table class="table" id="productTable">
     <thead class="thead-dark">
         <tr>
             <th scope="col"></th>
-            <th scope="col">@lang('products/products.id')</th>
-            <th scope="col">@lang('products/products.name')</th>
-            <th scope="col">@lang('products/products.description')</th>
-            <th scope="col">@lang('products/products.stock')</th>
-            <th scope="col">@lang('products/products.dateCreated')</th>
-            <th scope="col">@lang('products/productsIndex.actions')</th>
+            <th scope="col" id="idRow">@lang('products/products.id') ↕</th>
+            <th scope="col" id="nameRow">@lang('products/products.name') ↕</th>
+            <th scope="col" id="descriptionRow">@lang('products/products.description') ↕</th>
+            <th scope="col" id="stockRow">@lang('products/products.stock') ↕</th>
+            <th scope="col" id="dateRow">@lang('products/products.dateCreated') ↕</th>
+            <th scope="col">@lang('products/productsIndex.actions') </th>
         </tr>
     </thead>
     <tbody>

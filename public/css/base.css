@@ -2,3 +2,27 @@
 .navbar-dark .navbar-nav .nav-link{
     color: white;
 }
+
+table{
+    text-align: center;
+}
+tr:hover{
+    background-color: lightgrey ;
+}
+
+#idRow:hover{
+    background-color: rgba(43, 43, 43, 0.719) ;
+}
+#nameRow:hover{
+    background-color: rgba(43, 43, 43, 0.719) ;
+}
+#descriptionRow:hover{
+    background-color: rgba(43, 43, 43, 0.719) ;
+}
+#stockRow:hover{
+    background-color: rgba(43, 43, 43, 0.719) ;
+}
+
+#dateRow:hover{
+    background-color: rgba(43, 43, 43, 0.719) ;
+}
