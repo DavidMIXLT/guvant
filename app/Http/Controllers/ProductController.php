@@ -13,6 +13,14 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
  */
 class ProductController extends Controller
 {
+
+
+
+    public function printIncomingProductOrders(){
+        $products = Product::all();
+
+        return view('productsViews.incomingOrders',compact('products'));
+    }
     /**
      * Display a listing of the resource.
      *

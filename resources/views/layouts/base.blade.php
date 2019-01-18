@@ -9,10 +9,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/base.css')}}">
-    <script src="{{asset('js/products.js')}}"></script>
     <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-
     <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+    @yield('header')
 </head>
 
 <body>
@@ -33,6 +32,7 @@
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{route('products.create')}}">Crear producto</a>
                         <a class="dropdown-item" href="{{route('products.index')}}">Productos</a>
+                        <a class="dropdown-item" href="{{route('entradaProducto')}}">Entrar pedidos</a>
                     </div>
                 </div>
             </li>
@@ -46,7 +46,18 @@
     <!-- Inicio Contenido --><br/>
     <br/>
     <div class="container">
-        <h1 class="m-b-5">@yield('subtitle')</h1><br> @yield('content')
+        <h1 class="m-b-5">@yield('subtitle')</h1><br> 
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+        
+        @yield('content') 
     </div>
     <!-- Fin Contenido -->
 

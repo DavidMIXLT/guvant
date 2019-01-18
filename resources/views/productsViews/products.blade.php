@@ -3,6 +3,10 @@
 @section('subtitle') Gestion de productos
 @endsection
 
+@section('header')
+        <script src="{{asset('js/products.js')}}"></script>
+@endsection
+
 @section('content')
 
 
@@ -44,7 +48,7 @@
             </td>
             <td><a href="{{route('products.edit',$product->id)}}">{{$product->id}}</td>
             <td><a href="{{route('products.edit',$product->id)}}">{{$product->name}}</a></td>
-            <td><a href="{{route('products.edit',$product->id)}}">{{ substr($product->description, 0, 500)}}</a></td>
+            <td><a href="{{route('products.edit',$product->id)}}">{{ substr($product->description, 0, 60)}}</a></td>
             <td><a href="{{route('products.edit',$product->id)}}">{{$product->stock}}</a></td>
             <td><a href="{{route('products.edit',$product->id)}}">{{$product->created_at}}</a></td>
 
