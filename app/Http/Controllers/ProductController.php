@@ -14,12 +14,11 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
 class ProductController extends Controller
 {
 
-
-
-    public function printIncomingProductOrders(){
+    public function printIncomingProductOrders()
+    {
         $products = Product::all();
 
-        return view('productsViews.incomingOrders',compact('products'));
+        return view('productsViews.incomingOrders', compact('products'));
     }
     /**
      * Display a listing of the resource.
@@ -95,8 +94,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::where('id',$id)->first();
-        return view('productsViews.editProducts',compact('product'));
+        $product = Product::where('id', $id)->first();
+        return view('productsViews.editProducts', compact('product'));
         //
     }
 
@@ -109,18 +108,42 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::find($id);
-        //Se valida el producto
-        $product->validate($request);
+        /*
+        Si en el request nos envian la variable  stockActualizar significa que nos estan enviado mas de un producto a actualizar
+         */
+        if ($request->input("stockActualizar") == null) {
+            $product = Product::find($id);
+            //Se valida el producto
 
-        //Se crea el producto y se guarda en la base de datos
-        
-        $product->name = ($request->Name);
-        $product->description = ($request->Description);
-        $product->stock = ($request->Stock);
-        $alertaCreado = $product->save();
+            $product->validate($request);
+
+            //Se crea el producto y se guarda en la base de datos
+
+            $product->name = ($request->Name);
+            $product->description = ($request->Description);
+            $product->stock = ($request->Stock);
+            $alertaCreado = $product->save();
+
+        } else {
+
+            $ids = explode(" ", $request->input("stockActualizar"));
+            foreach ($ids as $product) {
+                $separatedIdandStock = explode(":", $product);
+                //Id 0 para el id del producto y el 1 para el nuevo stock
+
+                if (is_numeric($separatedIdandStock[1])) {
+                    $product = Product::find($separatedIdandStock[0]);
+                    //Se valida el producto
+                    $product->stock = $separatedIdandStock[1];
+                    $product->save();
+                }
+
+            }
+
+        }
         $products = Product::all();
         return view('productsViews.products', compact('products'));
+
     }
 
     /**
@@ -140,11 +163,11 @@ class ProductController extends Controller
 
             $alertaBorrado = Product::destroy(collect($ids));
             $products = Product::all();
-        
+
         } else {
             $alertaBorrado = Product::destroy($id);
             $products = Product::all();
-        
+
         }
 
         $products = Product::all();
@@ -152,6 +175,4 @@ class ProductController extends Controller
 
     }
 
-
-   
 }

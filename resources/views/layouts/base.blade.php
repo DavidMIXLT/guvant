@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="{{ asset('css/base.css')}}">
     <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+
+
     @yield('header')
 </head>
 
@@ -46,8 +48,7 @@
     <!-- Inicio Contenido --><br/>
     <br/>
     <div class="container">
-        <h1 class="m-b-5">@yield('subtitle')</h1><br> 
-        @if ($errors->any())
+        <h1 class="m-b-5">@yield('subtitle')</h1><br> @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -55,9 +56,7 @@
                 @endforeach
             </ul>
         </div>
-        @endif
-        
-        @yield('content') 
+        @endif @yield('content')
     </div>
     <!-- Fin Contenido -->
 

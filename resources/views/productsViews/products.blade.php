@@ -5,6 +5,7 @@
 
 @section('header')
         <script src="{{asset('js/products.js')}}"></script>
+        <script src="{{asset('js/sortTable.js')}}"></script>
 @endsection
 
 @section('content')
