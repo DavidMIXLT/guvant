@@ -106,6 +106,9 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+
+     //TO DO: Crear un propio metodo para actualizar el stock para evitar errores i solo actualizar la columna correspondiente
     public function update(Request $request, $id)
     {
         /*
