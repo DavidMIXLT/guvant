@@ -24,6 +24,7 @@
     @lang('messages.productError')
 </div>
 @endif @endif
+<div class="table-responsive">
 <table class="table" id="productTable">
     <thead class="thead-dark">
         <tr>
@@ -54,15 +55,19 @@
             <td><a href="{{route('products.edit',$product->id)}}">{{$product->created_at}}</a></td>
 
             <td>
-                <form action="{{route('products.destroy',$product->id)}}" method="POST">
+                <div class="container">
+                <form class=" d-inline" action="{{route('products.destroy',$product->id)}}" method="POST">
                     @csrf @method('DELETE')
-                    <button name="submit" type="submit" class="btn btn-primary">@lang('products/productsIndex.delete')</button>
+                    <button name="submit" type="submit" class="btn btn-danger">@lang('products/productsIndex.delete')</button>
                 </form>
+            <a class="btn btn-primary"  role="button" href="{{route("products.edit",$product->id)}}">@lang('products/productsIndex.edit')</a>
+            </div>
             </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+</div>
 
 <form id="massiveAction" action="{{route('products.destroy',-1)}}" method="POST">
     @csrf @method('DELETE')

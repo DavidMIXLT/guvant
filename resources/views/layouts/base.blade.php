@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="{{ asset('css/base.css')}}">
     <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
-
-
     @yield('header')
 </head>
 

@@ -6,6 +6,7 @@ return [
     'createProduct' => 'Crear producto',
     'actions' => "Acciones",
     'delete' => 'Eliminar',
+    'edit' => 'Editar',
     'stock' => 'Stock',
     'id' => 'ID',
     'Massiveactions' => 'Acciones masivas',

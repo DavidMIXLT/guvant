@@ -107,14 +107,13 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
-     //TO DO: Crear un propio metodo para actualizar el stock para evitar errores i solo actualizar la columna correspondiente
+    //TO DO: Crear un propio metodo para actualizar el stock para evitar errores i solo actualizar la columna correspondiente
     public function update(Request $request, $id)
     {
         /*
         Si en el request nos envian la variable  stockActualizar significa que nos estan enviado mas de un producto a actualizar
          */
-        if ($request->input("stockActualizar") == null) {
+        if ($id != "mul") {
             $product = Product::find($id);
             //Se valida el producto
 
@@ -129,18 +128,21 @@ class ProductController extends Controller
 
         } else {
 
-            $ids = explode(" ", $request->input("stockActualizar"));
-            foreach ($ids as $product) {
-                $separatedIdandStock = explode(":", $product);
-                //Id 0 para el id del producto y el 1 para el nuevo stock
+            //Comprovamos que no nos envien una string vacia
+            if ($request->input("stockActualizar") != null) {
+                $ids = explode(" ", $request->input("stockActualizar"));
+                foreach ($ids as $product) {
+                    $separatedIdandStock = explode(":", $product);
+                    //Id 0 para el id del producto y el 1 para el nuevo stock
 
-                if (is_numeric($separatedIdandStock[1])) {
-                    $product = Product::find($separatedIdandStock[0]);
-                    //Se valida el producto
-                    $product->stock = $separatedIdandStock[1];
-                    $product->save();
+                    if (is_numeric($separatedIdandStock[1])) {
+                        $product = Product::find($separatedIdandStock[0]);
+                        //Se valida el producto
+                        $product->stock = $separatedIdandStock[1];
+                        $product->save();
+                    }
+
                 }
-
             }
 
         }
