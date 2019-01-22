@@ -24,7 +24,7 @@
             </li>
             <li class="nav-item dropdown">
                 <div class="btn-group nav-item">
-                    <a href="{{route('products.index')}}" class="nav-link ">Gestion de productos</a>
+                    <a href="{{route('products.index')}}" class="nav-link ">Productos</a>
                     <button type="button" class="btn  dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               <span class="sr-only">Toggle Dropdown</span>
                             </button>
@@ -34,6 +34,9 @@
                         <a class="dropdown-item" href="{{route('entradaProducto')}}">Entrar pedidos</a>
                     </div>
                 </div>
+            </li>
+            <li class="navbar-nav">
+                <a class="nav-link" href="{{route('orders.index')}}">Pedidos</a>
             </li>
         </ul>
 
@@ -57,7 +60,7 @@
     </div>
     <!-- Fin Contenido -->
 
-    
+
 </body>
 
 </html>
