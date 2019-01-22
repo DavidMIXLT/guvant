@@ -2,7 +2,6 @@
 <html>
 
 <head>
-    <!-- TO DO Cargar los scripts desde local del boostrap -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>A la carta ya - @yield('title')</title>
@@ -58,9 +57,7 @@
     </div>
     <!-- Fin Contenido -->
 
-    <!-- Inicio footer -->
-
-    <!-- Fin footer -->
+    
 </body>
 
 </html>
