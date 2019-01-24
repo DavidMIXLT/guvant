@@ -7,6 +7,6 @@ Fichero de traduciones en español de mensajes al usuario Informativos o de Erro
 
  */
 return [
-    'productCreated' => 'Producto creado correctamente',
-    'productError' => 'Producto no se ha podido crear',
+    'successfullyCreated' => ':Object creado correctamente',
+    'errorCreating' => ':Object no se ha podido crear',
 ];
