@@ -7,8 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     //
-    
-    public function validate($request){
+    protected $fillable = ['Name','Description','Stock'];
+
+    /**
+     * Valida el producto
+     *
+     * @param  int  $request
+     *
+     */
+    public function validate($request)
+    {
         $request->validate([
             'Name' => 'required',
             'Description' => 'required',
@@ -16,6 +24,5 @@ class Product extends Model
         ]);
     }
 
-    
 
 }

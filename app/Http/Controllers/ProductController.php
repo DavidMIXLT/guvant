@@ -4,6 +4,7 @@ namespace AlaCartaYa\Http\Controllers;
 
 use AlaCartaYa\Product;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 /*
 TO DO
@@ -39,7 +40,6 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
 
         return view('productsViews.createProducts');
     }
@@ -53,25 +53,14 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         //Metodo llamado cuando se envia por POST se crea un nuevo producto y luego es guardado en la base de datos
-
         $product = new Product;
         //Se valida el producto
         $product->validate($request);
-
         //Se crea el producto y se guarda en la base de datos
-
-        $product->name = ($request->Name);
-        $product->description = ($request->Description);
-        $product->stock = ($request->Stock);
-        $alertaCreado = $product->save();
-
-        //Si no se a podido crear el producto en la base de datos se aborta y se redirige el usuario a la pagina de error
-        if (!$alertaCreado) {
-            App::abort(500, 'Error');
-        }
+        $product->fill($request->all())->save();
 
         $products = Product::all();
-        return view('productsViews.products', compact('products', 'alertaCreado'));
+        return view('productsViews.products', compact('products'));
     }
 
     /**
@@ -95,7 +84,13 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::where('id', $id)->first();
-        return view('productsViews.editProducts', compact('product'));
+        $view = view('productsViews.editProducts', compact('product'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+
+        ]);
+
         //
     }
 
@@ -125,6 +120,10 @@ class ProductController extends Controller
             $product->description = ($request->Description);
             $product->stock = ($request->Stock);
             $alertaCreado = $product->save();
+            return response()->json([
+                "status" => "success",
+
+            ]);
 
         } else {
 
@@ -160,23 +159,17 @@ class ProductController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        $alertaBorrado;
-
-        //Borramos el producto que pasen por el $id
-        if (isset($request->productsToDelete)) {
-            $ids = explode(' ', $request->productsToDelete);
-
-            $alertaBorrado = Product::destroy(collect($ids));
-            $products = Product::all();
-
+        if ($id == -1) {
+            Product::destroy($request->ListOfID);
+            return response()->json([
+                'status' => 'success',
+            ]);
         } else {
             $alertaBorrado = Product::destroy($id);
-            $products = Product::all();
-
+            return response()->json([
+                'status' => 'success',
+            ]);
         }
-
-        $products = Product::all();
-        return view('productsViews.products', compact('products'));
 
     }
 
