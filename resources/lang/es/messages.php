@@ -9,4 +9,5 @@ Fichero de traduciones en español de mensajes al usuario Informativos o de Erro
 return [
     'successfullyCreated' => ':Object creado correctamente',
     'errorCreating' => ':Object no se ha podido crear',
+    'successfullyUpdate' => ':Object actualizado correctamente',
 ];

@@ -23,8 +23,8 @@ function sortTableDate(n) {
         x = rows[i].getElementsByTagName("TD")[n];
         y = rows[i + 1].getElementsByTagName("TD")[n];
   
-        xD = new Date(x.getElementsByTagName('a')[0].innerHTML);
-        xY = new Date(y.getElementsByTagName('a')[0].innerHTML)
+        xD = new Date(x.innerHTML);
+        xY = new Date(y.innerHTML)
   
         if (dir == "asc") {
           if (xD > xY) {
@@ -68,8 +68,8 @@ function sortTableDate(n) {
   
         shouldSwitch = false;
   
-        x = rows[i].getElementsByTagName("TD")[n].getElementsByTagName('a')[0];
-        y = rows[i + 1].getElementsByTagName("TD")[n].getElementsByTagName('a')[0];
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
   
         if (dir == "asc") {
           if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
@@ -113,8 +113,8 @@ function sortTableDate(n) {
       for (i = 1; i < (rows.length - 1); i++) {
   
         shouldSwitch = false;
-        x = rows[i].getElementsByTagName("TD")[n].getElementsByTagName('a')[0];
-        y = rows[i + 1].getElementsByTagName("TD")[n].getElementsByTagName('a')[0];
+        x = rows[i].getElementsByTagName("TD")[n];
+        y = rows[i + 1].getElementsByTagName("TD")[n];
         console.log
         if (dir == "asc") {
           if (Number(x.innerHTML) > Number(y.innerHTML)) {

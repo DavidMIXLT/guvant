@@ -41,7 +41,13 @@ class ProductController extends Controller
     public function create()
     {
 
-        return view('productsViews.createProducts');
+        $product = new Product;
+        $view = view('productsViews.createProducts', compact('product'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+
+        ]);
     }
 
     /**
@@ -60,7 +66,15 @@ class ProductController extends Controller
         $product->fill($request->all())->save();
 
         $products = Product::all();
-        return view('productsViews.products', compact('products'));
+        //  return view('productsViews.products', compact('products'));
+        return response()->json([
+            'status' => 'success',
+            'message' => __("messages.successfullyCreated",['Object' => $product->Name]),
+            'date' => $product->created_at->format('Y-m-d H:i:s'),
+            'id' => $product->id
+
+        ]);
+
     }
 
     /**
@@ -122,6 +136,7 @@ class ProductController extends Controller
             $alertaCreado = $product->save();
             return response()->json([
                 "status" => "success",
+                "message" => __('messages.successfullyUpdate', ["Object" => $product->name]),
 
             ]);
 

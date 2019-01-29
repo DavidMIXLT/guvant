@@ -6,6 +6,8 @@
 @section('header')
 <script src="{{asset('js/products.js')}}"></script>
 <script src="{{asset('js/sortTable.js')}}"></script>
+<script src="{{asset('js/alertify.min.js')}}"></script>
+<link rel="stylesheet" href="{{ asset('css/alertify.css')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
  
@@ -13,7 +15,8 @@
 
 
 <br/>
-<a href="{{route('products.create')}}" class="btn btn-primary">@lang('products/productsIndex.createProduct')</a>
+<button name="Create" class="btn btn-success ">@lang('products/productsIndex.createProduct')</button>
+
 <br/>
 <!-- Inicio mensajes de Alertas -->
 <br/>
@@ -47,11 +50,11 @@
                         <label class="form-check-label" for="checkBoxAction"></label>
                     </div>
                 </td>
-                <td><a class="ProductID" href="{{route('products.edit',$product->id)}}">{{$product->id}}</td>
-                <td><a class="ProductName" href="{{route('products.edit',$product->id)}}">{{$product->name}}</a></td>
-                <td><a class="ProductDescription" href="{{route('products.edit',$product->id)}}">{{substr($product->description, 0, 60)}}</a></td>
-                <td><a class="ProductStock" href="{{route('products.edit',$product->id)}}">{{$product->stock}}</a></td>
-                <td><a href="{{route('products.edit',$product->id)}}">{{$product->created_at}}</a></td>
+                <td class="ProductID">{{$product->id}}</td>
+                <td class="ProductName">{{$product->name}}</a></td>
+                <td class="ProductDescription">{{substr($product->description, 0, 60)}}</td>
+                <td class="ProductStock">{{$product->stock}}</td>
+                <td class="ProductDate">{{$product->created_at}}</td>
 
                 <td>
                     <div class="container">

@@ -1,33 +1,41 @@
-var lastRowClicked;
-$(document).ready(function () {
+/**
+  * Variable usada para guardar la ultima columna que el usuario a hecho click
+  */
+var RowClicked;
 
+
+$(document).ready(function () {
+  alertify.set('notifier', 'position', 'top-right');
   $("#MassiveDeleteButton").click(function () {
     massiveElimination();
-  });
-
-  $("button[name=Delete]").click(function () {
-
-    delete_product($(this).parent().parent().parent());
-
   });
 
   $("#SelectAll").click(function () {
     selectAll();
   });
 
-  $("button[name=Edit]").click(function () {
-
-    editProduct($(this).parent().parent().parent().find(".ProductID").text());
-    lastRowClicked = $(this).parent().parent().parent();
+  $("button[name=Create]").click(function () {
+    createModal("create", $(this).parent().parent().parent().find(".ProductID").text());
   });
-
-
-
-
   loadTableSortEvents();
+  loadButtonTableEvents();
   console.log("----- Products.js Loaded -----");
 });
 
+
+
+function loadButtonTableEvents() {
+  $("button[name=Delete]").on('click', function () {
+    delete_product($(this).parent().parent().parent().find(".ProductID").text());
+    RowClicked = $(this).parent().parent().parent();
+  });
+  $("button[name=Edit]").on('click', function () {
+
+    createModal("edit", $(this).parent().parent().parent().find(".ProductID").text());
+    RowClicked = $(this).parent().parent().parent();
+  });
+
+}
 
 function selectAll() {
   $("input[type=checkbox]").each(function () {
@@ -141,128 +149,148 @@ function ren_spinner($ren) {
   * Elimina el producto cuando el usuario pulsa el boton de Eliminar
   *  @param int ProductID
   */
-function delete_product(row) {
-  var id = row.find(".ProductID").text();
-  ren_spinner(true);
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
+function delete_product(id) {
+  ajaxRequest("products/" + id, 'DELETE', null, function (response) {
+    console.log(response);
+    ren_RemoveRow(RowClicked);
+    ren_spinner(false);
   });
-  $.ajax(
-    {
-      url: "products/" + id,
-      type: 'delete', // replaced from put
-      dataType: "JSON",
-      data: {
-      },
-      success: function (response) {
-        console.log(response); // see the reponse sent  
-        ren_RemoveRow(row);
-        ren_spinner(false);
-      },
-      error: function (xhr) {
-        console.log(xhr.responseText); // this line will save you tons of hours while debugging
-        // do something here because of error
-
-        ren_spinner(false);
-      }
-    });
-
 }
+
+
+
+
 
 /**
-  * Muestra el formulario de edicion del producto
-  *  @param int ProductID
+  * Actualiza las columnas con los nuevos datos
+  *  @param Row columna
   */
-function editProduct(id) {
-  ren_spinner(true);
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-  $.ajax(
-    {
-      url: "products/" + id + "/edit",
-      type: 'GET', // replaced from put
-      dataType: "JSON",
-      data: {
-      },
-      success: function (response) {
-        $('body').append(response.html)
-        $('#editModal').modal('show');
-
-        /**
-          * Carga los eventos del Modal tanto para cerrarlo como para enviarlo
-          */
-        $("button[name=closeModal]").click(function () {
-          closeModal($('#editModal'));
-        });
-        $("button[name=submitEdit]").click(function () {
-          postEdit();
-      
-          
-        });
-        ren_spinner(false);
-      },
-      error: function (xhr) {
-        console.log("AJAX Error");
-        console.log(xhr.responseText); // this line will save you tons of hours while debugging
-        // do something here because of error
-
-        ren_spinner(false);
-      }
-    });
-}
-
-/**
-  * Cierra y elimina el Modal creado
-  *  @param Modal
-  */
-
-
-
-function postEdit() {
-  ren_spinner(true);
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-  $.ajax(
-    {
-      url: "products/" + $("input[name=Id]").val(),
-      type: 'PUT',
-      dataType: "JSON",
-      data: $("#editProduct").serialize(),
-      success: function (response) {
-
-        updateRow(lastRowClicked);
-        closeModal($('#editModal'));
-        console.log("success")
-        ren_spinner(false);
-      },
-      error: function (xhr) {
-        closeModal($('#editModal'));
-        console.log("AJAX Error");
-        console.log(xhr.responseText); 
-        ren_spinner(false);
-      }
-    });
-}
-
-function updateRow(row){
+function updateRow(row, date = "-1", id = "-1") {
 
   row.find(".ProductName").text($('input[name="Name"]').val());
   row.find(".ProductStock").text($('input[name="Stock"]').val());
-
   row.find(".ProductDescription").text($('textarea[name="Description"]').val());
+  if (date != "-1") {
+    row.find(".ProductDate").text(date);
+  }
+  if (id != "-1") {
+    row.find(".ProductID").text(id);
+  }
 
 }
-
+/**
+  * Cierra la ventana Model y la elimina
+  *  @param Modal modal
+  */
 function closeModal(Modal) {
   Modal.modal('hide');
   Modal.remove();
 }
 
+
+
+function createModal(Modal, id = -1) {
+  switch (Modal) {
+    case 'create':
+      ajaxRequest("products/create", 'GET', null, function (response) {
+        renderModel(response);
+        /**
+          * Carga los eventos del Modal tanto para cerrarlo como para enviarlo
+          */
+        addEventListernerModal(function () {
+          /**
+           * Este codigo se ejecutara cuando el usuario haga click en Enviar
+           */
+          ajaxRequest("products", 'POST', $("#productForm").serialize(), function (response) {
+            /**
+             * Una vez enviada la peticion ajax si todo tiene exito copiamos el ultimo tr y 
+             * se inserta en la tabla y luego se remplazan los datos con los del nuevo producto creado
+             */
+            alertify.success(response.message);
+            row = $("#productTable tr:last").clone(true, true).appendTo("#productTable");
+            updateRow(row, response.date, response.id);
+
+            /**
+             * Cierra el modal y desactiva el spinner
+             */
+            closeModal($('#productModal'));
+            ren_spinner(false);
+          });
+
+
+        });
+      });
+      break;
+    case 'edit':
+      ajaxRequest("products/" + id + "/edit", 'GET', null, function (response) {
+
+        /**
+          * Carga los eventos del Modal tanto para cerrarlo como para enviarlo
+          */
+        renderModel(response);
+
+        addEventListernerModal(function (response) {
+          /**
+           * Este codigo se ejecutara cuando el usuario haga click en Enviar
+           */
+          ajaxRequest("products/" + id, 'PUT', $("#productForm").serialize(), function (request) {
+            alertify.success(response.message);
+            updateRow(RowClicked);
+            closeModal($('#productModal'));
+            ren_spinner(false);
+          });
+        })
+      });
+      break;
+  }
+
+
+}
+
+function addEventListernerModal(submit_Func) {
+  $("button[name=closeModal]").click(function () {
+    closeModal($('#productModal'));
+  });
+
+  $("button[name=submitEdit]").click(function () {
+    submit_Func();
+  });
+
+
+}
+
+function renderModel(response) {
+  ren_spinner(false);
+  $('body').append(response.html)
+  $('#productModal').modal('show');
+}
+
+
+
+
+
+function ajaxRequest(url, type, data, success) {
+  ren_spinner(true);
+  $.ajaxSetup({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+  });
+  $.ajax(
+    {
+      url: url,
+      type: type,
+      dataType: "JSON",
+      data: data,
+      success: success,
+      error: function (xhr) {
+
+        alertify.alert('Error', xhr.responseText)
+        closeModal($('#productModal'));
+        console.log("---AJAX Error---");
+        console.log(xhr.responseText);
+        ren_spinner(false);
+      }
+    });
+
+}
