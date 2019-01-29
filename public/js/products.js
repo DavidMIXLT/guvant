@@ -3,7 +3,9 @@
   */
 var RowClicked;
 
-
+/**
+ * Ejecutado cuando la pagina acaba de cargar
+ */
 $(document).ready(function () {
   alertify.set('notifier', 'position', 'top-right');
   $("#MassiveDeleteButton").click(function () {
@@ -23,7 +25,9 @@ $(document).ready(function () {
 });
 
 
-
+/**
+ * Carga los eventos de los Botones de editar y eliminar de la tabla
+ */
 function loadButtonTableEvents() {
   $("button[name=Delete]").on('click', function () {
     delete_product($(this).parent().parent().parent().find(".ProductID").text());
@@ -37,12 +41,14 @@ function loadButtonTableEvents() {
 
 }
 
+/**
+ * Selecciona todas las checkbox
+ */
 function selectAll() {
   $("input[type=checkbox]").each(function () {
     $(this).prop('checked', true);
   });
 }
-
 
 /**
   * Carga los eventos para ordenar la tabla al pulsar en las cabecera
@@ -66,14 +72,12 @@ function loadTableSortEvents() {
 
 }
 
-
-
 /**
   * Elimina las columnas que se le pasan de una tabla
   * 
   * @param  array of <TR>
-  * 
   */
+
 function ren_RemoveRow(ren_rows) {
   $(ren_rows).each(function () {
     $(this).remove();
@@ -85,7 +89,6 @@ function ren_RemoveRow(ren_rows) {
   *
   * @return Response AJAX
   */
-
 
 function massiveElimination() {
 
@@ -142,9 +145,6 @@ function ren_spinner($ren) {
   }
 }
 
-
-
-
 /**
   * Elimina el producto cuando el usuario pulsa el boton de Eliminar
   *  @param int ProductID
@@ -156,10 +156,6 @@ function delete_product(id) {
     ren_spinner(false);
   });
 }
-
-
-
-
 
 /**
   * Actualiza las columnas con los nuevos datos
@@ -186,8 +182,6 @@ function closeModal(Modal) {
   Modal.modal('hide');
   Modal.remove();
 }
-
-
 
 function createModal(Modal, id = -1) {
   switch (Modal) {
@@ -247,6 +241,12 @@ function createModal(Modal, id = -1) {
 
 }
 
+/**
+ * Genera los eventos para los botones del Modal creado
+ * La funcion que se pasa como parametro es llamada cuando el usuario hace click en el boton enviar
+ * @param {} submit_Func 
+ */
+
 function addEventListernerModal(submit_Func) {
   $("button[name=closeModal]").click(function () {
     closeModal($('#productModal'));
@@ -258,16 +258,25 @@ function addEventListernerModal(submit_Func) {
 
 
 }
-
+/**
+ * Renderiza la respuesta dada por el Controlador de PHP 
+ * En este caso renderiza la ventana Model
+ * @param {*} response 
+ */
 function renderModel(response) {
   ren_spinner(false);
   $('body').append(response.html)
   $('#productModal').modal('show');
 }
 
-
-
-
+/**
+ * Genera una peticion AJAX al servidor
+ * 
+ * @param {*} url 
+ * @param {*} type 
+ * @param {*} data 
+ * @param {*} success 
+ */
 
 function ajaxRequest(url, type, data, success) {
   ren_spinner(true);
