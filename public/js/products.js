@@ -227,7 +227,7 @@ function createModal(Modal, id = -1) {
           /**
            * Este codigo se ejecutara cuando el usuario haga click en Enviar
            */
-          ajaxRequest("products/" + id, 'PUT', $("#productForm").serialize(), function (request) {
+          ajaxRequest("products/" + id, 'PUT', $("#productForm").serialize(), function (response) {
             alertify.success(response.message);
             updateRow(RowClicked);
             closeModal($('#productModal'));
