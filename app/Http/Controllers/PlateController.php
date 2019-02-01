@@ -3,7 +3,8 @@
 namespace AlaCartaYa\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use AlaCartaYa\Product;
+use AlaCartaYa\Plate;
 class PlateController extends Controller
 {
     /**
@@ -14,6 +15,8 @@ class PlateController extends Controller
     public function index()
     {
         //
+        $plates = Plate::all();
+        return view('platesViews.index',compact('plates'));
     }
 
     /**
@@ -24,6 +27,13 @@ class PlateController extends Controller
     public function create()
     {
         //
+        $products = Product::all();
+        $view = view('platesViews.create',compact('products'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+
+        ]);
     }
 
     /**
@@ -35,6 +45,23 @@ class PlateController extends Controller
     public function store(Request $request)
     {
         //
+        $ProductList = explode(",",$request->ProductList);
+        $products = Product::find($ProductList);
+        $plate = new Plate;
+        $plate->name = $request->name;
+        $plate->description = $request->description;
+        $plate->save();
+
+
+        foreach ($products as $product) {
+            $plate->products()->attach($product );
+        }
+
+        $view = view('platesViews.layouts.tableRow',compact('plate'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view
+        ]);
     }
 
     /**

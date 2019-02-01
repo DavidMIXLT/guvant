@@ -99,36 +99,15 @@ function massiveElimination() {
     ListOfID.push($(this).val())
   });
 
-  ren_spinner(true);
+  ajaxRequest("products/-1",'delete',ListOfID,function(){
 
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-  });
-  $.ajax(
-    {
-      url: "products/-1",
-      type: 'delete', // replaced from put
-      dataType: "JSON",
-      data: {
-        "ListOfID": ListOfID // method and token not needed in data
-      },
-      success: function (response) {
-        console.log(response); // see the reponse sent
-        $(rows).fadeOut("fast", function () {
-          ren_RemoveRow(rows);
-        });
-
-        ren_spinner(false);
-      },
-      error: function (xhr) {
-        console.log(xhr.responseText); // this line will save you tons of hours while debugging
-        // do something here because of error
-
-        ren_spinner(false);
-      }
+    $(rows).fadeOut("fast", function () {
+      ren_RemoveRow(rows);
     });
+
+    ren_spinner(false);
+
+  });
 }
 
 /**

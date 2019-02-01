@@ -15,8 +15,10 @@ class CreatePlateProductTable extends Migration
     {
         Schema::create('plate_product', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('plate_id');
-            $table->integer('product_id');
+            $table->integer('plate_id')->unsigned();
+            $table->foreign('plate_id')->references('id')->on('plates');
+            $table->integer('product_id')->unsigned();
+            $table->foreign('product_id')->references('id')->on('products');
             $table->timestamps();
         });
     }

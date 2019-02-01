@@ -30,3 +30,9 @@ tr:hover{
 .table .btn{
     width:80px;
 }
+
+.flex-even {
+    flex: 1;
+  }
+
+ 
