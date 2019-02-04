@@ -15,24 +15,26 @@
 @section('content')
 <button name="Create" type="button" class="btn btn-success m-1">Crear Plato</button>
 <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">ID</th>
-        <th scope="col">Nombre</th>
-        <th scope="col">Descripcion</th>
-        <th scope="col">Ingredientes</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">
+        <div class="spinner-border invisible" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </th>
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Descripcion</th>
+      <th scope="col">Ingredientes</th>
+      <th scope="col">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
 
-      @foreach ($plates as $plate)
-      @include('plates.layouts.tablerow',["plate" => $plate])
-      @endforeach
-      
-    </tbody>
-  </table>
+    @foreach ($plates as $plate)
+  @include('plates.layouts.tablerow',["plate" => $plate]) @endforeach
 
-
+  </tbody>
+</table>
+  @include("layouts.actions")
 @endsection
-

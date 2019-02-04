@@ -61,8 +61,9 @@
         </div>
         @endif @yield('content')
     </div>
-    <!-- Fin Contenido -->
 
+    <!-- Fin Contenido -->
+    
 
 </body>
 

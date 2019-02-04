@@ -16,8 +16,6 @@
         <div class="container">
             <button name="Delete" class="btn btn-danger ">@lang('products/index.delete')</button>
             <button name="Edit" class="btn btn-primary ">@lang('products/index.edit')</button>
-
-
         </div>
     </td>
 </tr>

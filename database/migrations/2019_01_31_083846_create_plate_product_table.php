@@ -15,10 +15,10 @@ class CreatePlateProductTable extends Migration
     {
         Schema::create('plate_product', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('plate_id')->unsigned();
-            $table->foreign('plate_id')->references('id')->on('plates');
+            $table->integer('plate_id')->unsigned() ;
+            $table->foreign('plate_id')->references('id')->on('plates')->onDelete('cascade');;
             $table->integer('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');;
             $table->timestamps();
         });
     }

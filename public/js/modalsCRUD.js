@@ -1,4 +1,10 @@
 
+$(document).ready(function () {
+    $("#SelectAll").click(function () {
+        selectAll();
+    });
+});
+//-----------------------------------------------------------------------------------//
 /**
   * Renderiza el spinner de loading en la tabla de productos
   * 
@@ -12,20 +18,50 @@ function ren_spinner($ren) {
         $(".spinner-border").addClass("invisible");
     }
 }
-
-
+//-----------------------------------------------------------------------------------//
+/**
+ * Renderiza el Modal
+ * @param {Url de la peticion} url 
+ * @param {Funcion ejecutada al hacer click en submit} submit_Func 
+ * @param {Funcion ejecutada cuando el Modal a sido renderizado} success_func 
+ */
 function renderModal(url, submit_Func, success_func) {
-        ajaxRequest(url, "GET", null, function (response) {
-            $('body').append(response.html)
-            $('#modalBox').modal('show');
-            ren_spinner(false);
-            if (success_func != null) { success_func(response); };
+    ajaxRequest(url, "GET", null, function (response) {
+        $('body').append(response.html)
+        $('#modalBox').modal('show');
+        ren_spinner(false);
+        if (success_func != null) { success_func(response); };
 
-            addEventListernerModal(submit_Func);
-        })
-    
+        addEventListernerModal(submit_Func);
+    })
+
 }
+//-----------------------------------------------------------------------------------//
+/**
+  * Obtiene todos los IDS de los checkbox selecionados en productos.index
+  *
+  * @return Response AJAX
+  */
+function massiveElimination(url) {
 
+    var ListOfID = new Array();
+    var rows = $("input[type=checkbox][name=checkBoxActionDelete]:checked").parents("tr");
+
+    $("input[type=checkbox][name=checkBoxActionDelete]:checked").each(function () {
+        ListOfID.push($(this).val())
+    });
+
+    ajaxRequest(url, 'delete', ListOfID, function (response) {
+
+        $(rows).fadeOut("fast", function () {
+            ren_RemoveRow(rows);
+        });
+        alertify.warning(response.message);
+        ren_spinner(false);
+
+    })
+}
+//-----------------------------------------------------------------------------------//
 
 /**
  * Genera una peticion AJAX al servidor
@@ -61,7 +97,7 @@ function ajaxRequest(url, type, data, success) {
         });
 
 }
-
+//-----------------------------------------------------------------------------------//
 
 /**
  * Genera los eventos para los botones del Modal creado
@@ -80,7 +116,7 @@ function addEventListernerModal(submit_Func) {
 
 
 }
-
+//-----------------------------------------------------------------------------------//
 /**
   * Cierra la ventana Model y la elimina
   *  @param Modal modal
@@ -89,3 +125,25 @@ function closeModal(Modal) {
     Modal.modal('hide');
     Modal.remove();
 }
+//-----------------------------------------------------------------------------------//
+/**
+  * Elimina las columnas que se le pasan de una tabla
+  * 
+  * @param  array of <TR>
+  */
+
+function ren_RemoveRow(ren_rows) {
+    $(ren_rows).each(function () {
+        $(this).remove();
+    });
+}
+//-----------------------------------------------------------------------------------//
+/**
+* Selecciona todas las checkbox
+*/
+function selectAll() {
+    $("input[type=checkbox]").each(function () {
+        $(this).prop('checked', true);
+    });
+}
+//-----------------------------------------------------------------------------------//

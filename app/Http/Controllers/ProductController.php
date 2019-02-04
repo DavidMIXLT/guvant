@@ -28,7 +28,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->input('page') -1;
+        $page = $request->input('page') - 1;
         $products = Product::all();
         return view('products.index', compact('products'));
     }
@@ -69,9 +69,9 @@ class ProductController extends Controller
         //  return view('products.products', compact('products'));
         return response()->json([
             'status' => 'success',
-            'message' => __("messages.successfullyCreated",['Object' => $product->Name]),
+            'message' => __("messages.successfullyCreated", ['Object' => $product->Name]),
             'date' => $product->created_at->format('Y-m-d H:i:s'),
-            'id' => $product->id
+            'id' => $product->id,
 
         ]);
 
@@ -172,21 +172,13 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request)
     {
-        if ($id == -1) {
-            Product::destroy($request->ListOfID);
-            return response()->json([
-                'status' => 'success',
-                'message' => __('messages.successfullyDeleted',["Object" => "Products"])
-            ]);
-        } else {
-            $alertaBorrado = Product::destroy($id);
-            return response()->json([
-                'status' => 'success',
-                'message' => __('messages.successfullyDeleted',["Object" => "Product"])
-            ]);
-        }
+        Product::destroy($request->ListOfID);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.successfullyDeleted', ["Object" => "Products"]),
+        ]);
 
     }
 

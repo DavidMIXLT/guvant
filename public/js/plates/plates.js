@@ -7,10 +7,26 @@ $(document).ready(function () {
     $("button[name=Show]").click(function () {
         renderModal("plates/" + $(this).val());
     });
-
+    $("button[name=Delete]").click(function () {
+        remove($(this).val(),$(this).closest('tr'));
+    });
+    $("#MassiveDeleteButton").click(function () {
+        massiveElimination("plates/-1");
+      });
     console.log("----Plates.js Ready----");
 });
 
+
+
+function remove(id,RowClicked){
+    
+    ajaxRequest("plates/" + id, 'DELETE', null, function (response) {
+        console.log(response);
+        alertify.warning(response.message);
+        ren_RemoveRow(RowClicked);
+        ren_spinner(false);
+      });
+};
 
 var onLoadModal = function(){
     $('.productItem').click(function () {
@@ -25,10 +41,8 @@ var onLoadModal = function(){
 
 
 var submit = function () {
-    onClickOnItemList();
-    
+  
     var ProductList = new Array;
-
     $('#SelectedProducts').children().each(function(){
         ProductList.push($(this).val());
     });

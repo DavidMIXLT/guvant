@@ -30,7 +30,6 @@
                     <div class="spinner-border invisible" role="status">
                         <span class="sr-only">Loading...</span>
                     </div>
-
                 </th>
                 <th scope="col" id="idRow">@lang('products/index.id') ↕</th>
                 <th scope="col" id="nameRow">@lang('products/index.name') ↕</th>
@@ -49,25 +48,6 @@
         </tbody>
     </table>
 </div>
-<nav aria-label="Page navigation example">
-    <ul class="pagination">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
-    </ul>
-  </nav>
-<div class="dropdown m-2">
-    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">
-        @lang('products/index.Massiveactions')
-        </button>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <button type="button" class=" dropdown-item" id="SelectAll">Seleccionar Todo</button>
-        <button type="button" class=" dropdown-item" id="MassiveDeleteButton">@lang('products/index.deleteSelectedItems')</button>
-        <button type="button" class=" dropdown-item" id="editButton">Editar</button>
-    </div>
-</div>
 
+@include("layouts.actions")
 @endsection
