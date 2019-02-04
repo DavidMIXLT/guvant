@@ -11,9 +11,9 @@ class Plate extends Model
     public function validate($request)
     {
         $request->validate([
-            'Name' => 'required',
-            'Description' => 'required',
-            'Stock' => 'required|integer',
+            'name' => 'required',
+            'description' => 'required',
+            'ListProducts.*' => 'required|integer',
         ]);
     }
 

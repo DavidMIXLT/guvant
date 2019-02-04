@@ -38,6 +38,9 @@
             <li class="navbar-nav">
                 <a class="nav-link" href="{{route('orders.index')}}">Pedidos</a>
             </li>
+            <li class="navbar-nav">
+                <a class="nav-link" href="{{route('plates.index')}}">Platos</a>
+            </li>
         </ul>
 
     </nav>

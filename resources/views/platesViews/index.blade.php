@@ -13,7 +13,7 @@
 @endsection
  
 @section('content')
-<button name="Create" type="button" class="btn btn-success">Crear Plato</button>
+<button name="Create" type="button" class="btn btn-success m-1">Crear Plato</button>
 <table class="table">
     <thead class="thead-dark">
       <tr>

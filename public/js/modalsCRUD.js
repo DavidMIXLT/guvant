@@ -14,16 +14,16 @@ function ren_spinner($ren) {
 }
 
 
-function renderModal(url, submit_Func,success_func) {
+function renderModal(url, submit_Func, success_func) {
+        ajaxRequest(url, "GET", null, function (response) {
+            $('body').append(response.html)
+            $('#modalBox').modal('show');
+            ren_spinner(false);
+            if (success_func != null) { success_func(response); };
 
-    ajaxRequest(url, "GET", null, function (response) {
-        $('body').append(response.html)
-        $('#modalBox').modal('show');
-      
-        success_func();
-        addEventListernerModal(submit_Func);
-    })
-
+            addEventListernerModal(submit_Func);
+        })
+    
 }
 
 
@@ -85,7 +85,7 @@ function addEventListernerModal(submit_Func) {
   * Cierra la ventana Model y la elimina
   *  @param Modal modal
   */
- function closeModal(Modal) {
+function closeModal(Modal) {
     Modal.modal('hide');
     Modal.remove();
-  }
+}

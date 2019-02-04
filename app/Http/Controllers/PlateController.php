@@ -48,14 +48,12 @@ class PlateController extends Controller
         $ProductList = explode(",",$request->ProductList);
         $products = Product::find($ProductList);
         $plate = new Plate;
+        $plate->validate($request);
         $plate->name = $request->name;
         $plate->description = $request->description;
         $plate->save();
 
-
-        foreach ($products as $product) {
-            $plate->products()->attach($product );
-        }
+        $plate->products()->attach($products );
 
         $view = view('platesViews.layouts.tableRow',compact('plate'))->render();
         return response()->json([

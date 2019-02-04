@@ -19,18 +19,18 @@ class ProductController extends Controller
     {
         $products = Product::all();
 
-        return view('productsViews.incomingOrders', compact('products'));
+        return view('products.incomingOrders', compact('products'));
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $page = $request->input('page') -1;
         $products = Product::all();
-        return view('productsViews.products', compact('products'));
+        return view('products.index', compact('products'));
     }
 
     /**
@@ -42,7 +42,7 @@ class ProductController extends Controller
     {
 
         $product = new Product;
-        $view = view('productsViews.createProducts', compact('product'))->render();
+        $view = view('products.create', compact('product'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view,
@@ -66,7 +66,7 @@ class ProductController extends Controller
         $product->fill($request->all())->save();
 
         $products = Product::all();
-        //  return view('productsViews.products', compact('products'));
+        //  return view('products.products', compact('products'));
         return response()->json([
             'status' => 'success',
             'message' => __("messages.successfullyCreated",['Object' => $product->Name]),
@@ -98,7 +98,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::where('id', $id)->first();
-        $view = view('productsViews.editProducts', compact('product'))->render();
+        $view = view('products.edit', compact('product'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view,
@@ -161,7 +161,7 @@ class ProductController extends Controller
 
         }
         $products = Product::all();
-        return view('productsViews.products', compact('products'));
+        return view('products.products', compact('products'));
 
     }
 

@@ -4,6 +4,7 @@
 @endsection
  
 @section('header')
+<script src="{{asset('js/modalsCRUD.js')}}"></script>
 <script src="{{asset('js/products.js')}}"></script>
 <script src="{{asset('js/sortTable.js')}}"></script>
 <script src="{{asset('js/alertify.min.js')}}"></script>
@@ -43,34 +44,21 @@
 
 
             @foreach ($products as $product)
-            <tr>
-                <td>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" name="checkBoxActionDelete" value="{{$product->id}}">
-                        <label class="form-check-label" for="checkBoxAction"></label>
-                    </div>
-                </td>
-                <td class="ProductID">{{$product->id}}</td>
-                <td class="ProductName">{{$product->name}}</a></td>
-                <td class="ProductDescription">{{substr($product->description, 0, 60)}}</td>
-                <td class="ProductStock">{{$product->stock}}</td>
-                <td class="ProductDate">{{$product->created_at}}</td>
-
-                <td>
-                    <div class="container">
-                        <button name="Delete" class="btn btn-danger ">@lang('products/productsIndex.delete')</button>
-                        <button name="Edit" class="btn btn-primary ">@lang('products/productsIndex.edit')</button>
-
-                        
-                    </div>
-                </td>
-            </tr>
+                @include('products.layouts.tablerow',["product" => $product])
             @endforeach
         </tbody>
     </table>
 </div>
-
-<div class="dropdown">
+<nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav>
+<div class="dropdown m-2">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
         @lang('products/productsIndex.Massiveactions')
@@ -79,8 +67,7 @@
             <button type="button" class=" dropdown-item" id="SelectAll">Seleccionar Todo</button>
         <button type="button" class=" dropdown-item" id="MassiveDeleteButton">@lang('products/productsIndex.deleteSelectedItems')</button>
         <button type="button" class=" dropdown-item" id="editButton">Editar</button>
-    
-
     </div>
 </div>
+
 @endsection
