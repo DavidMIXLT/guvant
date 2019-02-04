@@ -10,4 +10,5 @@ return [
     'successfullyCreated' => ':Object creado correctamente',
     'errorCreating' => ':Object no se ha podido crear',
     'successfullyUpdate' => ':Object actualizado correctamente',
+    'successfullyDeleted' => ':Object eliminado correctamente',
 ];

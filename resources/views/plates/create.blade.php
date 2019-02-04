@@ -1,11 +1,10 @@
-
 @extends('layouts.modal')
 
-@section('title','Editar Producto')
+@section('title','Crear Plato')
 
 @section('content')
     <form id="modalForm">
-        @include('products.form.inputs')
+        @include('plates.form.inputs')
     </form>
 @endsection
 

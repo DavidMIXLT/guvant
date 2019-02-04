@@ -73,6 +73,7 @@ var submit = function () {
 var remove = function (id) {
    ajaxRequest("products/" + id, 'DELETE', null, function (response) {
     console.log(response);
+    alertify.warning(response.message);
     ren_RemoveRow(RowClicked);
     ren_spinner(false);
   });
@@ -158,7 +159,7 @@ function massiveElimination() {
     $(rows).fadeOut("fast", function () {
       ren_RemoveRow(rows);
     });
-
+    alertify.warning(response.message);
     ren_spinner(false);
 
   });

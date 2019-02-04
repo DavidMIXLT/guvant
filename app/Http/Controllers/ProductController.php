@@ -178,11 +178,13 @@ class ProductController extends Controller
             Product::destroy($request->ListOfID);
             return response()->json([
                 'status' => 'success',
+                'message' => __('messages.successfullyDeleted',["Object" => "Products"])
             ]);
         } else {
             $alertaBorrado = Product::destroy($id);
             return response()->json([
                 'status' => 'success',
+                'message' => __('messages.successfullyDeleted',["Object" => "Product"])
             ]);
         }
 

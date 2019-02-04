@@ -10,5 +10,11 @@ return [
     'stock' => 'Stock',
     'id' => 'ID',
     'Massiveactions' => 'Acciones masivas',
-    'deleteSelectedItems' => 'Eliminar elementos seleccionados'
+    'deleteSelectedItems' => 'Eliminar elementos seleccionados',
+    'name' => 'Nombre',
+    'description' => "Descripcion",
+    'dateCreated' => 'Fecha creado',
+    'id' => 'ID',
+    'stock' => 'Stock',
+    'createNewProduct' => 'Crear producto nuevo',
 ];

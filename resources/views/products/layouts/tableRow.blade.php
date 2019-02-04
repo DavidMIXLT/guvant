@@ -14,8 +14,8 @@
 
     <td>
         <div class="container">
-            <button name="Delete" class="btn btn-danger ">@lang('products/productsIndex.delete')</button>
-            <button name="Edit" class="btn btn-primary ">@lang('products/productsIndex.edit')</button>
+            <button name="Delete" class="btn btn-danger ">@lang('products/index.delete')</button>
+            <button name="Edit" class="btn btn-primary ">@lang('products/index.edit')</button>
 
 
         </div>

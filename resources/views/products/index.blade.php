@@ -16,7 +16,7 @@
 
 
 <br/>
-<button name="Create" class="btn btn-success ">@lang('products/productsIndex.createProduct')</button>
+<button name="Create" class="btn btn-success ">@lang('products/index.createProduct')</button>
 
 <br/>
 <!-- Inicio mensajes de Alertas -->
@@ -32,12 +32,12 @@
                     </div>
 
                 </th>
-                <th scope="col" id="idRow">@lang('products/products.id') ↕</th>
-                <th scope="col" id="nameRow">@lang('products/products.name') ↕</th>
-                <th scope="col" id="descriptionRow">@lang('products/products.description') ↕</th>
-                <th scope="col" id="stockRow">@lang('products/products.stock') ↕</th>
-                <th scope="col" id="dateRow">@lang('products/products.dateCreated') ↕</th>
-                <th scope="col">@lang('products/productsIndex.actions') </th>
+                <th scope="col" id="idRow">@lang('products/index.id') ↕</th>
+                <th scope="col" id="nameRow">@lang('products/index.name') ↕</th>
+                <th scope="col" id="descriptionRow">@lang('products/index.description') ↕</th>
+                <th scope="col" id="stockRow">@lang('products/index.stock') ↕</th>
+                <th scope="col" id="dateRow">@lang('products/index.dateCreated') ↕</th>
+                <th scope="col">@lang('products/index.actions') </th>
             </tr>
         </thead>
         <tbody>
@@ -61,11 +61,11 @@
 <div class="dropdown m-2">
     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
         aria-expanded="false">
-        @lang('products/productsIndex.Massiveactions')
+        @lang('products/index.Massiveactions')
         </button>
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <button type="button" class=" dropdown-item" id="SelectAll">Seleccionar Todo</button>
-        <button type="button" class=" dropdown-item" id="MassiveDeleteButton">@lang('products/productsIndex.deleteSelectedItems')</button>
+        <button type="button" class=" dropdown-item" id="MassiveDeleteButton">@lang('products/index.deleteSelectedItems')</button>
         <button type="button" class=" dropdown-item" id="editButton">Editar</button>
     </div>
 </div>

@@ -3,11 +3,6 @@
     <td class="Name">{{$plate->name}}</td>
     <td class="description">{{$plate->description}}</td>
     <td class="products">
-
-        <ul>
-    @foreach ($plate->products as $product)
-        <li>{{$product->name}}</li>
-    @endforeach
-        </ul>
+    <button name="Show" value="{{$plate->id}}" type="button" class="btn btn-info">Mostrar</button>
     </td>
 </tr>

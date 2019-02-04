@@ -4,14 +4,23 @@ $(document).ready(function () {
         renderModal("plates/create", submit,onLoadModal);
     });
 
+    $("button[name=Show]").click(function () {
+        renderModal("plates/" + $(this).val());
+    });
 
     console.log("----Plates.js Ready----");
 });
 
 
 var onLoadModal = function(){
-    onClickOnItemList();
-
+    $('.productItem').click(function () {
+        console.log("click")
+        if ($(this).parent().attr('id') == "ProductList") {
+            $(this).appendTo("#SelectedProducts");
+        } else {
+            $(this).appendTo("#ProductList");
+        }
+    });
 }
 
 
@@ -34,18 +43,5 @@ var submit = function () {
         console.log(response.products)
     });
 
-}
-
-
-function onClickOnItemList() {
-    $('.productItem').click(function () {
-        console.log("click")
-        if ($(this).parent().attr('id') == "ProductList") {
-            $(this).appendTo("#SelectedProducts");
-        } else {
-            $(this).appendTo("#ProductList");
-        }
-
-    });
 }
 

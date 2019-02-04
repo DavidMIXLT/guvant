@@ -11,8 +11,7 @@
                 @yield('content')
             </div>
             <div class="modal-footer">
-                <button name="submitEdit" type="button" class="btn btn-primary">Save changes</button>
-                <button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    @yield('footer') 
             </div>
         </div>
     </div>

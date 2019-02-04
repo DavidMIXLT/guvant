@@ -16,7 +16,7 @@ class PlateController extends Controller
     {
         //
         $plates = Plate::all();
-        return view('platesViews.index',compact('plates'));
+        return view('plates.index',compact('plates'));
     }
 
     /**
@@ -28,7 +28,7 @@ class PlateController extends Controller
     {
         //
         $products = Product::all();
-        $view = view('platesViews.create',compact('products'))->render();
+        $view = view('plates.create',compact('products'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view,
@@ -55,7 +55,7 @@ class PlateController extends Controller
 
         $plate->products()->attach($products );
 
-        $view = view('platesViews.layouts.tableRow',compact('plate'))->render();
+        $view = view('plates.layouts.tableRow',compact('plate'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view
@@ -68,9 +68,14 @@ class PlateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Plate $plate)
     {
-        //
+        $view = view('plates.show',compact('plate'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view
+        ]);
+
     }
 
     /**

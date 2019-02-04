@@ -27,7 +27,7 @@
     <tbody>
 
       @foreach ($plates as $plate)
-      @include('platesViews.layouts.tablerow',["plate" => $plate])
+      @include('plates.layouts.tablerow',["plate" => $plate])
       @endforeach
       
     </tbody>
@@ -35,3 +35,4 @@
 
 
 @endsection
+
