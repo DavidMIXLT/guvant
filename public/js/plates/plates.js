@@ -1,5 +1,29 @@
+//-----------------------------------------------------------------------------------//
+/**
+ * Variables
+ * @var rowClicked  / Sirve para guardar la ultima fila que se ha hecho click
+ */
 var rowClicked;
-
+//-----------------------------------------------------------------------------------//
+var submitCreate = getSubmit("plates", "POST");
+/**
+ * Variable que guarda una funcion anonima encargada de la interactividad de lista de productos dentro de los formularios de 
+ * crear y editar.
+ */
+var onLoadModal = function () {
+    $('.productItem').click(function () {
+      
+        if ($(this).parent().attr('id') == "ProductList") {
+            $(this).appendTo("#SelectedProducts");
+        } else {
+            $(this).appendTo("#ProductList");
+        }
+    });
+}
+//-----------------------------------------------------------------------------------//
+/**
+ *  Ejecutada cuando la web a terminado de cargar y luego se encarga de cargar los eventos
+ */
 $(document).ready(function () {
 
     $("button[name=Create]").click(function () {
@@ -12,8 +36,10 @@ $(document).ready(function () {
     loadEvents();
     console.log("----Plates.js Ready----");
 });
-
-
+//-----------------------------------------------------------------------------------//
+/**
+ * Carga los eventos o refresca los mismos  de los boton de mostrar,editar y eliminar
+ */
 function loadEvents() {
 
     $("button[name=Show]").click(function () {
@@ -28,32 +54,27 @@ function loadEvents() {
         remove($(this).val(), $(this).closest('tr'));
     });
 }
-
+//-----------------------------------------------------------------------------------//
+/**
+ * Elimina el plato y envia la peticion por ajax y despues la elimina de la tabla local
+ * @param {Id del plato} id 
+ * @param {Columna que se ha hecho click} RowClicked 
+ */
 function remove(id, RowClicked) {
 
     ajaxRequest("plates/" + id, 'DELETE', null, function (response) {
-        console.log(response);
+     
         alertify.warning(response.message);
         ren_RemoveRow(RowClicked);
         ren_spinner(false);
     });
 };
-
-var onLoadModal = function () {
-    $('.productItem').click(function () {
-        console.log("click")
-        if ($(this).parent().attr('id') == "ProductList") {
-            $(this).appendTo("#SelectedProducts");
-        } else {
-            $(this).appendTo("#ProductList");
-        }
-    });
-}
-
-
-var submitCreate = getSubmit("plates", "POST");
-
-
+//-----------------------------------------------------------------------------------//
+/**
+ * Funcion utiliza para obtener una funcion anonima con parametros encargada de enviar los submits para el Create y el edit de los platos
+ * @param {Url a la que enviar la peticion} url 
+ * @param {Metodo de la peticion} method 
+ */
 function getSubmit(url, method) {
     return function () {
         var ProductList = new Array;
@@ -66,30 +87,30 @@ function getSubmit(url, method) {
 
         ajaxRequest(url, method, data, function (response) {
             alertify.success(response.message);
-            console.log(response.html)
             closeModal($('#modalBox'));
             ren_spinner(false);       
             if (method == "PUT") {
                 updateRow(rowClicked, response.html);
             } else {
                 $("tbody").append(response.html)
+                loadEvents();
             }
         });
 
     }
 }
-
+//-----------------------------------------------------------------------------------//
 /**
   * Actualiza las columnas con los nuevos datos
-  *  @param OldRow columna
-  *  @param newRow columna
+  *  @param OldRow Columna actual renderiza en la tabla
+  *  @param newRow Nueva columna con los datos actualizados
   */
 function updateRow(OldRow, newRow) {
     $(newRow).insertBefore(OldRow);
     OldRow.remove();
     loadEvents();
 }
-
+//-----------------------------------------------------------------------------------//
 
 
 
