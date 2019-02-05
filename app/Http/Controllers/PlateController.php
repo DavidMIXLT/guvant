@@ -138,13 +138,13 @@ class PlateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Plate $plate)
+    public function destroy(Request $request)
     {
-        $name = $plate->name;
-        $plate->delete();
+        Plate::destroy($request->ListOfID);
+      
         return response()->json([
             'status' => 'success',
-            'message' => __("messages.successfullyDeleted",["Object" => $name]),
+            'message' => __("messages.deleted"),
         ]);
     }
 }
