@@ -3,6 +3,10 @@ $(document).ready(function () {
     $("#SelectAll").click(function () {
         selectAll();
     });
+    $(document).on('hidden.bs.modal', function () {
+
+        $("#modalBox").remove();
+    });
 });
 //-----------------------------------------------------------------------------------//
 /**
@@ -25,11 +29,13 @@ function ren_spinner($ren) {
  * @param {Funcion ejecutada al hacer click en submit} submit_Func 
  * @param {Funcion ejecutada cuando el Modal a sido renderizado} success_func 
  */
+
 function renderModal(url, submit_Func, success_func) {
     ajaxRequest(url, "GET", null, function (response) {
         $('body').append(response.html)
         $('#modalBox').modal('show');
         ren_spinner(false);
+        console.log(response.message)
         if (success_func != null) { success_func(response); };
 
         addEventListernerModal(submit_Func);

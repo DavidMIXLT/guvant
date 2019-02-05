@@ -2,9 +2,10 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
-use Illuminate\Http\Request;
-use AlaCartaYa\Product;
 use AlaCartaYa\Plate;
+use AlaCartaYa\Product;
+use Illuminate\Http\Request;
+
 class PlateController extends Controller
 {
     /**
@@ -16,7 +17,7 @@ class PlateController extends Controller
     {
         //
         $plates = Plate::all();
-        return view('plates.index',compact('plates'));
+        return view('plates.index', compact('plates'));
     }
 
     /**
@@ -28,7 +29,7 @@ class PlateController extends Controller
     {
         //
         $products = Product::all();
-        $view = view('plates.create',compact('products'))->render();
+        $view = view('plates.create', compact('products'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view,
@@ -45,7 +46,7 @@ class PlateController extends Controller
     public function store(Request $request)
     {
         //
-        $ProductList = explode(",",$request->ProductList);
+        $ProductList = explode(",", $request->ProductList);
         $products = Product::find($ProductList);
         $plate = new Plate;
         $plate->validate($request);
@@ -53,12 +54,13 @@ class PlateController extends Controller
         $plate->description = $request->description;
         $plate->save();
 
-        $plate->products()->attach($products );
+        $plate->products()->attach($products);
 
-        $view = view('plates.layouts.tableRow',compact('plate'))->render();
+        $view = view('plates.layouts.tableRow', compact('plate'))->render();
         return response()->json([
             'status' => 'success',
-            'html' => $view
+            'message' => __('messages.successfullyCreated',["Object" => $plate->name]),
+            'html' => $view,
         ]);
     }
 
@@ -70,10 +72,10 @@ class PlateController extends Controller
      */
     public function show(Plate $plate)
     {
-        $view = view('plates.show',compact('plate'))->render();
+        $view = view('plates.show', compact('plate'))->render();
         return response()->json([
             'status' => 'success',
-            'html' => $view
+            'html' => $view,
         ]);
 
     }
@@ -84,9 +86,22 @@ class PlateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $Request,$id)
     {
-        //
+
+        $SelectedProducts = Plate::findOrFail($id);
+        $ids = array();
+        foreach ($SelectedProducts->products as $product) {
+            $ids[] = $product->id;
+        }
+
+        $products = Product::whereNotIn('id', $ids)->get();
+
+        $view = view('plates.edit',compact('products','SelectedProducts'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+        ]);
     }
 
     /**
@@ -98,7 +113,23 @@ class PlateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
+        $ProductList = explode(",", $request->ProductList);
+        $products = Product::find($ProductList);
+        $plate = Plate::findOrFail($id);
+
+        $plate->validate($request);
+        $plate->name = $request->name;
+        $plate->description = $request->description;
+        $plate->save();
+        
+        $plate->products()->sync($products);
+        $view = view('plates.layouts.tableRow', compact('plate'))->render();
+        return response()->json([
+            'status' => 'success',
+            'message' => __("messages.successfullyUpdate",["Object" => $plate->name]),
+            'html' => $view,
+        ]);
     }
 
     /**
@@ -109,7 +140,6 @@ class PlateController extends Controller
      */
     public function destroy(Plate $plate)
     {
-        
-        
+
     }
 }
