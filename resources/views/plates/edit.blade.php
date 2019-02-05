@@ -1,6 +1,6 @@
 @extends('layouts.modal')
 
-@section('title','Editar ')
+@section('title','Editar - ' . $SelectedProducts->name)
 
 @section('content')
     <form id="modalForm">

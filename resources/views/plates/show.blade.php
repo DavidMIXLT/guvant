@@ -1,5 +1,5 @@
 @extends('layouts.modal') 
-@section('title',$plate->name) 
+@section('title',"Mostrar - " . $plate->name) 
 @section('content') 
         <ul>
         @foreach ($plate->products as $product)
