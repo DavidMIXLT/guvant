@@ -140,6 +140,11 @@ class PlateController extends Controller
      */
     public function destroy(Plate $plate)
     {
-
+        $name = $plate->name;
+        $plate->delete();
+        return response()->json([
+            'status' => 'success',
+            'message' => __("messages.successfullyDeleted",["Object" => $name]),
+        ]);
     }
 }
