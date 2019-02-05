@@ -4,11 +4,11 @@ m12 proyecto
 
 // TO DO
 
-Añadir autentificacion de usuarios
-    -Roles(Admin,Camarero)
-Crear Sistema de pedidos
-    -Crear Carta
-    -Crear pedidos
-Traduccions
-    -Español(50%)
+Añadir autentificacion de usuarios<br>
+    -Roles(Admin,Camarero)<br>
+Crear Sistema de pedidos<br>
+    -Crear Carta<br>
+    -Crear pedidos<br>
+Traduccions<br>
+    -Español(50%)<br>
     -Ingles(0%)
