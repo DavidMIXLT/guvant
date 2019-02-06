@@ -28,16 +28,17 @@ var submitCreate = function(){
             closeModal($('#modalBox'));
             $("tbody").append(response.html);
             ren_spinner(false);
+            loadEvents();
     });
 }
 
 
-function remove(){
+function remove(id,RowClicked){
     ajaxRequest("categories/" + id, 'DELETE', null, function (response) {
-     
         alertify.warning(response.message);
         ren_RemoveRow(RowClicked);
         ren_spinner(false);
+        loadEvents();
     });
 }
 
