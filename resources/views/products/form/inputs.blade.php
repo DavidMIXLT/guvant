@@ -41,7 +41,7 @@
                     Categorias seleccionados
                 </div>
                 <ul id="SelectedList" class="list-group list-group-flush">
-                    @isset($SelectedCategories) @foreach ($SelectedCategories->category as $category)
+                    @isset($SelectedCategories) @foreach ($SelectedCategories as $category)
                     <li value="{{$category->id}}" class="list-group-item Item">
                         {{$category->name}}
                     </li>

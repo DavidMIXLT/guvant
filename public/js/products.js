@@ -43,7 +43,8 @@ function loadButtonTableEvents() {
   });
   $("button[name=Edit]").on('click', function () {
     var url = "products/" + $(this).parent().parent().parent().find(".ProductID").text() + "/edit";
-    renderModal(url, edit);
+    renderModal(url, edit, loadEventsNavSelectionBox);
+
     RowClicked = $(this).parent().parent().parent();
   });
 
@@ -52,13 +53,10 @@ function loadButtonTableEvents() {
 /**
  * CRUD ejecutado para crear un nuevo producto
  */
+
+ 
 var submit = function () {
-  var CategoryList = new Array;
-  $('#SelectedList').children().each(function () {
-    CategoryList.push($(this).val());
-  });
-  var data = $("#modalForm").serialize() + "&CategoryList=" + CategoryList;
-  ajaxRequest("products", "POST", data, function (response) {
+  ajaxRequest("products", "POST", serializeForm(), function (response) {
     alertify.success(response.message);
     row = $("#productTable tr:last").clone(true, true).appendTo("#productTable");
 
@@ -73,6 +71,15 @@ var submit = function () {
 
 };
 //-----------------------------------------------------------------------------------//
+
+function serializeForm(){
+  var CategoryList = new Array;
+  $('#SelectedList').children().each(function () {
+    CategoryList.push($(this).val());
+  });
+  var data = $("#modalForm").serialize() + "&CategoryList=" + CategoryList;
+  return data;
+}
 /**
  * CRUD ejecutado para eliminar producto
  */
@@ -94,7 +101,7 @@ var remove = function (id) {
  */
 var edit = function () {
   var id = RowClicked.find(".ProductID").text();
-  ajaxRequest("products/" + id, 'PUT', $("#modalForm").serialize(), function (response) {
+  ajaxRequest("products/" + id, 'PUT', serializeForm(), function (response) {
     alertify.success(response.message);
     updateRow(RowClicked);
     closeModal($('#modalBox'));

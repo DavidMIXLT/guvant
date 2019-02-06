@@ -2,8 +2,8 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
-use AlaCartaYa\Product;
 use AlaCartaYa\Category;
+use AlaCartaYa\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         $products = Product::all();
         $categories = Category::all();
-        return view('products.incomingOrders', compact('products','categories'));
+        return view('products.incomingOrders', compact('products', 'categories'));
     }
     /**
      * Display a listing of the resource.
@@ -32,7 +32,7 @@ class ProductController extends Controller
         $page = $request->input('page') - 1;
         $products = Product::all();
         $categories = Category::all();
-        return view('products.index', compact('products','categories'));
+        return view('products.index', compact('products', 'categories'));
     }
 
     /**
@@ -42,22 +42,21 @@ class ProductController extends Controller
      */
     public function create(Request $request)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
 
             $product = new Product;
             $categories = Category::all();
-            $view = view('products.create', compact('product','categories'))->render();
+            $view = view('products.create', compact('product', 'categories'))->render();
             return response()->json([
                 'status' => 'success',
                 'html' => $view,
-    
-            ]);    
-    
-        }else{
+
+            ]);
+
+        } else {
             return redirect()->route('products.index');
         }
 
-        
     }
 
     /**
@@ -74,7 +73,7 @@ class ProductController extends Controller
         $product->validate($request);
         //Se crea el producto y se guarda en la base de datos
         $product->fill($request->all())->save();
-        $category = Category::find(explode(",",$request->CategoryList));
+        $category = Category::find(explode(",", $request->CategoryList));
         $product->categories()->attach($category);
 
         $products = Product::all();
@@ -109,11 +108,18 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::where('id', $id)->first();
-        $view = view('products.edit', compact('product'))->render();
+        $product = Product::findOrFail($id);
+        $ids = array();
+        foreach ($product->categories as $category) {
+            $ids[] = $category->id;
+        }
+        $SelectedCategories = $product->categories;
+        $categories = Category::whereNotIn('id', $ids)->get();
+        $view = view('products.edit', compact('product', 'categories','SelectedCategories'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view,
+            'message' => $ids,
 
         ]);
 
@@ -145,6 +151,9 @@ class ProductController extends Controller
             $product->name = ($request->Name);
             $product->description = ($request->Description);
             $product->stock = ($request->Stock);
+            $categories = Category::findOrFail(explode(",", $request->CategoryList));
+            $product->categories()->sync($categories);
+            
             $alertaCreado = $product->save();
             return response()->json([
                 "status" => "success",

@@ -115,7 +115,7 @@ class PlateController extends Controller
     {
         
         $ProductList = explode(",", $request->ProductList);
-        $products = Product::find($ProductList);
+        $products = Product::findOrFail($ProductList);
         $plate = Plate::findOrFail($id);
 
         $plate->validate($request);

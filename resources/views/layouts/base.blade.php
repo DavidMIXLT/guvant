@@ -30,8 +30,9 @@
                             </button>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="{{route('products.create')}}">Crear producto</a>
-                        <a class="dropdown-item" href="{{route('products.index')}}">Productos</a>
                         <a class="dropdown-item" href="{{route('entradaProducto')}}">Entrar pedidos</a>
+                        <a class="dropdown-item" href="{{route('categories.index')}}">Categorias</a>
+                        <a class="dropdown-item" href="{{route('products.index')}}">Productos</a>                       
                     </div>
                 </div>
             </li>

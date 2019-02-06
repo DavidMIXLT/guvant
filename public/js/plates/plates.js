@@ -34,7 +34,7 @@ function loadEvents() {
     $("button[name=Edit]").click(function () {
         var submitEdit = getSubmit("plates/" + $(this).val(), "PUT")
         rowClicked = $(this).parent().parent();
-        renderModal("plates/" + $(this).val() + "/edit", submitEdit, onLoadModal);
+        renderModal("plates/" + $(this).val() + "/edit", submitEdit, loadEventsNavSelectionBox);
     });
     $("button[name=Delete]").click(function () {
         remove($(this).val(), $(this).closest('tr'));
