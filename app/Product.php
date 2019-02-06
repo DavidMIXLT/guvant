@@ -22,6 +22,13 @@ class Product extends Model
             'Description' => 'required',
             'Stock' => 'required|integer',
         ]);
+
+        
+    }
+    
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
     }
 
 

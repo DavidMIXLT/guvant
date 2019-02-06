@@ -38,16 +38,23 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        if($request->ajax()){
 
-        $product = new Product;
-        $view = view('products.create', compact('product'))->render();
-        return response()->json([
-            'status' => 'success',
-            'html' => $view,
+            $product = new Product;
+            $view = view('products.create', compact('product'))->render();
+            return response()->json([
+                'status' => 'success',
+                'html' => $view,
+    
+            ]);    
+    
+        }else{
+            return redirect()->route('products.index');
+        }
 
-        ]);
+        
     }
 
     /**

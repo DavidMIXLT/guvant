@@ -11,4 +11,7 @@ Crear Sistema de pedidos<br>
     -Crear pedidos<br>
 Traduccions<br>
     -Español(50%)<br>
-    -Ingles(0%)
+    -Ingles(0%)<br>
+
+Arreglar validaciones<br>
+Detectar cuando se intenta hacer un create o edit manualmente desde la url
