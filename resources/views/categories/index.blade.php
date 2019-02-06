@@ -5,6 +5,7 @@
  
 @section('header')
 <script src="{{asset('js/modalsCRUD.js')}}"></script>
+<script src="{{asset('js/category.js')}}"></script>
 <script src="{{asset('js/sortTable.js')}}"></script>
 <script src="{{asset('js/alertify.min.js')}}"></script>
 <link rel="stylesheet" href="{{ asset('css/alertify.css')}}">
@@ -27,7 +28,7 @@
     </tr>
   </thead>
   <tbody>
-    @each('plates.layouts.tableRow', $categories, 'category')
+    @each('categories.layouts.tableRow', $categories, 'category')
   </tbody>
 </table>
   @include("layouts.actions")

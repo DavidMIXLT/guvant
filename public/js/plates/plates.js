@@ -6,28 +6,14 @@
 var rowClicked;
 //-----------------------------------------------------------------------------------//
 var submitCreate = getSubmit("plates", "POST");
-/**
- * Variable que guarda una funcion anonima encargada de la interactividad de lista de productos dentro de los formularios de 
- * crear y editar.
- */
-var onLoadModal = function () {
-    $('.productItem').click(function () {
-      
-        if ($(this).parent().attr('id') == "ProductList") {
-            $(this).appendTo("#SelectedProducts");
-        } else {
-            $(this).appendTo("#ProductList");
-        }
-    });
-}
-//-----------------------------------------------------------------------------------//
+
 /**
  *  Ejecutada cuando la web a terminado de cargar y luego se encarga de cargar los eventos
  */
 $(document).ready(function () {
 
     $("button[name=Create]").click(function () {
-        renderModal("plates/create", submitCreate, onLoadModal);
+        renderModal("plates/create", submitCreate, loadEventsNavSelectionBox);
     });
 
     $("#MassiveDeleteButton").click(function () {
@@ -78,7 +64,7 @@ function remove(id, RowClicked) {
 function getSubmit(url, method) {
     return function () {
         var ProductList = new Array;
-        $('#SelectedProducts').children().each(function () {
+        $('#SelectedList').children().each(function () {
             ProductList.push($(this).val());
         });
 

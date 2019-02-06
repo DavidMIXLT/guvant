@@ -26,7 +26,7 @@ function loadEvents() {
   });
 
   $("button[name=Create]").click(function () {
-    renderModal("products/create", submit);
+    renderModal("products/create", submit, loadEventsNavSelectionBox);
   });
   loadTableSortEvents();
   loadButtonTableEvents();
@@ -53,10 +53,15 @@ function loadButtonTableEvents() {
  * CRUD ejecutado para crear un nuevo producto
  */
 var submit = function () {
-
-  ajaxRequest("products", "POST", $("#modalForm").serialize(), function (response) {
+  var CategoryList = new Array;
+  $('#SelectedList').children().each(function () {
+    CategoryList.push($(this).val());
+  });
+  var data = $("#modalForm").serialize() + "&CategoryList=" + CategoryList;
+  ajaxRequest("products", "POST", data, function (response) {
     alertify.success(response.message);
     row = $("#productTable tr:last").clone(true, true).appendTo("#productTable");
+
     updateRow(row, response.date, response.id);
 
     /**

@@ -18,10 +18,10 @@
             <div class="card-header">
                 Lista productos
             </div>
-            <ul id="ProductList" class="list-group list-group-flush">
+            <ul id="AvaibleList" class="list-group list-group-flush">
 
                 @foreach ($products as $product)
-                <li value="{{$product->id}}" class="list-group-item productItem">
+                <li value="{{$product->id}}" class="list-group-item Item ">
                     {{$product->name}}
                 </li>
                 @endforeach
@@ -34,9 +34,9 @@
             <div class="card-header">
                 Productos seleccionados
             </div>
-            <ul id="SelectedProducts" class="list-group list-group-flush">
+            <ul id="SelectedList" class="list-group list-group-flush">
                 @isset($SelectedProducts) @foreach ($SelectedProducts->products as $product)
-                <li value="{{$product->id}}" class="list-group-item productItem">
+                <li value="{{$product->id}}" class="list-group-item Item">
                     {{$product->name}}
                 </li>
                 @endforeach @endisset

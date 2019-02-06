@@ -11,6 +11,8 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     
     public function index()
     {
         $categories = Category::all();
@@ -26,7 +28,12 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        $view = view('categories.create')->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+
+        ]);
     }
 
     /**
@@ -38,6 +45,17 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         //
+        $category = new Category();
+        $category->validate($request);
+
+        $category->fill($request->all())->save();
+        $view = view("categories.layouts.tablerow",compact("category"))->render();
+        return response()->json([
+            "status" => "success",
+            'html' => $view,
+            'message' => __('messages.successfullyCreated',["Object" => $category->name]),
+        ]);
+
     }
 
     /**
@@ -80,8 +98,8 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
     }
 }

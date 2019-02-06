@@ -3,6 +3,7 @@
 namespace AlaCartaYa\Http\Controllers;
 
 use AlaCartaYa\Product;
+use AlaCartaYa\Category;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -18,8 +19,8 @@ class ProductController extends Controller
     public function printIncomingProductOrders()
     {
         $products = Product::all();
-
-        return view('products.incomingOrders', compact('products'));
+        $categories = Category::all();
+        return view('products.incomingOrders', compact('products','categories'));
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +31,8 @@ class ProductController extends Controller
     {
         $page = $request->input('page') - 1;
         $products = Product::all();
-        return view('products.index', compact('products'));
+        $categories = Category::all();
+        return view('products.index', compact('products','categories'));
     }
 
     /**
@@ -43,7 +45,8 @@ class ProductController extends Controller
         if($request->ajax()){
 
             $product = new Product;
-            $view = view('products.create', compact('product'))->render();
+            $categories = Category::all();
+            $view = view('products.create', compact('product','categories'))->render();
             return response()->json([
                 'status' => 'success',
                 'html' => $view,
@@ -71,6 +74,8 @@ class ProductController extends Controller
         $product->validate($request);
         //Se crea el producto y se guarda en la base de datos
         $product->fill($request->all())->save();
+        $category = Category::find(explode(",",$request->CategoryList));
+        $product->categories()->attach($category);
 
         $products = Product::all();
         //  return view('products.products', compact('products'));

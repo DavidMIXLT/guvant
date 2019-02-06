@@ -16,11 +16,23 @@
 
 
 <br/>
-<button name="Create" class="btn btn-success ">@lang('products/index.createProduct')</button>
+<div class="d-flex">
+    <button name="Create" class="btn btn-success m-1">@lang('products/index.createProduct')</button>
+    <div class="dropdown m-1">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+              Categorias
+            </button>
+        <div class="dropdown-menu" aria-labelledby="categories">
+            @foreach ($categories as $category)
+            <button class="dropdown-item" type="button">{{$category->name}}</button>
+            @endforeach
+        </div>
+    </div>
+</div>
 
-<br/>
 <!-- Inicio mensajes de Alertas -->
-<br/>
+
 
 <div class="table-responsive">
     <table class="table" id="productTable">
@@ -43,11 +55,9 @@
 
 
             @foreach ($products as $product)
-                @include('products.layouts.tablerow',["product" => $product])
-            @endforeach
+    @include('products.layouts.tablerow',["product" => $product]) @endforeach
         </tbody>
     </table>
 </div>
-
-@include("layouts.actions")
+    @include("layouts.actions")
 @endsection

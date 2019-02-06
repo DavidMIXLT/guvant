@@ -10,6 +10,22 @@ $(document).ready(function () {
 });
 //-----------------------------------------------------------------------------------//
 /**
+ * Variable que guarda una funcion anonima encargada de la interactividad de lista una lista con dos columnas
+ */
+var loadEventsNavSelectionBox = function () {
+    $('.Item').click(function () {
+      console.log($(this).parent().attr('id') );
+        if ($(this).parent().attr('id') == "AvaibleList") {
+            $(this).appendTo("#SelectedList");
+        } else {
+            $(this).appendTo("#AvaibleList");
+            
+        }
+    });
+}
+
+//-----------------------------------------------------------------------------------//
+/**
   * Renderiza el spinner de loading en la tabla de productos
   * 
   * @param Boolean $ren 
