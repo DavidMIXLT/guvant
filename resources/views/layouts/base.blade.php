@@ -32,7 +32,7 @@
                         <a class="dropdown-item" href="{{route('products.create')}}">Crear producto</a>
                         <a class="dropdown-item" href="{{route('entradaProducto')}}">Entrar pedidos</a>
                         <a class="dropdown-item" href="{{route('categories.index')}}">Categorias</a>
-                        <a class="dropdown-item" href="{{route('products.index')}}">Productos</a>                       
+                        <a class="dropdown-item" href="{{route('products.index')}}">Productos</a>
                     </div>
                 </div>
             </li>
@@ -42,6 +42,38 @@
             <li class="navbar-nav">
                 <a class="nav-link" href="{{route('plates.index')}}">Platos</a>
             </li>
+            <!-- Authentication Links -->
+
+        </ul>
+
+        <ul class="navbar-nav ml-auto">
+            @guest
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+            </li>
+            @if (Route::has('register'))
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+            </li>
+            @endif @else
+            <li class="nav-item dropdown">
+                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }} <span class="caret"></span>
+                    </a>
+
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                </div>
+            </li>
+            @endguest
         </ul>
 
     </nav>
@@ -64,7 +96,7 @@
     </div>
 
     <!-- Fin Contenido -->
-    
+
 
 </body>
 

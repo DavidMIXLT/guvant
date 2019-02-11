@@ -15,6 +15,10 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
  */
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function printIncomingProductOrders()
     {
@@ -115,7 +119,7 @@ class ProductController extends Controller
         }
         $SelectedCategories = $product->categories;
         $categories = Category::whereNotIn('id', $ids)->get();
-        $view = view('products.edit', compact('product', 'categories','SelectedCategories'))->render();
+        $view = view('products.edit', compact('product', 'categories', 'SelectedCategories'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view,
@@ -153,7 +157,7 @@ class ProductController extends Controller
             $product->stock = ($request->Stock);
             $categories = Category::findOrFail(explode(",", $request->CategoryList));
             $product->categories()->sync($categories);
-            
+
             $alertaCreado = $product->save();
             return response()->json([
                 "status" => "success",
