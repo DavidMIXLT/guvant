@@ -16,12 +16,13 @@ $(document).ready(function () {
 });
 
 function loadEvents() {
-    $("button[name=Delete]").click(function () {
+    $(document).on('click','button[name=Delete]',function(){
         remove($(this).val(), $(this).closest('tr'));
     });
-    $("button[name=Edit]").click(function () {
+    $(document).on('click','button[name=Edit]',function(){
         renderModal("categories/edit", getEdit($(this).val()), null);
     });
+
 }
 
 function getEdit(id){
@@ -31,7 +32,7 @@ function getEdit(id){
             alertify.success(response.message);
             closeModal($('#modalBox'));
             ren_spinner(false);
-            loadEvents();
+           
         });
     }
 }
@@ -42,7 +43,7 @@ var submit = function () {
         closeModal($('#modalBox'));
         $("tbody").append(response.html);
         ren_spinner(false);
-        loadEvents();
+      
     });
 }
 
