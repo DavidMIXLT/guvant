@@ -6,9 +6,10 @@ Route::get('/', function () {
 
 Route::get('/panel', function () {
     return view('panel');
-})->name('panel')->middleware('auth');;
+})->name('panel')->middleware('auth');
 
 Route::get('panel/products/entrada', 'ProductController@printIncomingProductOrders')->name('entradaProducto');
+Route::get('panel/products/category/{category}', 'ProductController@filterCategory');
 
 Route::resource('/panel/products', 'ProductController');
 

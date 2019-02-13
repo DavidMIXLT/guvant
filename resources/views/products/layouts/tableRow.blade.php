@@ -1,4 +1,4 @@
-<tr>
+<tr data-categories="@foreach($categories as $category){{$category->name}},@endforeach">
     <td>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="checkBoxActionDelete" value="{{$product->id}}">

@@ -58,9 +58,9 @@ function loadButtonTableEvents() {
 var submit = function () {
   ajaxRequest("products", "POST", serializeForm(), function (response) {
     alertify.success(response.message);
-    row = $("#productTable tr:last").clone(true, true).appendTo("#productTable");
 
-    updateRow(row, response.date, response.id);
+
+    $("tbody").append(response.html)
 
     /**
      * Cierra el modal y desactiva el spinner
@@ -103,7 +103,7 @@ var edit = function () {
   var id = RowClicked.find(".ProductID").text();
   ajaxRequest("products/" + id, 'PUT', serializeForm(), function (response) {
     alertify.success(response.message);
-    updateRow(RowClicked);
+    updateRow(RowClicked,response.html);
     closeModal($('#modalBox'));
     ren_spinner(false);
   });
@@ -136,23 +136,17 @@ function loadTableSortEvents() {
 
 
 //-----------------------------------------------------------------------------------//
-
 /**
   * Actualiza las columnas con los nuevos datos
-  *  @param Row columna
+  *  @param OldRow Columna actual renderiza en la tabla
+  *  @param newRow Nueva columna con los datos actualizados
   */
-function updateRow(row, date = "-1", id = "-1") {
-
-  row.find(".ProductName").text($('input[name="Name"]').val());
-  row.find(".ProductStock").text($('input[name="Stock"]').val());
-  row.find(".ProductDescription").text($('textarea[name="Description"]').val());
-  if (date != "-1") {
-    row.find(".ProductDate").text(date);
-  }
-  if (id != "-1") {
-    row.find(".ProductID").text(id);
-  }
-
+ function updateRow(OldRow, newRow) {
+  $(newRow).insertBefore(OldRow);
+  OldRow.remove();
+  loadButtonTableEvents();
 }
+//-----------------------------------------------------------------------------------//
+
 
 

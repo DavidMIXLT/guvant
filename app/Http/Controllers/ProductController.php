@@ -80,13 +80,12 @@ class ProductController extends Controller
         $category = Category::find(explode(",", $request->CategoryList));
         $product->categories()->attach($category);
 
-        $products = Product::all();
-        //  return view('products.products', compact('products'));
+        $categories = $product->categories;
+        $view =  view('products.layouts.tableRow', compact('product','categories'))->render();
         return response()->json([
             'status' => 'success',
             'message' => __("messages.successfullyCreated", ['Object' => $product->Name]),
-            'date' => $product->created_at->format('Y-m-d H:i:s'),
-            'id' => $product->id,
+            'html' => $view,
 
         ]);
 
@@ -155,13 +154,15 @@ class ProductController extends Controller
             $product->name = ($request->Name);
             $product->description = ($request->Description);
             $product->stock = ($request->Stock);
-            $categories = Category::findOrFail(explode(",", $request->CategoryList));
+            $categories = Category::find(explode(",", $request->CategoryList));
             $product->categories()->sync($categories);
-
+            $categories = $product->categories;
+            $view =  view('products.layouts.tableRow', compact('product','categories'))->render();
             $alertaCreado = $product->save();
             return response()->json([
                 "status" => "success",
                 "message" => __('messages.successfullyUpdate', ["Object" => $product->name]),
+                'html' => $view,
 
             ]);
 
@@ -205,6 +206,28 @@ class ProductController extends Controller
             'message' => __('messages.successfullyDeleted', ["Object" => "Products"]),
         ]);
 
+    }
+
+    public function filterCategory($category){
+
+        $categoryCheck = Category::where('name','=', $category)->get(['id'])->pluck('id');
+        if($categoryCheck != null){
+            
+            $products = Product::whereHas('categories',function($query) use($categoryCheck){
+
+                $query->whereIn('category_id',$categoryCheck);
+            })->get();
+            $view = [];
+            foreach ($products as $product) {
+               $view[] = view('products.layouts.tableRow', compact('product'))->render();
+            }
+            return $view;
+
+        }else{
+            return response()->json([
+                'status' => 'fail',
+            ]);
+        }
     }
 
 }

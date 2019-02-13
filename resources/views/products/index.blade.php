@@ -7,6 +7,7 @@
 <script src="{{asset('js/modalsCRUD.js')}}"></script>
 <script src="{{asset('js/products.js')}}"></script>
 <script src="{{asset('js/sortTable.js')}}"></script>
+<script src="{{asset('js/filter.js')}}"></script>
 <script src="{{asset('js/alertify.min.js')}}"></script>
 <link rel="stylesheet" href="{{ asset('css/alertify.css')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,14 +19,16 @@
 <br/>
 <div class="d-flex">
     <button name="Create" class="btn btn-success m-1">@lang('products/index.createProduct')</button>
-    <div class="dropdown m-1">
+    <div id="dropDown_CAT" class="dropdown m-1">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
               Categorias
             </button>
-        <div class="dropdown-menu" aria-labelledby="categories">
+        <div id="dropDown_Items" class="dropdown-menu" aria-labelledby="categories">
             @foreach ($categories as $category)
-            <button class="dropdown-item" type="button">{{$category->name}}</button>
+            <div class="dropCat checkbox m-1">
+                <label><input class="mr-1" type="checkbox" value=""><span>{{$category->name}}</span></label>
+            </div>
             @endforeach
         </div>
     </div>
@@ -55,7 +58,8 @@
 
 
             @foreach ($products as $product)
-    @include('products.layouts.tablerow',["product" => $product]) @endforeach
+    @include('products.layouts.tablerow',["product" => $product,"categories" => $product->categories])
+            @endforeach
         </tbody>
     </table>
 </div>
