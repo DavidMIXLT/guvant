@@ -52,7 +52,7 @@ function remove(id, RowClicked) {
         alertify.warning(response.message);
         ren_RemoveRow(RowClicked);
         ren_spinner(false);
-        loadEvents();
+   
     });
 }
 

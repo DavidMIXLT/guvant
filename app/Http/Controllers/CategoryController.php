@@ -101,10 +101,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        $decode = json_decode($request->getContent(),true);
-        Product::destroy($decode['listofid']);
+        Category::destroy($id);
      
         return response()->json([
             'status' => 'success',
