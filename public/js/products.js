@@ -145,7 +145,7 @@ function loadTableSortEvents() {
  function updateRow(OldRow, newRow) {
   $(newRow).insertBefore(OldRow);
   OldRow.remove();
-  loadButtonTableEvents();
+
 }
 //-----------------------------------------------------------------------------------//
 
