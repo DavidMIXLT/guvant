@@ -26,7 +26,7 @@ function loadEvents() {
   });
 
   $("button[name=Create]").click(function () {
-    renderModal("products/create", submit, loadEventsNavSelectionBox);
+    renderModal("products/create", submit);
   });
   loadTableSortEvents();
   loadButtonTableEvents();
@@ -43,7 +43,7 @@ function loadButtonTableEvents() {
   });
   $("button[name=Edit]").on('click', function () {
     var url = "products/" + $(this).parent().parent().parent().find(".ProductID").text() + "/edit";
-    renderModal(url, edit, loadEventsNavSelectionBox);
+    renderModal(url, edit);
 
     RowClicked = $(this).parent().parent().parent();
   });

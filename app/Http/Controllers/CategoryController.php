@@ -103,10 +103,13 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        $category->delete();
+        $decode = json_decode($request->getContent(),true);
+        Product::destroy($decode['listofid']);
+     
         return response()->json([
             'status' => 'success',
-            'message' => __('messages.successfullyDeleted', ["Object" => "Categoria"]),
+            'message' => __('messages.deleted'),
+
         ]);
     }
 }

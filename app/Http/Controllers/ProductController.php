@@ -161,18 +161,21 @@ class ProductController extends Controller
 
             //Se crea el producto y se guarda en la base de datos
 
-            $product->name = ($request->Name);
-            $product->description = ($request->Description);
-            $product->stock = ($request->Stock);
+            $product->name = ($request->name);
+            $product->description = ($request->description);
+            $product->stock = ($request->stock);
             $categories = Category::find(explode(",", $request->CategoryList));
+
+            $product->save();
             $product->categories()->sync($categories);
             $categories = $product->categories;
+      
             $view =  view('products.layouts.tableRow', compact('product','categories'))->render();
-            $alertaCreado = $product->save();
+          
             return response()->json([
                 "status" => "success",
                 "message" => __('messages.successfullyUpdate', ["Object" => $product->name]),
-                'html' => $view,
+               'html' => $view,
 
             ]);
 
@@ -197,7 +200,8 @@ class ProductController extends Controller
 
         }
         $products = Product::all();
-        return view('products.products', compact('products'));
+        $categories = Category::all();
+        return view('products.index', compact('products','categories'));
 
     }
 

@@ -13,7 +13,7 @@ var submitCreate = getSubmit("plates", "POST");
 $(document).ready(function () {
 
     $("button[name=Create]").click(function () {
-        renderModal("plates/create", submitCreate, loadEventsNavSelectionBox);
+        renderModal("plates/create", submitCreate);
     });
 
     $("#MassiveDeleteButton").click(function () {
@@ -34,7 +34,7 @@ function loadEvents() {
     $("button[name=Edit]").click(function () {
         var submitEdit = getSubmit("plates/" + $(this).val(), "PUT")
         rowClicked = $(this).parent().parent();
-        renderModal("plates/" + $(this).val() + "/edit", submitEdit, loadEventsNavSelectionBox);
+        renderModal("plates/" + $(this).val() + "/edit", submitEdit);
     });
     $("button[name=Delete]").click(function () {
         remove($(this).val(), $(this).closest('tr'));
