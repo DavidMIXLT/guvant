@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     //
-    protected $fillable = ['Name','Description','Stock'];
+    protected $fillable = ['name','description','stock'];
 
     /**
      * Valida el producto
@@ -18,9 +18,9 @@ class Product extends Model
     public function validate($request)
     {
         $request->validate([
-            'Name' => 'required',
-            'Description' => 'required',
-            'Stock' => 'required|integer',
+            'name' => 'required',
+            'description' => 'required',
+            'stock' => 'required|integer',
         ]);
 
         

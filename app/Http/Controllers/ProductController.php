@@ -15,11 +15,7 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
  */
 class ProductController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+  
     public function printIncomingProductOrders()
     {
         $products = Product::all();
@@ -33,7 +29,7 @@ class ProductController extends Controller
      
         return response()->json([
             'status' => 'success',
-            'message' => $request->input('ListOfID'),
+            'message' => $request->all(),
 
         ]);
     }
@@ -84,18 +80,21 @@ class ProductController extends Controller
     {
         //Metodo llamado cuando se envia por POST se crea un nuevo producto y luego es guardado en la base de datos
         $product = new Product;
+    
         //Se valida el producto
         $product->validate($request);
         //Se crea el producto y se guarda en la base de datos
         $product->fill($request->all())->save();
+       
         $category = Category::find(explode(",", $request->CategoryList));
         $product->categories()->attach($category);
 
         $categories = $product->categories;
+        $a = $product->Name;
         $view =  view('products.layouts.tableRow', compact('product','categories'))->render();
         return response()->json([
             'status' => 'success',
-            'message' => __("messages.successfullyCreated", ['Object' => $product->Name]),
+            'message' => __("messages.successfullyCreated", ['Object' => $product->name]),
             'html' => $view,
 
         ]);
