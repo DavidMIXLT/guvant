@@ -73,7 +73,7 @@ function massiveElimination(url) {
         ListOfID.push($(this).val())
     });
 
-    ajaxRequest(url, 'delete', ListOfID, function (response) {
+    ajaxRequest(url, 'post', ListOfID, function (response) {
 
         $(rows).fadeOut("fast", function () {
             ren_RemoveRow(rows);

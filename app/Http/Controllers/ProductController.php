@@ -26,6 +26,17 @@ class ProductController extends Controller
         $categories = Category::all();
         return view('products.incomingOrders', compact('products', 'categories'));
     }
+
+    public function massiveElimination(Request $request){
+     
+        Product::destroy($request->input('ListOfID'));
+     
+        return response()->json([
+            'status' => 'success',
+            'message' => $request->input('ListOfID'),
+
+        ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -198,12 +209,12 @@ class ProductController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function destroy(Request $request)
-    {
-        Product::destroy($request->ListOfID);
+    public function destroy($id)
+    {   
+        Product::destroy($id);
         return response()->json([
             'status' => 'success',
-            'message' => __('messages.successfullyDeleted', ["Object" => "Products"]),
+           'message' => __('messages.successfullyDeleted', ["Object" => "Products"]),
         ]);
 
     }

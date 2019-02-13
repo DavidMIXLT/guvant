@@ -18,7 +18,7 @@ $(document).ready(function () {
  */
 function loadEvents() {
   $("#MassiveDeleteButton").click(function () {
-    massiveElimination("products/-1");
+    massiveElimination("products/masDel");
   });
 
   $("#SelectAll").click(function () {
@@ -87,7 +87,8 @@ var remove = function (id) {
 
   var ListOfID = new Array();
   ListOfID.push(id);
-  ajaxRequest("products/" + id, 'DELETE', ListOfID, function (response) {
+  console.log(ListOfID);
+  ajaxRequest("products/" + id, 'DELETE', null, function (response) {
     console.log(response);
     alertify.warning(response.message);
     ren_RemoveRow(RowClicked);
