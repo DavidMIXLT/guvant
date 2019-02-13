@@ -24,12 +24,12 @@ class ProductController extends Controller
     }
 
     public function massiveElimination(Request $request){
-     
-        Product::destroy($request->input('ListOfID'));
+        $decode = json_decode($request->getContent(),true);
+        Product::destroy($decode['listofid']);
      
         return response()->json([
             'status' => 'success',
-            'message' => $request->all(),
+            'message' => __('messages.deleted'),
 
         ]);
     }

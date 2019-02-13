@@ -72,8 +72,10 @@ function massiveElimination(url) {
     $("input[type=checkbox][name=checkBoxActionDelete]:checked").each(function () {
         ListOfID.push($(this).val())
     });
-
-    ajaxRequest(url, 'post', ListOfID, function (response) {
+    var data = '{"listofid" : ' + JSON.stringify(ListOfID) + '}';
+    console.log(data);
+    
+    ajaxRequest(url, 'post', data, function (response) {
 
         $(rows).fadeOut("fast", function () {
             ren_RemoveRow(rows);
