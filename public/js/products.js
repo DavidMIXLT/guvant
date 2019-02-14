@@ -36,12 +36,12 @@ function loadEvents() {
  * Carga los eventos de los Botones de editar y eliminar de la tabla
  */
 function loadButtonTableEvents() {
-  $(document).on('click','button[name=Delete]', function () {
+  $(document).on('click', 'button[name=Delete]', function () {
     remove($(this).parent().parent().parent().find(".ProductID").text());
 
     RowClicked = $(this).parent().parent().parent();
   });
-  $(document).on('click','button[name=Edit]', function () {
+  $(document).on('click', 'button[name=Edit]', function () {
     var url = "products/" + $(this).parent().parent().parent().find(".ProductID").text() + "/edit";
     renderModal(url, edit);
 
@@ -54,25 +54,66 @@ function loadButtonTableEvents() {
  * CRUD ejecutado para crear un nuevo producto
  */
 
- 
+
 var submit = function () {
-  ajaxRequest("products", "POST", serializeForm(), function (response) {
-    alertify.success(response.message);
+
+  if (validateForm($("#modalForm"))) {
+    ajaxRequest("products", "POST", serializeForm(), function (response) {
+      alertify.success(response.message);
 
 
-    $("tbody").append(response.html)
+      $("tbody").append(response.html)
 
-    /**
-     * Cierra el modal y desactiva el spinner
-     */
-    closeModal($('#modalBox'));
-    ren_spinner(false);
-  });
-
+      /**
+       * Cierra el modal y desactiva el spinner
+       */
+      closeModal($('#modalBox'));
+      ren_spinner(false);
+    });
+  }
 };
 //-----------------------------------------------------------------------------------//
 
-function serializeForm(){
+function validateForm(form) {
+  var valid = true;
+  var name = $(form).find('input[name=name]').val().trim();
+  var description = $(form).find('textarea[name=description]').val();
+  var stock = parseInt($(form).find('input[type=number]').val());
+
+  if (!name.replace(/\s/g, '').length) {
+    displayFormErrors("#nameHelp","input[name=name]",false,form);
+    valid = false;
+  }else displayFormErrors("#nameHelp","input[name=name]",true,form);
+  
+  if (!description.replace(/\s/g, '').length) {
+    displayFormErrors("#descriptionHelp",'textarea[name=description]',false,form);
+    valid = false;
+  }else displayFormErrors("#descriptionHelp",'textarea[name=description]',true,form);
+  
+  if (isNaN(stock)) {
+    displayFormErrors('#stockHelp',"input[type=number]",false,form);
+    valid = false;
+  }else  displayFormErrors('#stockHelp',"input[type=number]",true,form); ;
+
+  return valid;
+}
+
+function displayFormErrors(selectorInv,selectorInput,valid,form){
+  if(!valid){
+    $(form).find(selectorInv).removeClass('invisible');
+    $(form).find(selectorInput).addClass('is-invalid');
+    $(form).find(selectorInput).parent().parent().addClass('is-invalid');
+  }else{
+    $(form).find(selectorInv).addClass('invisible');
+    $(form).find(selectorInput).removeClass('is-invalid');
+    $(form).find(selectorInput).parent().parent().removeClass('is-invalid');
+    $(form).find(selectorInput).addClass('is-valid');
+    $(form).find(selectorInput).parent().parent().addClass('is-valid');
+  }
+
+}
+
+function serializeForm() {
   var CategoryList = new Array;
   $('#SelectedList').children().each(function () {
     CategoryList.push($(this).val());
@@ -104,7 +145,7 @@ var edit = function () {
   var id = RowClicked.find(".ProductID").text();
   ajaxRequest("products/" + id, 'PUT', serializeForm(), function (response) {
     alertify.success(response.message);
-    updateRow(RowClicked,response.html);
+    updateRow(RowClicked, response.html);
     closeModal($('#modalBox'));
     ren_spinner(false);
   });
@@ -142,7 +183,7 @@ function loadTableSortEvents() {
   *  @param OldRow Columna actual renderiza en la tabla
   *  @param newRow Nueva columna con los datos actualizados
   */
- function updateRow(OldRow, newRow) {
+function updateRow(OldRow, newRow) {
   $(newRow).insertBefore(OldRow);
   OldRow.remove();
 

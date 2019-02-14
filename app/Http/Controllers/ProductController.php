@@ -222,26 +222,5 @@ class ProductController extends Controller
 
     }
 
-    public function filterCategory($category){
-
-        $categoryCheck = Category::where('name','=', $category)->get(['id'])->pluck('id');
-        if($categoryCheck != null){
-            
-            $products = Product::whereHas('categories',function($query) use($categoryCheck){
-
-                $query->whereIn('category_id',$categoryCheck);
-            })->get();
-            $view = [];
-            foreach ($products as $product) {
-               $view[] = view('products.layouts.tableRow', compact('product'))->render();
-            }
-            return $view;
-
-        }else{
-            return response()->json([
-                'status' => 'fail',
-            ]);
-        }
-    }
 
 }
