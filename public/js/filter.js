@@ -1,18 +1,17 @@
 var selectedCategories = [];
 
 $(document).ready(function () {
-    clearCategories();
+    
     $('.dropdown-menu').on('click', function (e) {
         e.stopPropagation();
     });
+
     $("input[name=categoryCheckBox").change(function (e) {
 
-        var categories = $(this).parent().find("span").text().split(",");
-        for (let i = 0; i < categories.length; i++) {
-            updateCategoryList(categories[i])
-            
-        }
-  
+        
+        var category = $(this).parent().find("label").text();
+        updateCategoryList(category);
+      
         filter_by_Category(selectedCategories);
 
 
@@ -27,21 +26,24 @@ function clearCategories() {
 }
 function updateCategoryList(newCategory) {
     clearCategories();
+
     var exists = false;
     for (let i = 0; i < selectedCategories.length; i++) {
-        console.log(selectedCategories[i])
-        if (selectedCategories[i] == newCategory) {
+        if (selectedCategories[i] === newCategory) {
             selectedCategories.splice(i, 1);
+  
             return;
         }
     }
     if (!exists) {
         selectedCategories.push(newCategory);
     };
+
 }
 
 
 function filter_by_Category(categories) {
+    console.log(categories.length)
     if (categories.length > 0) {
         $("#productTable").children('tbody').children('tr').each(function () {
             var l_categories = $(this).attr('data-categories').split(',');

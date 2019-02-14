@@ -26,15 +26,14 @@
             </button>
         <div id="dropDown_Items" class="dropdown-menu" aria-labelledby="categories">
             @foreach ($categories as $category)
-            <div class="dropCat checkbox m-1">
-                <label><input class="mr-1" type="checkbox" value=""><span>{{$category->name}}</span></label>
+            <div class="dropCat ml-2 custom-control custom-checkbox">
+                <input name="categoryCheckBox" type="checkbox" class="custom-control-input" id="{{$category->id}}">
+                <label class="custom-control-label" for="{{$category->id}}">{{$category->name}}</label>
             </div>
             @endforeach
         </div>
     </div>
 </div>
-
-<!-- Inicio mensajes de Alertas -->
 
 
 <div class="table-responsive">

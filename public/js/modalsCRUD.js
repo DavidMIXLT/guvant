@@ -1,8 +1,8 @@
-$(document).ready(function() {
-    $("#SelectAll").click(function() {
+$(document).ready(function () {
+    $("#SelectAll").click(function () {
         selectAll();
     });
-    $(document).on("hidden.bs.modal", function() {
+    $(document).on("hidden.bs.modal", function () {
         $("#modalBox").remove();
     });
 
@@ -10,7 +10,7 @@ $(document).ready(function() {
     /**
      * Variable que guarda una funcion anonima encargada de la interactividad de lista una lista con dos columnas
      */
-    $(document).on("click", ".Item", function() {
+    $(document).on("click", ".Item", function () {
         console.log(
             $(this)
                 .parent()
@@ -54,7 +54,7 @@ function ren_spinner($ren) {
  */
 
 function renderModal(url, submit_Func, success_func) {
-    ajaxRequest(url, "GET", null, function(response) {
+    ajaxRequest(url, "GET", null, function (response) {
         $("body").append(response.html);
         $("#modalBox").modal("show");
         ren_spinner(false);
@@ -79,15 +79,15 @@ function massiveElimination(url) {
     ).parents("tr");
 
     $("input[type=checkbox][name=checkBoxActionDelete]:checked").each(
-        function() {
+        function () {
             ListOfID.push($(this).val());
         }
     );
     var data = '{"listofid" : ' + JSON.stringify(ListOfID) + "}";
     console.log(data);
 
-    ajaxRequest(url, "post", data, function(response) {
-        $(rows).fadeOut("fast", function() {
+    ajaxRequest(url, "post", data, function (response) {
+        $(rows).fadeOut("fast", function () {
             ren_RemoveRow(rows);
         });
         alertify.warning(response.message);
@@ -118,7 +118,7 @@ function ajaxRequest(url, type, data, success) {
         dataType: "JSON",
         data: data,
         success: success,
-        error: function(xhr) {
+        error: function (xhr) {
             alertify.alert("Error", xhr.responseText);
             closeModal($("#modalBox"));
             console.log("---AJAX Error---");
@@ -136,11 +136,11 @@ function ajaxRequest(url, type, data, success) {
  */
 
 function addEventListernerModal(submit_Func) {
-    $("button[name=closeModal]").click(function() {
+    $("button[name=closeModal]").click(function () {
         closeModal($("#modalBox"));
     });
 
-    $("button[name=submitEdit]").click(function() {
+    $("button[name=submitEdit]").click(function () {
         submit_Func();
     });
 }
@@ -161,7 +161,7 @@ function closeModal(Modal) {
  */
 
 function ren_RemoveRow(ren_rows) {
-    $(ren_rows).each(function() {
+    $(ren_rows).each(function () {
         $(this).remove();
     });
 }
@@ -170,7 +170,7 @@ function ren_RemoveRow(ren_rows) {
  * Selecciona todas las checkbox
  */
 function selectAll() {
-    $("input[type=checkbox]").each(function() {
+    $("input[type=checkbox]").each(function () {
         $(this).prop("checked", true);
     });
 }

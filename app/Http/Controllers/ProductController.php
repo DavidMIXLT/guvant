@@ -167,7 +167,7 @@ class ProductController extends Controller
             $categories = Category::find(explode(",", $request->CategoryList));
 
             $product->save();
-            $product->categories()->sync($categories);
+            $product->categories()->syncWithoutDetaching($categories);
             $categories = $product->categories;
       
             $view =  view('products.layouts.tableRow', compact('product','categories'))->render();

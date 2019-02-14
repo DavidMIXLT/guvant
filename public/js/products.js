@@ -36,12 +36,12 @@ function loadEvents() {
  * Carga los eventos de los Botones de editar y eliminar de la tabla
  */
 function loadButtonTableEvents() {
-  $("button[name=Delete]").on('click', function () {
+  $(document).on('click','button[name=Delete]', function () {
     remove($(this).parent().parent().parent().find(".ProductID").text());
 
     RowClicked = $(this).parent().parent().parent();
   });
-  $("button[name=Edit]").on('click', function () {
+  $(document).on('click','button[name=Edit]', function () {
     var url = "products/" + $(this).parent().parent().parent().find(".ProductID").text() + "/edit";
     renderModal(url, edit);
 

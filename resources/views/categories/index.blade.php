@@ -1,6 +1,6 @@
 @extends('layouts.base') 
 @section('title','Productos') 
-@section('subtitle') Gestion de Platos
+@section('subtitle') Gestion de Categorias
 @endsection
  
 @section('header')
@@ -13,7 +13,7 @@
 @endsection
  
 @section('content')
-<button name="Create" type="button" class="btn btn-success m-1">Crear Plato</button>
+<button name="Create" type="button" class="btn btn-success m-1">Crear categoria</button>
 <table class="table">
   <thead class="thead-dark">
     <tr>
