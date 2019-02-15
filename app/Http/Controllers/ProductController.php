@@ -214,10 +214,11 @@ class ProductController extends Controller
 
     public function destroy($id)
     {   
+        $name = Product::find($id)->name;
         Product::destroy($id);
         return response()->json([
             'status' => 'success',
-           'message' => __('messages.successfullyDeleted', ["Object" => "Products"]),
+           'message' => __('messages.successfullyDeleted', ["Object" => $name]),
         ]);
 
     }

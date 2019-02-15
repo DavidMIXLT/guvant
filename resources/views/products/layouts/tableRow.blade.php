@@ -1,6 +1,6 @@
 <tr data-categories="@foreach($categories as $category){{$category->name}},@endforeach">
     <td>
-        <div class="form-check">
+        <div class="form-check ">
             <input type="checkbox" class="form-check-input" name="checkBoxActionDelete" value="{{$product->id}}">
             <label class="form-check-label" for="checkBoxAction"></label>
         </div>
