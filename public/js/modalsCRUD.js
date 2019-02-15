@@ -152,6 +152,8 @@ function addEventListernerModal(submit_Func) {
 function closeModal(Modal) {
     Modal.modal("hide");
     Modal.remove();
+    $('body').removeClass('modal-open');
+    $('.modal-backdrop').remove();
 }
 //-----------------------------------------------------------------------------------//
 /**
