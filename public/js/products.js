@@ -3,6 +3,7 @@
   * Variable usada para guardar la ultima columna que el usuario a hecho click
   */
 var RowClicked;
+
 //-----------------------------------------------------------------------------------//
 /**
  * Ejecutado cuando la pagina acaba de cargar
@@ -10,7 +11,10 @@ var RowClicked;
 $(document).ready(function () {
   alertify.set('notifier', 'position', 'top-right');
   loadEvents();
+ 
+
   console.log("----- Products.js Loaded -----");
+  
 });
 //-----------------------------------------------------------------------------------//
 /**
@@ -61,12 +65,11 @@ var submit = function () {
     ajaxRequest("products", "POST", serializeForm(), function (response) {
       alertify.success(response.message);
 
-
-      $("tbody").append(response.html)
-
+      updateTable(response.html);
       /**
-       * Cierra el modal y desactiva el spinner
+       * Cierra el modal y desactiva el spinner y actualiza el numero de Productos que hay en la tabla
        */
+   
       closeModal($('#modalBox'));
       ren_spinner(false);
     });

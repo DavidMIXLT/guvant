@@ -8,7 +8,7 @@
 <script src="{{asset('js/products.js')}}"></script>
 <script src="{{asset('js/sortTable.js')}}"></script>
 <script src="{{asset('js/filter.js')}}"></script>
-<script src="{{asset('js/alertify.min.js')}}"></script>
+<script src="{{asset('js/libraries/alertify.min.js')}}"></script>
 <link rel="stylesheet" href="{{ asset('css/alertify.css')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
@@ -54,13 +54,15 @@
             </tr>
         </thead>
         <tbody>
-
-
             @foreach ($products as $product)
-    @include('products.layouts.tablerow',["product" => $product,"categories" => $product->categories])
+                 @include('products.layouts.tablerow',["product" => $product,"categories" => $product->categories])
             @endforeach
         </tbody>
     </table>
+    <div class="container pagination">
+        @include('layouts.pagination',['object' => $products])
+    </div>
+ 
 </div>
     @include("layouts.actions")
 @endsection

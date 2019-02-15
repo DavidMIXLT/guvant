@@ -1,3 +1,8 @@
+
+var numberOfItems;
+var MaxItemsTable = 5;
+
+//-----------------------------------------------------------------------------------//
 $(document).ready(function () {
     $("#SelectAll").click(function () {
         selectAll();
@@ -27,7 +32,105 @@ $(document).ready(function () {
         }
     });
     //-----------------------------------------------------------------------------------//
+    $(document).on('click', '.page-link', function () {
+        changePageTable($(this).data('href'));
+
+    })
+    numberOfItems = $('tr').length - 1;
 });
+
+//-----------------------------------------------------------------------------------//
+/**
+ * 
+ * Pagination functions
+ */
+
+//-----------------------------------------------------------------------------------//
+
+function updateNumberOfRows(){
+    numberOfItems = $('tr').length - 1;
+}
+function updateTable(html) {
+    updateNumberOfRows();
+    if (numberOfItems < MaxItemsTable && html != null) {
+        $("tbody").append(html).fadeIn();
+    } else if (numberOfItems > 0) {
+        nextPage();
+    } else {
+        previusPage();
+    }
+    updateNumberOfRows();
+
+}
+
+/**
+ * Canvia la pagina de la tabla
+ * @param {URL para obtener los items de la nueva pagina} url 
+ */
+function changePageTable(url) {
+    emptyTable();
+    ajaxRequest(url, 'GET', null, function (res) {
+        $("tbody").append(res.html);
+        updatePaginationLinks(res.paginationHTML);
+        ren_spinner(false);
+    });
+}
+//-----------------------------------------------------------------------------------//
+/**
+ * Vacia la tabla y solo deja la cabezera
+ */
+function emptyTable() {
+    $('tr:gt(0)').remove();
+
+}
+//-----------------------------------------------------------------------------------//
+/**
+ * Actualiza los links de la paginacion 
+ * @param {HTML con los links de paginacion} html 
+ */
+function updatePaginationLinks(html) {
+    console.log("Actualizado links")
+    numberOfItems = $('tr').length - 1;
+    $('.pagination').empty();
+    $('.pagination').append(html);
+}
+//-----------------------------------------------------------------------------------//
+/**
+ * Canvia a la siguiente pagina de la tabla
+ */
+
+function nextPage() {
+    console.log("NextPage")
+    changePageTable($('.page-link.next').data('href'));
+
+}
+
+function previusPage() {
+    console.log("Previus page")
+    var href = $('.page-link.last').data('href');
+    console.log(href)
+    if (href != "unique") {
+        changePageTable(href);
+    }
+
+}
+//-----------------------------------------------------------------------------------//
+/**
+ * Obtiene el html de la paginacion
+ */
+function getPaginationLinks() {
+    numberOfItems = $('tr').length - 1;
+    ajaxRequest('products/pagination', 'GET', null, function (res) {
+        updatePaginationLinks(res.paginationHTML)
+    });
+
+}
+
+/**
+ * 
+ * Fin de las funciones de paginacion
+ */
+
 
 //-----------------------------------------------------------------------------------//
 
@@ -58,7 +161,7 @@ function renderModal(url, submit_Func, success_func) {
         $("body").append(response.html);
         $("#modalBox").modal("show");
         ren_spinner(false);
-        console.log(response.message);
+      
         if (success_func != null) {
             success_func(response);
         }
@@ -163,9 +266,15 @@ function closeModal(Modal) {
  */
 
 function ren_RemoveRow(ren_rows) {
+
     $(ren_rows).each(function () {
         $(this).remove();
     });
+    updateNumberOfRows();
+    if(numberOfItems == 0){
+        updateTable();
+    }
+
 }
 //-----------------------------------------------------------------------------------//
 /**

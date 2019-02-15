@@ -15,7 +15,7 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
  */
 class ProductController extends Controller
 {
-  
+
     public function printIncomingProductOrders()
     {
         $products = Product::all();
@@ -23,15 +23,28 @@ class ProductController extends Controller
         return view('products.incomingOrders', compact('products', 'categories'));
     }
 
-    public function massiveElimination(Request $request){
-        $decode = json_decode($request->getContent(),true);
+    public function massiveElimination(Request $request)
+    {
+        $decode = json_decode($request->getContent(), true);
         Product::destroy($decode['listofid']);
-     
+
         return response()->json([
-            'status' => 'success',
+        
             'message' => __('messages.deleted'),
 
-        ]);
+        ],200);
+    }
+
+    public function getPaginationLinks(Request $request)
+    {
+        $object = Product::paginate(5);
+        $paginationHTML = view('layouts.pagination', compact('object'))->render();
+        if ($request->ajax()) {
+            return response()->json([
+                'paginationHTML' => $paginationHTML,
+            ],200);
+        }
+
     }
     /**
      * Display a listing of the resource.
@@ -40,10 +53,34 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $page = $request->input('page') - 1;
-        $products = Product::all();
-        $categories = Category::all();
-        return view('products.index', compact('products', 'categories'));
+
+        if ($request->ajax()) {
+            //$t = $category->pluck('id')->toArray();
+            /*    $products = Product::whereHas('categories', function ($query) use ($t) {
+            $query->whereIn('category_id', $t);
+            })->get();*/
+
+            $products = Product::paginate(5);
+            $a = array();
+            foreach ($products as $product) {
+                $categories = $product->categories;
+                $a[] = view('products.layouts.tableRow', compact('product', 'categories'))->render();
+            }
+            $object = $products;
+            $paginationHTML = view('layouts.pagination', compact('object'))->render();
+            return response()->json([
+                'html' => $a,
+                'paginationHTML' => $paginationHTML,
+
+            ],200);
+
+        } else {
+            $category = Category::all();
+            $products = Product::paginate(5);
+            $categories = Category::all();
+            return view('products.index', compact('products', 'categories'));
+        }
+
     }
 
     /**
@@ -59,10 +96,9 @@ class ProductController extends Controller
             $categories = Category::all();
             $view = view('products.create', compact('product', 'categories'))->render();
             return response()->json([
-                'status' => 'success',
                 'html' => $view,
 
-            ]);
+            ],200);
 
         } else {
             return redirect()->route('products.index');
@@ -80,24 +116,23 @@ class ProductController extends Controller
     {
         //Metodo llamado cuando se envia por POST se crea un nuevo producto y luego es guardado en la base de datos
         $product = new Product;
-    
+
         //Se valida el producto
         $product->validate($request);
         //Se crea el producto y se guarda en la base de datos
         $product->fill($request->all())->save();
-       
+
         $category = Category::find(explode(",", $request->CategoryList));
         $product->categories()->attach($category);
 
         $categories = $product->categories;
         $a = $product->Name;
-        $view =  view('products.layouts.tableRow', compact('product','categories'))->render();
+        $view = view('products.layouts.tableRow', compact('product', 'categories'))->render();
         return response()->json([
-            'status' => 'success',
             'message' => __("messages.successfullyCreated", ['Object' => $product->name]),
             'html' => $view,
 
-        ]);
+        ],200);
 
     }
 
@@ -130,11 +165,10 @@ class ProductController extends Controller
         $categories = Category::whereNotIn('id', $ids)->get();
         $view = view('products.edit', compact('product', 'categories', 'SelectedCategories'))->render();
         return response()->json([
-            'status' => 'success',
             'html' => $view,
             'message' => $ids,
 
-        ]);
+        ],200);
 
         //
     }
@@ -169,15 +203,14 @@ class ProductController extends Controller
             $product->save();
             $product->categories()->syncWithoutDetaching($categories);
             $categories = $product->categories;
-      
-            $view =  view('products.layouts.tableRow', compact('product','categories'))->render();
-          
-            return response()->json([
-                "status" => "success",
-                "message" => __('messages.successfullyUpdate', ["Object" => $product->name]),
-               'html' => $view,
 
-            ]);
+            $view = view('products.layouts.tableRow', compact('product', 'categories'))->render();
+
+            return response()->json([
+                "message" => __('messages.successfullyUpdate', ["Object" => $product->name]),
+                'html' => $view,
+
+            ],200);
 
         } else {
 
@@ -201,7 +234,7 @@ class ProductController extends Controller
         }
         $products = Product::all();
         $categories = Category::all();
-        return view('products.index', compact('products','categories'));
+        return view('products.index', compact('products', 'categories'));
 
     }
 
@@ -213,15 +246,13 @@ class ProductController extends Controller
      */
 
     public function destroy($id)
-    {   
+    {
         $name = Product::find($id)->name;
         Product::destroy($id);
         return response()->json([
-            'status' => 'success',
-           'message' => __('messages.successfullyDeleted', ["Object" => $name]),
-        ]);
+            'message' => __('messages.successfullyDeleted', ["Object" => $name]),
+        ],200);
 
     }
-
 
 }

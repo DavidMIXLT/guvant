@@ -7,7 +7,7 @@
 <script src="{{asset('js/modalsCRUD.js')}}"></script>
 <script src="{{asset('js/sortTable.js')}}"></script>
 <script src="{{asset('js/plates/plates.js')}}"></script>
-<script src="{{asset('js/alertify.min.js')}}"></script>
+<script src="{{asset('js/libraries/alertify.min.js')}}"></script>
 <link rel="stylesheet" href="{{ asset('css/alertify.css')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection

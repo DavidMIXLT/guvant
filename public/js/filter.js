@@ -12,8 +12,10 @@ $(document).ready(function () {
         var category = $(this).parent().find("label").text();
         updateCategoryList(category);
       
-        filter_by_Category(selectedCategories);
-
+      //  filter_by_Category(selectedCategories);
+        ajaxRequest('products','GET',null,function(res){
+            console.log(res.pagination);
+        });
 
     });
 
