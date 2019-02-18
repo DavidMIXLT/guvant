@@ -1,1 +1,1 @@
-{{$object->links()}}
+{{$object->links('pagination.default')}}
