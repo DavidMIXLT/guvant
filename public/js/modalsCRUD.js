@@ -47,7 +47,7 @@ $(document).ready(function () {
 
 //-----------------------------------------------------------------------------------//
 
-function updateNumberOfRows(){
+function updateNumberOfRows() {
     numberOfItems = $('tr').length - 1;
 }
 function updateTable(html) {
@@ -161,7 +161,7 @@ function renderModal(url, submit_Func, success_func) {
         $("body").append(response.html);
         $("#modalBox").modal("show");
         ren_spinner(false);
-      
+
         if (success_func != null) {
             success_func(response);
         }
@@ -256,6 +256,7 @@ function closeModal(Modal) {
     Modal.modal("hide");
     Modal.remove();
     $('body').removeClass('modal-open');
+    $('body').removeAttr("style");
     $('.modal-backdrop').remove();
 }
 //-----------------------------------------------------------------------------------//
@@ -271,7 +272,7 @@ function ren_RemoveRow(ren_rows) {
         $(this).remove();
     });
     updateNumberOfRows();
-    if(numberOfItems == 0){
+    if (numberOfItems == 0) {
         updateTable();
     }
 
