@@ -190,8 +190,9 @@ function massiveElimination(url) {
     console.log(data);
 
     ajaxRequest(url, "post", data, function (response) {
+        ren_RemoveRow(rows);
         $(rows).fadeOut("fast", function () {
-            ren_RemoveRow(rows);
+          
         });
         alertify.warning(response.message);
         ren_spinner(false);

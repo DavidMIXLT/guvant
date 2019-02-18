@@ -3,7 +3,7 @@ var selectedCategories = [];
 $(document).ready(function () {
     
     $('.dropdown-menu').on('click', function (e) {
-        e.stopPropagation();
+    //    e.stopPropagation();
     });
 
     $("input[name=categoryCheckBox").change(function (e) {
