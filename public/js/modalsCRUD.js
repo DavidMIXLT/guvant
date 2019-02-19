@@ -1,6 +1,8 @@
 
 var numberOfItems;
 var MaxItemsTable = 5;
+var animationsDelay = 50;
+var animationTimeOut = 50;
 
 //-----------------------------------------------------------------------------------//
 $(document).ready(function () {
@@ -10,11 +12,10 @@ $(document).ready(function () {
     $(document).on("hidden.bs.modal", function () {
         $("#modalBox").remove();
     });
+  
 
     //-----------------------------------------------------------------------------------//
-    /**
-     * Variable que guarda una funcion anonima encargada de la interactividad de lista una lista con dos columnas
-     */
+   
     $(document).on("click", ".Item", function () {
         console.log(
             $(this)
@@ -37,8 +38,43 @@ $(document).ready(function () {
 
     })
     numberOfItems = $('tr').length - 1;
+
+    // Ejecutamos fadeInall() para mostrar la animacion de todos los productos de la tabla
+    fadeInAll();
 });
 
+
+//-----------------------------------------------------------------------------------//
+/**
+ * 
+ * Animations
+ */
+//-----------------------------------------------------------------------------------//
+
+function fadeInAll() {
+    var offset = 0;
+    $('.DataRow').each(function () {
+        var row = $(this);
+        setTimeout(function () {
+            row.removeClass('invisible')
+            row.addClass('fadeInLeft');
+        }, animationTimeOut + offset);
+
+        offset += animationsDelay;
+    });
+
+}
+function fadeInLeft(row){
+    console.log(row)
+    row.removeClass('invisible')
+    row.addClass('fadeInLeft');
+}
+
+function fadeInLeftStop(DataRow) {
+    DataRow.removeClass('fadeInLeft');
+
+
+}
 //-----------------------------------------------------------------------------------//
 /**
  * 
@@ -46,21 +82,33 @@ $(document).ready(function () {
  */
 
 //-----------------------------------------------------------------------------------//
-
+/**
+ * Funcion que actualiza la variable que contiene el numero de filas que tiene la tabla 
+ */
 function updateNumberOfRows() {
     numberOfItems = $('tr').length - 1;
 }
+
+/**
+ * Funcion encargada de tomar la accion correspondiente sobre la tabla
+ * principalmente se encarga de actualizar el contenido interior
+ * @param {Filas que envia el servidor} html 
+ */
 function updateTable(html) {
     updateNumberOfRows();
     if (numberOfItems < MaxItemsTable && html != null) {
-        $("tbody").append(html).fadeIn();
-    } else if (numberOfItems > 0) {
+        $("tbody").append(html);
+        fadeInAll();
+    } else if (numberOfItems >= 5) {
         nextPage();
-    } else {
+    } else if (numberOfItems == 0) {
         previusPage();
+    } else if (numberOfItems < 5) {
+        console.log("UPDATE")
+        changePageTable($('.currentPage').data('href'));
     }
     updateNumberOfRows();
-
+    
 }
 
 /**
@@ -68,22 +116,27 @@ function updateTable(html) {
  * @param {URL para obtener los items de la nueva pagina} url 
  */
 function changePageTable(url) {
-    emptyTable();
+
+    EmptyContent();
     ajaxRequest(url, 'GET', null, function (res) {
+        emptyTable();
         $("tbody").append(res.html);
         updatePaginationLinks(res.paginationHTML);
+        fadeInAll();
         ren_spinner(false);
     });
 }
-//-----------------------------------------------------------------------------------//
+
+
+
 /**
  * Vacia la tabla y solo deja la cabezera
  */
 function emptyTable() {
-    $('tr:gt(0)').remove();
+    $('tr:gt(0)').remove()
 
 }
-//-----------------------------------------------------------------------------------//
+
 /**
  * Actualiza los links de la paginacion 
  * @param {HTML con los links de paginacion} html 
@@ -92,9 +145,10 @@ function updatePaginationLinks(html) {
     console.log("Actualizado links")
     numberOfItems = $('tr').length - 1;
     $('.pagination').empty();
-    $('.pagination').append(html);
+    $('.pagination').append(html).fadeIn(999);
+
 }
-//-----------------------------------------------------------------------------------//
+
 /**
  * Canvia a la siguiente pagina de la tabla
  */
@@ -104,7 +158,9 @@ function nextPage() {
     changePageTable($('.page-link.next').data('href'));
 
 }
-
+/**
+ * Canvia a la pagina anterior de la tabla
+ */
 function previusPage() {
     console.log("Previus page")
     var href = $('.page-link.last').data('href');
@@ -114,7 +170,17 @@ function previusPage() {
     }
 
 }
-//-----------------------------------------------------------------------------------//
+/**
+ * Vacia todo el contenido de las filas de la tabla
+ */
+function EmptyContent() {
+    $('ProductID').html('');
+    $('ProductName').html('');
+    $('ProductDescription').html('');
+    $('ProductDate').html('');
+}
+
+
 /**
  * Obtiene el html de la paginacion
  */
@@ -125,6 +191,7 @@ function getPaginationLinks() {
     });
 
 }
+
 
 /**
  * 
@@ -192,7 +259,7 @@ function massiveElimination(url) {
     ajaxRequest(url, "post", data, function (response) {
         ren_RemoveRow(rows);
         $(rows).fadeOut("fast", function () {
-          
+
         });
         alertify.warning(response.message);
         ren_spinner(false);
@@ -272,10 +339,8 @@ function ren_RemoveRow(ren_rows) {
     $(ren_rows).each(function () {
         $(this).remove();
     });
+    updateTable();
     updateNumberOfRows();
-    if (numberOfItems == 0) {
-        updateTable();
-    }
 
 }
 //-----------------------------------------------------------------------------------//

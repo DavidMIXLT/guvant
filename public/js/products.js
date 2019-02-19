@@ -150,6 +150,7 @@ var edit = function () {
     alertify.success(response.message);
     updateRow(RowClicked, response.html);
     closeModal($('#modalBox'));
+  
     ren_spinner(false);
   });
 };
@@ -189,6 +190,8 @@ function loadTableSortEvents() {
 function updateRow(OldRow, newRow) {
   $(newRow).insertBefore(OldRow);
   OldRow.remove();
+  fadeInLeft($('.DataRow.invisible'));
+ 
 
 }
 //-----------------------------------------------------------------------------------//

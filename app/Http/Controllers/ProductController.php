@@ -42,6 +42,7 @@ class ProductController extends Controller
         if ($request->ajax()) {
             return response()->json([
                 'paginationHTML' => $paginationHTML,
+                'test' => "hola",
             ],200);
         }
 
@@ -71,6 +72,7 @@ class ProductController extends Controller
             return response()->json([
                 'html' => $a,
                 'paginationHTML' => $paginationHTML,
+              
 
             ],200);
 
@@ -142,10 +144,20 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        return "SHOW";
-        //
+        if($request->ajax()){
+            $product = Product::find($id);
+            $categories = $product->categories;
+            $a = $product->Name;
+            $view = view('products.layouts.tableRow', compact('product', 'categories'))->render();
+            return response()->json([
+                'html' => $view,
+    
+            ],200);
+        }else {
+            return redirect()->route('products.index');
+        }
     }
 
     /**
