@@ -11,10 +11,7 @@ var RowClicked;
 $(document).ready(function () {
   alertify.set('notifier', 'position', 'top-right');
   loadEvents();
- 
-
   console.log("----- Products.js Loaded -----");
-  
 });
 //-----------------------------------------------------------------------------------//
 /**
@@ -32,6 +29,7 @@ function loadEvents() {
   $("button[name=Create]").click(function () {
     renderModal("products/create", submit);
   });
+
   loadTableSortEvents();
   loadButtonTableEvents();
 }
@@ -69,7 +67,7 @@ var submit = function () {
       /**
        * Cierra el modal y desactiva el spinner y actualiza el numero de Productos que hay en la tabla
        */
-   
+
       closeModal($('#modalBox'));
       ren_spinner(false);
     });
@@ -84,29 +82,29 @@ function validateForm(form) {
   var stock = parseInt($(form).find('input[type=number]').val());
 
   if (!name.replace(/\s/g, '').length) {
-    displayFormErrors("#nameHelp","input[name=name]",false,form);
+    displayFormErrors("#nameHelp", "input[name=name]", false, form);
     valid = false;
-  }else displayFormErrors("#nameHelp","input[name=name]",true,form);
-  
+  } else displayFormErrors("#nameHelp", "input[name=name]", true, form);
+
   if (!description.replace(/\s/g, '').length) {
-    displayFormErrors("#descriptionHelp",'textarea[name=description]',false,form);
+    displayFormErrors("#descriptionHelp", 'textarea[name=description]', false, form);
     valid = false;
-  }else displayFormErrors("#descriptionHelp",'textarea[name=description]',true,form);
-  
+  } else displayFormErrors("#descriptionHelp", 'textarea[name=description]', true, form);
+
   if (isNaN(stock)) {
-    displayFormErrors('#stockHelp',"input[type=number]",false,form);
+    displayFormErrors('#stockHelp', "input[type=number]", false, form);
     valid = false;
-  }else  displayFormErrors('#stockHelp',"input[type=number]",true,form); ;
+  } else displayFormErrors('#stockHelp', "input[type=number]", true, form);;
 
   return valid;
 }
 
-function displayFormErrors(selectorInv,selectorInput,valid,form){
-  if(!valid){
+function displayFormErrors(selectorInv, selectorInput, valid, form) {
+  if (!valid) {
     $(form).find(selectorInv).removeClass('invisible');
     $(form).find(selectorInput).addClass('is-invalid');
     $(form).find(selectorInput).parent().parent().addClass('is-invalid');
-  }else{
+  } else {
     $(form).find(selectorInv).addClass('invisible');
     $(form).find(selectorInput).removeClass('is-invalid');
     $(form).find(selectorInput).parent().parent().removeClass('is-invalid');
@@ -150,7 +148,7 @@ var edit = function () {
     alertify.success(response.message);
     updateRow(RowClicked, response.html);
     closeModal($('#modalBox'));
-  
+
     ren_spinner(false);
   });
 };
@@ -191,7 +189,7 @@ function updateRow(OldRow, newRow) {
   $(newRow).insertBefore(OldRow);
   OldRow.remove();
   fadeInLeft($('.DataRow.invisible'));
- 
+
 
 }
 //-----------------------------------------------------------------------------------//

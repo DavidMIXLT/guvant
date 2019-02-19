@@ -12,10 +12,10 @@ $(document).ready(function () {
     $(document).on("hidden.bs.modal", function () {
         $("#modalBox").remove();
     });
-  
+
 
     //-----------------------------------------------------------------------------------//
-   
+
     $(document).on("click", ".Item", function () {
         console.log(
             $(this)
@@ -64,7 +64,7 @@ function fadeInAll() {
     });
 
 }
-function fadeInLeft(row){
+function fadeInLeft(row) {
     console.log(row)
     row.removeClass('invisible')
     row.addClass('fadeInLeft');
@@ -108,7 +108,7 @@ function updateTable(html) {
         changePageTable($('.currentPage').data('href'));
     }
     updateNumberOfRows();
-    
+
 }
 
 /**
