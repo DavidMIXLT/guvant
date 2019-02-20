@@ -13,6 +13,7 @@ Route::get('/panel', function () {
  */
 Route::get('panel/products/entrada', 'ProductController@printIncomingProductOrders')->name('entradaProducto');
 Route::get('panel/products/pagination','ProductController@getPaginationLinks');
+Route::post('panel/products/filter','ProductController@filter');
 Route::post('panel/products/masDel', 'ProductController@massiveElimination');
 Route::resource('/panel/products', 'ProductController');
 

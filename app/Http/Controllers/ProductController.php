@@ -15,7 +15,29 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
  */
 class ProductController extends Controller
 {
+    public function filter(Request $request)
+    {
+        if ($request->ajax()) {
+            $decode = json_decode($request->getContent(), true);
+            $categories = Category::whereIn('name', $decode['selectedCategories'])->get()->pluck('id')->toArray();
+            $query;
 
+           foreach ($categories as $id) {
+              $query = Product::whereHas('categories', function ($q) use ($id) {
+                    $q->where('category_id', $id);
+                })->paginate(5);
+
+            }
+            $object = $query;
+            $html = $this->renderRows($query);
+            $paginationHTML = view('layouts.pagination', compact('object'))->render();
+            return response()->json([
+                'html' => $html,
+                'paginationHTML' => $paginationHTML,
+            ], 200);
+        }
+
+    }
     public function printIncomingProductOrders()
     {
         $products = Product::all();
@@ -29,10 +51,10 @@ class ProductController extends Controller
         Product::destroy($decode['listofid']);
 
         return response()->json([
-        
+
             'message' => __('messages.deleted'),
 
-        ],200);
+        ], 200);
     }
 
     public function getPaginationLinks(Request $request)
@@ -43,9 +65,17 @@ class ProductController extends Controller
             return response()->json([
                 'paginationHTML' => $paginationHTML,
                 'test' => "hola",
-            ],200);
+            ], 200);
         }
 
+    }
+    public function renderRows($products)
+    {
+        $a = array();
+        foreach ($products as $product) {
+            $a[] = view('products.layouts.tableRow', compact('product'))->render();
+        }
+        return $a;
     }
     /**
      * Display a listing of the resource.
@@ -56,28 +86,18 @@ class ProductController extends Controller
     {
 
         if ($request->ajax()) {
-            //$t = $category->pluck('id')->toArray();
-            /*    $products = Product::whereHas('categories', function ($query) use ($t) {
-            $query->whereIn('category_id', $t);
-            })->get();*/
 
             $products = Product::paginate(5);
-            $a = array();
-            foreach ($products as $product) {
-                $categories = $product->categories;
-                $a[] = view('products.layouts.tableRow', compact('product', 'categories'))->render();
-            }
+            $a = $this->renderRows($products);
             $object = $products;
             $paginationHTML = view('layouts.pagination', compact('object'))->render();
             return response()->json([
                 'html' => $a,
                 'paginationHTML' => $paginationHTML,
-              
 
-            ],200);
+            ], 200);
 
         } else {
-            $category = Category::all();
             $products = Product::paginate(5);
             $categories = Category::all();
             return view('products.index', compact('products', 'categories'));
@@ -100,7 +120,7 @@ class ProductController extends Controller
             return response()->json([
                 'html' => $view,
 
-            ],200);
+            ], 200);
 
         } else {
             return redirect()->route('products.index');
@@ -134,7 +154,7 @@ class ProductController extends Controller
             'message' => __("messages.successfullyCreated", ['Object' => $product->name]),
             'html' => $view,
 
-        ],200);
+        ], 200);
 
     }
 
@@ -144,18 +164,18 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$id)
+    public function show(Request $request, $id)
     {
-        if($request->ajax()){
+        if ($request->ajax()) {
             $product = Product::find($id);
             $categories = $product->categories;
             $a = $product->Name;
             $view = view('products.layouts.tableRow', compact('product', 'categories'))->render();
             return response()->json([
                 'html' => $view,
-    
-            ],200);
-        }else {
+
+            ], 200);
+        } else {
             return redirect()->route('products.index');
         }
     }
@@ -180,7 +200,7 @@ class ProductController extends Controller
             'html' => $view,
             'message' => $ids,
 
-        ],200);
+        ], 200);
 
         //
     }
@@ -222,7 +242,7 @@ class ProductController extends Controller
                 "message" => __('messages.successfullyUpdate', ["Object" => $product->name]),
                 'html' => $view,
 
-            ],200);
+            ], 200);
 
         } else {
 
@@ -263,7 +283,7 @@ class ProductController extends Controller
         Product::destroy($id);
         return response()->json([
             'message' => __('messages.successfullyDeleted', ["Object" => $name]),
-        ],200);
+        ], 200);
 
     }
 

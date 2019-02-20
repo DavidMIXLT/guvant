@@ -3,6 +3,7 @@ var numberOfItems;
 var MaxItemsTable = 5;
 var animationsDelay = 50;
 var animationTimeOut = 50;
+var filterActive = false;
 
 //-----------------------------------------------------------------------------------//
 $(document).ready(function () {
@@ -34,7 +35,16 @@ $(document).ready(function () {
     });
     //-----------------------------------------------------------------------------------//
     $(document).on('click', '.page-link', function () {
-        changePageTable($(this).data('href'));
+
+        if (!filterActive) {
+
+            changePageTable($(this).data('href'));
+
+        } else {
+
+            postCategoryList($(this).data('href'), getDataCategories());
+
+        }
 
     })
     numberOfItems = $('tr').length - 1;
@@ -75,6 +85,15 @@ function fadeInLeftStop(DataRow) {
 
 
 }
+
+//-----------------------------------------------------------------------------------//
+
+/**
+ * End Animations
+ */
+
+//-----------------------------------------------------------------------------------//
+
 //-----------------------------------------------------------------------------------//
 /**
  * 
@@ -192,12 +211,12 @@ function getPaginationLinks() {
 
 }
 
+//-----------------------------------------------------------------------------------//
 
 /**
  * 
- * Fin de las funciones de paginacion
+ * End Pagination functions
  */
-
 
 //-----------------------------------------------------------------------------------//
 

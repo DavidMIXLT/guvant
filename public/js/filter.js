@@ -1,27 +1,55 @@
 var selectedCategories = [];
+var filter_url;
 
 $(document).ready(function () {
-    
-    $('.dropdown-menu').on('click', function (e) {
-    //    e.stopPropagation();
+  
+
+    $('#dropDown_Items').on('click', function (e) {
+        e.stopPropagation();
     });
 
     $("input[name=categoryCheckBox").change(function (e) {
 
-        
+        filterActive = isFilterActive();
         var category = $(this).parent().find("label").text();
-        updateCategoryList(category);
-      
-      //  filter_by_Category(selectedCategories);
-        ajaxRequest('products','GET',null,function(res){
-            console.log(res.pagination);
-        });
-
+        updateCategoryList(category);      
     });
 
-
+    $('button[name=applyFilter]').click(function(e){
+        $('#dropDown_Items').hide();
+        postCategoryList(filter_url, getDataCategories());
+    });
+    $('input[name=categoryCheckBox]').prop('checked',false);
     console.log("----Filter.js Ready----");
 });
+
+function getDataCategories() {
+
+    var data = '{"selectedCategories" : ' + JSON.stringify(selectedCategories) + "}";
+    console.log(data)
+    return data;
+}
+
+
+function postCategoryList(url, data) {
+    ajaxRequest(url, 'POST', data, function (res) {
+        
+        console.log(res.paginationHTML);
+        emptyTable();
+        $('tbody').append(res.html);
+        updatePaginationLinks(res.paginationHTML)
+        fadeInAll();
+        ren_spinner(false);
+    });
+}
+
+function isFilterActive() {
+    if (selectedCategories.length > 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 function clearCategories() {
     $("tr").removeClass('d-none');
@@ -33,7 +61,7 @@ function updateCategoryList(newCategory) {
     for (let i = 0; i < selectedCategories.length; i++) {
         if (selectedCategories[i] === newCategory) {
             selectedCategories.splice(i, 1);
-  
+
             return;
         }
     }
@@ -43,26 +71,3 @@ function updateCategoryList(newCategory) {
 
 }
 
-
-function filter_by_Category(categories) {
-    console.log(categories.length)
-    if (categories.length > 0) {
-        $("#productTable").children('tbody').children('tr').each(function () {
-            var l_categories = $(this).attr('data-categories').split(',');
-            var hasCategory = false;
-            var n = 0;
-            for (let i = 0; i < categories.length; i++) {
-                for (let h = 0; h < l_categories.length; h++) {
-                    if (l_categories[h] == categories[i]) {
-                        n++;
-                    }
-
-                }
-            }
-            if (n != (categories.length)) {
-                $(this).addClass('d-none');
-            }
-        });
-    }
-
-}
