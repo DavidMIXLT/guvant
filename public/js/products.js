@@ -6,13 +6,11 @@ var RowClicked;
 
 //-----------------------------------------------------------------------------------//
 /**
- * Ejecutado cuando la pagina acaba de cargar
+ * Ejecutado cuando la pagina acaba de cargar --- Inicializa la pagina de productos
  */
 $(document).ready(function () {
   alertify.set('notifier', 'position', 'top-right');
-
   filter_url = 'products/filter';
-
   loadEvents();
   console.log("----- Products.js Loaded -----");
 });

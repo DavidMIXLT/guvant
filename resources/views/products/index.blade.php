@@ -51,11 +51,11 @@
                         <span class="sr-only">Loading...</span>
                     </div>
                 </th>
-                <th scope="col" id="idRow">@lang('products/index.id') ↕</th>
-                <th scope="col" id="nameRow">@lang('products/index.name') ↕</th>
-                <th scope="col" id="descriptionRow">@lang('products/index.description') ↕</th>
-                <th scope="col" id="stockRow">@lang('products/index.stock') ↕</th>
-                <th scope="col" id="dateRow">@lang('products/index.dateCreated') ↕</th>
+                <th scope="col" id="id">@lang('products/index.id') ↕</th>
+                <th scope="col" id="name">@lang('products/index.name') ↕</th>
+                <th scope="col" id="description">@lang('products/index.description') ↕</th>
+                <th scope="col" id="stock">@lang('products/index.stock') ↕</th>
+                <th scope="col" id="date">@lang('products/index.dateCreated') ↕</th>
                 <th scope="col">@lang('products/index.actions') </th>
             </tr>
         </thead>

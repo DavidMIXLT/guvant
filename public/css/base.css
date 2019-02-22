@@ -10,20 +10,20 @@ tr:hover{
     background-color: lightgrey ;
 }
 
-#idRow:hover{
+th#id:hover{
     background-color: rgba(43, 43, 43, 0.719) ;
 }
-#nameRow:hover{
+th#name:hover{
     background-color: rgba(43, 43, 43, 0.719) ;
 }
-#descriptionRow:hover{
+th#description:hover{
     background-color: rgba(43, 43, 43, 0.719) ;
 }
-#stockRow:hover{
+th#stock:hover{
     background-color: rgba(43, 43, 43, 0.719) ;
 }
 
-#dateRow:hover{
+#date:hover{
     background-color: rgba(43, 43, 43, 0.719) ;
 }
 

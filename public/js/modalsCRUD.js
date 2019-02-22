@@ -36,13 +36,14 @@ $(document).ready(function () {
     //-----------------------------------------------------------------------------------//
     $(document).on('click', '.page-link', function () {
 
+        //Comprovamos si hay algun fitlro en la tabla activo
         if (!filterActive) {
 
             changePageTable($(this).data('href'));
 
         } else {
-
             postCategoryList($(this).data('href'), getDataCategories());
+         
 
         }
 

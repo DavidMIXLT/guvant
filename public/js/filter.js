@@ -1,8 +1,11 @@
 var selectedCategories = [];
 var filter_url;
+var booleanASCDESC = false;
+var filterColumn = "id";
+var filterOrder = "ASC";
 
 $(document).ready(function () {
-  
+
 
     $('#dropDown_Items').on('click', function (e) {
         e.stopPropagation();
@@ -12,43 +15,69 @@ $(document).ready(function () {
 
         filterActive = isFilterActive();
         var category = $(this).parent().find("label").text();
-        updateCategoryList(category);      
+        updateCategoryList(category);
     });
 
-    $('button[name=applyFilter]').click(function(e){
-        $('#dropDown_Items').hide();
-        postCategoryList(filter_url, getDataCategories());
+    $('button[name=applyFilter]').click(function (e) {
+        $('button.dropdown-toggle#categories').dropdown('toggle');
+        postFilter(getDataCategories());
     });
-    $('input[name=categoryCheckBox]').prop('checked',false);
+
+    $('th').click(function () {
+        booleanASCDESC = !booleanASCDESC;
+        filterColumn = $(this).prop('id');
+        if (booleanASCDESC) {
+            console.log('asc')
+            filterOrder = 'ASC';
+            postFilter(getDataCategories());
+        } else {
+            console.log('desc')
+            filterOrder = 'DESC';
+            postFilter(getDataCategories());
+        }
+
+    });
+    $('input[name=categoryCheckBox]').prop('checked', false);
     console.log("----Filter.js Ready----");
 });
 
-function getDataCategories() {
+function postFilter(data) {
+    ajaxRequest(filter_url, 'POST', data, function (res) {
+        renderResult(res);
+    });
+}
 
-    var data = '{"selectedCategories" : ' + JSON.stringify(selectedCategories) + "}";
+
+function getDataCategories() {
+    var data
+    data = '{"selectedCategories" : ' + JSON.stringify(selectedCategories) + ',"mode" : "' + filterColumn + '","order" : "' + filterOrder + '"  }';
     console.log(data)
     return data;
 }
 
+function renderResult(res) {
+
+    emptyTable();
+    $('tbody').append(res.html);
+    updatePaginationLinks(res.paginationHTML)
+    fadeInAll();
+    ren_spinner(false);
+}
 
 function postCategoryList(url, data) {
     ajaxRequest(url, 'POST', data, function (res) {
-        
-        console.log(res.paginationHTML);
-        emptyTable();
-        $('tbody').append(res.html);
-        updatePaginationLinks(res.paginationHTML)
-        fadeInAll();
-        ren_spinner(false);
+
+        renderResult(res);
     });
 }
 
 function isFilterActive() {
-    if (selectedCategories.length > 0) {
+    if (selectedCategories.length > 0 || filterColumn != "") {
         return true;
     } else {
         return false;
     }
+
 }
 
 function clearCategories() {

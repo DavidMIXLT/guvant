@@ -18,16 +18,37 @@ class ProductController extends Controller
     public function filter(Request $request)
     {
         if ($request->ajax()) {
+
             $decode = json_decode($request->getContent(), true);
-            $categories = Category::whereIn('name', $decode['selectedCategories'])->get()->pluck('id')->toArray();
+
             $query;
+            $column = 'id';
+            $order = "ASC";
 
-           foreach ($categories as $id) {
-              $query = Product::whereHas('categories', function ($q) use ($id) {
-                    $q->where('category_id', $id);
-                })->paginate(5);
-
+            if (isset($decode['mode'])) {
+                $column = $decode['mode'];
             }
+
+            if (isset($decode['order'])) {
+                $order = $decode['order'];
+            }
+
+            if (isset($decode['selectedCategories'])) {
+                if (count($decode['selectedCategories']) > 0 )  {
+                    $categories = Category::whereIn('name', $decode['selectedCategories'])->get()->pluck('id')->toArray();
+                    foreach ($categories as $id) {
+                        $query = Product::whereHas('categories', function ($q) use ($id) {
+                            $q->where('category_id', $id);
+                        })->orderBy($column, $order)->paginate(5);
+
+                    }
+                } else {
+                    $query = Product::orderBy($column, $order)->paginate(5);
+                }
+            } else {
+                $query = Product::orderBy($column, $order)->paginate(5);
+            }
+
             $object = $query;
             $html = $this->renderRows($query);
             $paginationHTML = view('layouts.pagination', compact('object'))->render();
@@ -35,6 +56,7 @@ class ProductController extends Controller
                 'html' => $html,
                 'paginationHTML' => $paginationHTML,
             ], 200);
+
         }
 
     }
