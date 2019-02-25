@@ -33,19 +33,17 @@ $(document).ready(function () {
             $(this).appendTo("#AvaibleList");
         }
     });
+    $("#NumberOfElements").change(function () {
+        MaxItemsTable = $(this).val();
+
+        PostNumberofItems(MaxItemsTable);
+      
+    });
     //-----------------------------------------------------------------------------------//
     $(document).on('click', '.page-link', function () {
 
         //Comprovamos si hay algun fitlro en la tabla activo
-        if (!filterActive) {
-
-            changePageTable($(this).data('href'));
-
-        } else {
-            postCategoryList($(this).data('href'), getDataCategories());
-         
-
-        }
+        updatePage($(this).data('href'))
 
     })
     numberOfItems = $('tr').length - 1;
@@ -55,6 +53,26 @@ $(document).ready(function () {
 });
 
 
+function PostNumberofItems(number){
+    var data = "NumberOfItems="+number ;
+    var url = window.location.href + "/NumberOfItems";
+    console.log(url);
+    ajaxRequest(url,"POST",data,function(r){
+        updatePage($('.page-link currentPage').data('href'));
+        console.log(r.message)
+    });
+}
+function updatePage(url) {
+    if (!filterActive) {
+        console.log("CHANGE")
+        changePageTable(url);
+
+    } else {
+        console.log("POST")
+        postCategoryList(url, getDataCategories());
+    }
+    console.log(url)
+}
 //-----------------------------------------------------------------------------------//
 /**
  * 

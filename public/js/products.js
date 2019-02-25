@@ -61,6 +61,7 @@ function loadButtonTableEvents() {
 var submit = function () {
 
   if (validateForm($("#modalForm"))) {
+
     ajaxRequest("products", "POST", serializeForm(), function (response) {
       alertify.success(response.message);
 
