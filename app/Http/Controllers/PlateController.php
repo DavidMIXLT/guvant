@@ -5,7 +5,7 @@ namespace AlaCartaYa\Http\Controllers;
 use AlaCartaYa\Plate;
 use AlaCartaYa\Product;
 use Illuminate\Http\Request;
-
+use AlaCartaYa\Pagination;
 class PlateController extends Controller
 {
     /**
@@ -17,11 +17,23 @@ class PlateController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $plates = Plate::all();
-        return view('plates.index', compact('plates'));
+        
+        $plates = Plate::paginate(Pagination::getNumberofItems($request));
+        if($request->ajax()){
+            $a = Plate::renderRows($plates);
+            $paginationHTML = view('layouts.pagination', ['object' => $plates])->render();
+            return response()->json([
+                'html' => $a,
+                'paginationHTML' => $paginationHTML,
+
+            ], 200);
+        }else{
+            return view('plates.index', compact('plates'));
+        }
+        
+        
     }
 
     /**

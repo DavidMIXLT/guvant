@@ -46,13 +46,12 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $NumberOfItems = 5;
+        $NumberOfItems = Pagination::getNumberofItems($request);
+        $products = Product::paginate($NumberOfItems);
         if ($request->ajax()) {
-
-            $products = Product::paginate(Pagination::getNumberofItems($request));
+            
             $a = Product::renderRows($products);
-            $object = $products;
-            $paginationHTML = view('layouts.pagination', compact('object'))->render();
+            $paginationHTML = view('layouts.pagination', ['object' => $products])->render();
             return response()->json([
                 'html' => $a,
                 'paginationHTML' => $paginationHTML,
@@ -60,7 +59,6 @@ class ProductController extends Controller
             ], 200);
 
         } else {
-            $products = Product::paginate(Pagination::getNumberofItems($request));
             $categories = Category::all();
             return view('products.index', compact('products', 'categories'));
         }

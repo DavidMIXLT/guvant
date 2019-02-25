@@ -52,5 +52,16 @@ class Category extends Model
         return $query;
     }
 
+    
+    public static function renderRows($categories)
+    {
+        $a = array();
+        foreach ($categories as $category) {
+            $a[] = view("categories.layouts.tableRow", compact('category'))->render();
+        }
+        return $a;
+    }
+    
+
 
 }

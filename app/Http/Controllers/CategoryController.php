@@ -2,8 +2,10 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
-use Illuminate\Http\Request;
 use AlaCartaYa\Category;
+use AlaCartaYa\Pagination;
+use Illuminate\Http\Request;
+
 class CategoryController extends Controller
 {
     /**
@@ -15,12 +17,24 @@ class CategoryController extends Controller
     {
         $this->middleware('auth');
     }
-     
-    public function index()
-    {
-        $categories = Category::all();
 
-        return view("categories.index",compact("categories"));
+    public function index(Request $request)
+    {
+        $NumberOfItems = Pagination::getNumberofItems($request);
+        $categories = Category::paginate($NumberOfItems);
+
+        if ($request->ajax()) {
+            $a = Category::renderRows($categories);
+            $paginationHTML = view('layouts.pagination', ['object' => $categories])->render();
+            return response()->json([
+                'html' => $a,
+                'paginationHTML' => $paginationHTML,
+
+            ], 200);
+        } else {
+        
+            return view("categories.index", compact("categories"));
+        }
 
     }
 
@@ -52,11 +66,11 @@ class CategoryController extends Controller
         $category->validate($request);
 
         $category->fill($request->all())->save();
-        $view = view("categories.layouts.tablerow",compact("category"))->render();
+        $view = view("categories.layouts.tablerow", compact("category"))->render();
         return response()->json([
             "status" => "success",
             'html' => $view,
-            'message' => __('messages.successfullyCreated',["Object" => $category->name]),
+            'message' => __('messages.successfullyCreated', ["Object" => $category->name]),
         ]);
 
     }
@@ -104,7 +118,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::destroy($id);
-     
+
         return response()->json([
             'status' => 'success',
             'message' => __('messages.deleted'),

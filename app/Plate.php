@@ -21,4 +21,13 @@ class Plate extends Model
     public function products(){
         return $this->belongsToMany(Product::class);
     }
+
+    public static function renderRows($plates)
+    {
+        $a = array();
+        foreach ($plates as $plate) {
+            $a[] = view('plates.layouts.tableRow', compact('plate'))->render();
+        }
+        return $a;
+    }
 }

@@ -36,5 +36,8 @@
 
   </tbody>
 </table>
+<div class="container pagination">
+  @include('layouts.pagination',['object' => $plates])
+</div>
   @include("layouts.actions")
 @endsection

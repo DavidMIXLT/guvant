@@ -31,5 +31,10 @@
     @each('categories.layouts.tableRow', $categories, 'category')
   </tbody>
 </table>
+
+{{-- Paginacion --}}
+<div class="container pagination">
+  @include('layouts.pagination',['object' => $categories])
+</div>
   @include("layouts.actions")
 @endsection

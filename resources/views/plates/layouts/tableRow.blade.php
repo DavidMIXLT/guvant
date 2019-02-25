@@ -1,4 +1,4 @@
-<tr>
+<tr class="DataRow invisible">
     <td>
         <div class="form-check">
             <input type="checkbox" class="form-check-input" name="checkBoxActionDelete" value="{{$plate->id}}">

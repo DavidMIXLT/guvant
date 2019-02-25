@@ -12,6 +12,7 @@ class PaginationController extends Controller
     public function setNumberOfItems(Request $request)
     {
         $request->session()->put('NumberOfItems', $request->NumberOfItems);
+       
         return response()->json([
             "message" => $request->NumberOfItems,
         ], 200);

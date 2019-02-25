@@ -16,6 +16,11 @@ $(document).ready(function () {
 
 
     //-----------------------------------------------------------------------------------//
+    if (getCookie("NumberOfItems") > 0) {
+        $("#NumberOfElements").val(getCookie("NumberOfItems"));
+    }
+
+    //-----------------------------------------------------------------------------------//
 
     $(document).on("click", ".Item", function () {
         console.log(
@@ -37,7 +42,7 @@ $(document).ready(function () {
         MaxItemsTable = $(this).val();
 
         PostNumberofItems(MaxItemsTable);
-      
+
     });
     //-----------------------------------------------------------------------------------//
     $(document).on('click', '.page-link', function () {
@@ -53,14 +58,14 @@ $(document).ready(function () {
 });
 
 
-function PostNumberofItems(number){
-    var data = "NumberOfItems="+number ;
-    var url =  "./NumberOfItems";
-  
-    ajaxRequest(url,"POST",data,function(r){
+function PostNumberofItems(number) {
+    var data = "NumberOfItems=" + number;
+    var url = "./NumberOfItems";
+
+    ajaxRequest(url, "POST", data, function (r) {
         console.log("URL: " + $('.page-link.currentPage').data('href'));
         updatePage($('.page-link.currentPage').data('href'));
-       
+        document.cookie = "NumberOfItems=" + number;
         console.log(r.message)
     });
 }
@@ -114,7 +119,21 @@ function fadeInLeftStop(DataRow) {
  */
 
 //-----------------------------------------------------------------------------------//
-
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
 //-----------------------------------------------------------------------------------//
 /**
  * 
