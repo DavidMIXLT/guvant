@@ -55,10 +55,12 @@ $(document).ready(function () {
 
 function PostNumberofItems(number){
     var data = "NumberOfItems="+number ;
-    var url = window.location.href + "/NumberOfItems";
-    console.log(url);
+    var url =  "./NumberOfItems";
+  
     ajaxRequest(url,"POST",data,function(r){
-        updatePage($('.page-link currentPage').data('href'));
+        console.log("URL: " + $('.page-link.currentPage').data('href'));
+        updatePage($('.page-link.currentPage').data('href'));
+       
         console.log(r.message)
     });
 }
@@ -223,8 +225,9 @@ function EmptyContent() {
  * Obtiene el html de la paginacion
  */
 function getPaginationLinks() {
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAa")
     numberOfItems = $('tr').length - 1;
-    ajaxRequest('products/pagination', 'GET', null, function (res) {
+    ajaxRequest('./pagination', 'GET', null, function (res) {
         updatePaginationLinks(res.paginationHTML)
     });
 

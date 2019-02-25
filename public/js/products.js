@@ -10,7 +10,6 @@ var RowClicked;
  */
 $(document).ready(function () {
   alertify.set('notifier', 'position', 'top-right');
-  filter_url = 'products/filter';
   loadEvents();
   console.log("----- Products.js Loaded -----");
 });

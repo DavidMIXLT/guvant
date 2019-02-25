@@ -1,5 +1,5 @@
 var selectedCategories = [];
-var filter_url;
+var filter_url = "./filter";
 var booleanASCDESC = false;
 var filterColumn = "id";
 var filterOrder = "ASC";
@@ -42,7 +42,9 @@ $(document).ready(function () {
 });
 
 function postFilter(data) {
+    console.log(filter_url)
     ajaxRequest(filter_url, 'POST', data, function (res) {
+      
         renderResult(res);
     });
 }

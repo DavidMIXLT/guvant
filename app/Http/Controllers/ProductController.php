@@ -6,6 +6,7 @@ use AlaCartaYa\Category;
 use AlaCartaYa\Product;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use AlaCartaYa\Pagination;
 
 /*
 TO DO
@@ -15,71 +16,8 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
  */
 class ProductController extends Controller
 {
+  
 
-    public function setNumberOfItems(Request $request)
-    {
-
-        $request->session()->put('NumberOfItems', $request->NumberOfItems);
-        return response()->json([ 
-            "message" => $request->NumberOfItems,
-        ], 200);
-
-    }
-    public function getNumberofItems(Request $request)
-    {
-
-        if ($request->session()->has('NumberOfItems')) {
-            return $request->session()->get('NumberOfItems');
-        } else {
-            return 5;
-        }
-    }
-    public function filter(Request $request)
-    {
-
-        if ($request->ajax()) {
-
-            $decode = json_decode($request->getContent(), true);
-
-            $query;
-            $column = 'id';
-            $order = "ASC";
-
-            if (isset($decode['mode'])) {
-                $column = $decode['mode'];
-            }
-
-            if (isset($decode['order'])) {
-                $order = $decode['order'];
-            }
-
-            if (isset($decode['selectedCategories'])) {
-                if (count($decode['selectedCategories']) > 0) {
-                    $categories = Category::whereIn('name', $decode['selectedCategories'])->get()->pluck('id')->toArray();
-                    foreach ($categories as $id) {
-                        $query = Product::whereHas('categories', function ($q) use ($id) {
-                            $q->where('category_id', $id);
-                        })->orderBy($column, $order)->paginate($this->getNumberofItems($request));
-
-                    }
-                } else {
-                    $query = Product::orderBy($column, $order)->paginate($this->getNumberofItems($request));
-                }
-            } else {
-                $query = Product::orderBy($column, $order)->paginate($this->getNumberofItems($request));
-            }
-
-            $object = $query;
-            $html = $this->renderRows($query);
-            $paginationHTML = view('layouts.pagination', compact('object'))->render();
-            return response()->json([
-                'html' => $html,
-                'paginationHTML' => $paginationHTML,
-            ], 200);
-
-        }
-
-    }
     public function printIncomingProductOrders()
     {
         $products = Product::all();
@@ -99,27 +37,8 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function getPaginationLinks(Request $request)
-    {
-        $NumberOfItems = 5;
-        $object = Product::paginate($this->getNumberofItems($request));
-        $paginationHTML = view('layouts.pagination', compact('object'))->render();
-        if ($request->ajax()) {
-            return response()->json([
-                'paginationHTML' => $paginationHTML,
-                'test' => "hola",
-            ], 200);
-        }
 
-    }
-    public function renderRows($products)
-    {
-        $a = array();
-        foreach ($products as $product) {
-            $a[] = view('products.layouts.tableRow', compact('product'))->render();
-        }
-        return $a;
-    }
+   
     /**
      * Display a listing of the resource.
      *
@@ -130,8 +49,8 @@ class ProductController extends Controller
         $NumberOfItems = 5;
         if ($request->ajax()) {
 
-            $products = Product::paginate($this->getNumberofItems($request));
-            $a = $this->renderRows($products);
+            $products = Product::paginate(Pagination::getNumberofItems($request));
+            $a = Product::renderRows($products);
             $object = $products;
             $paginationHTML = view('layouts.pagination', compact('object'))->render();
             return response()->json([
@@ -141,7 +60,7 @@ class ProductController extends Controller
             ], 200);
 
         } else {
-            $products = Product::paginate($this->getNumberofItems($request));
+            $products = Product::paginate(Pagination::getNumberofItems($request));
             $categories = Category::all();
             return view('products.index', compact('products', 'categories'));
         }

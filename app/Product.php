@@ -31,5 +31,12 @@ class Product extends Model
         return $this->belongsToMany(Category::class);
     }
 
-
+    public static function renderRows($products)
+    {
+        $a = array();
+        foreach ($products as $product) {
+            $a[] = view('products.layouts.tableRow', compact('product'))->render();
+        }
+        return $a;
+    }
 }

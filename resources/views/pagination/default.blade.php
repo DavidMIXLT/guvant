@@ -1,4 +1,4 @@
-@if ($paginator->hasPages())
+
     <ul class="pagination" role="navigation">
         {{-- Previous Page Link --}}
         @if ($paginator->onFirstPage())
@@ -22,7 +22,7 @@
             @if (is_array($element))
                 @foreach ($element as $page => $url)
                     @if ($page == $paginator->currentPage())
-                        <li class="page-item active currentPage" aria-current="page"><span class="page-link" >{{ $page }}</span></li>
+                        <li class="page-item active currentPage"  aria-current="page"><span data-href="{{ $url }}"  class="page-link currentPage" >{{ $page }}</span></li>
                     @else
                         <li class="page-item"><span class="page-link currentPage" data-href="{{ $url }}">{{ $page }}</span></li>
                     @endif
@@ -41,4 +41,4 @@
             </li>
         @endif
     </ul>
-@endif
+
