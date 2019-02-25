@@ -2,10 +2,11 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
+use AlaCartaYa\Pagination;
 use AlaCartaYa\Plate;
 use AlaCartaYa\Product;
 use Illuminate\Http\Request;
-use AlaCartaYa\Pagination;
+
 class PlateController extends Controller
 {
     /**
@@ -19,9 +20,9 @@ class PlateController extends Controller
     }
     public function index(Request $request)
     {
-        
+
         $plates = Plate::paginate(Pagination::getNumberofItems($request));
-        if($request->ajax()){
+        if ($request->ajax()) {
             $a = Plate::renderRows($plates);
             $paginationHTML = view('layouts.pagination', ['object' => $plates])->render();
             return response()->json([
@@ -29,11 +30,10 @@ class PlateController extends Controller
                 'paginationHTML' => $paginationHTML,
 
             ], 200);
-        }else{
+        } else {
             return view('plates.index', compact('plates'));
         }
-        
-        
+
     }
 
     /**
@@ -75,7 +75,7 @@ class PlateController extends Controller
         $view = view('plates.layouts.tableRow', compact('plate'))->render();
         return response()->json([
             'status' => 'success',
-            'message' => __('messages.successfullyCreated',["Object" => $plate->name]),
+            'message' => __('messages.successfullyCreated', ["Object" => $plate->name]),
             'html' => $view,
         ]);
     }
@@ -102,7 +102,7 @@ class PlateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Request $Request,$id)
+    public function edit(Request $Request, $id)
     {
 
         $SelectedProducts = Plate::findOrFail($id);
@@ -113,7 +113,7 @@ class PlateController extends Controller
 
         $products = Product::whereNotIn('id', $ids)->get();
 
-        $view = view('plates.edit',compact('products','SelectedProducts'))->render();
+        $view = view('plates.edit', compact('products', 'SelectedProducts'))->render();
         return response()->json([
             'status' => 'success',
             'html' => $view,
@@ -129,7 +129,7 @@ class PlateController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $ProductList = explode(",", $request->ProductList);
         $products = Product::findOrFail($ProductList);
         $plate = Plate::findOrFail($id);
@@ -138,12 +138,12 @@ class PlateController extends Controller
         $plate->name = $request->name;
         $plate->description = $request->description;
         $plate->save();
-        
+
         $plate->products()->sync($products);
         $view = view('plates.layouts.tableRow', compact('plate'))->render();
         return response()->json([
             'status' => 'success',
-            'message' => __("messages.successfullyUpdate",["Object" => $plate->name]),
+            'message' => __("messages.successfullyUpdate", ["Object" => $plate->name]),
             'html' => $view,
         ]);
     }
@@ -154,13 +154,13 @@ class PlateController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,$id)
+    public function destroy(Request $request, $id)
     {
-        if($id == -1){
-            $decode = json_decode($request->getContent(),true);
+        if ($id == -1) {
+            $decode = json_decode($request->getContent(), true);
             Plate::destroy($decode['listofid']);
-         
-        }else{
+
+        } else {
             Plate::destroy($id);
         }
 
