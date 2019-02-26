@@ -18,6 +18,8 @@ $(document).ready(function () {
     //-----------------------------------------------------------------------------------//
     if (getCookie("NumberOfItems") > 0) {
         $("#NumberOfElements").val(getCookie("NumberOfItems"));
+    }else{
+        $("#NumberOfElements").val(5)
     }
 
     //-----------------------------------------------------------------------------------//
@@ -154,6 +156,7 @@ function updateNumberOfRows() {
  * @param {Filas que envia el servidor} html 
  */
 function updateTable(html) {
+    console.log("Updating table")
     updateNumberOfRows();
     if (numberOfItems < MaxItemsTable && html != null) {
         $("tbody").append(html);
@@ -350,7 +353,7 @@ function ajaxRequest(url, type, data, success) {
         data: data,
         success: success,
         error: function (xhr) {
-            alertify.alert("Error", xhr.responseText);
+            alertify.alert("Error", "<pre style='height:400px'>"+xhr.responseText+"</pre>");
             closeModal($("#modalBox"));
             console.log("---AJAX Error---");
             console.log(xhr.responseText);
@@ -368,10 +371,12 @@ function ajaxRequest(url, type, data, success) {
 
 function addEventListernerModal(submit_Func) {
     $("button[name=closeModal]").click(function () {
+     
         closeModal($("#modalBox"));
     });
 
     $("button[name=submitEdit]").click(function () {
+        console.log("Sending")
         submit_Func();
     });
 }
@@ -381,6 +386,7 @@ function addEventListernerModal(submit_Func) {
  *  @param Modal modal
  */
 function closeModal(Modal) {
+    console.log("Closing")
     Modal.modal("hide");
     Modal.remove();
     $('body').removeClass('modal-open');

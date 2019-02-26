@@ -41,7 +41,8 @@ var submit = function () {
     ajaxRequest("categories", "POST", $("#modalForm").serialize(), function (response) {
         alertify.success(response.message);
         closeModal($('#modalBox'));
-        $("tbody").append(response.html);
+     
+        updateTable(response.html);
         ren_spinner(false);
       
     });

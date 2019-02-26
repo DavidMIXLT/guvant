@@ -5,7 +5,7 @@ namespace AlaCartaYa\Http\Controllers;
 use AlaCartaYa\Category;
 use AlaCartaYa\Product;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+
 use AlaCartaYa\Pagination;
 
 /*
@@ -16,7 +16,10 @@ Añadir listado de errores / mensaje cuando los productos son eliminados
  */
 class ProductController extends Controller
 {
-  
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     public function printIncomingProductOrders()
     {

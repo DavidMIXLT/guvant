@@ -28,15 +28,15 @@ $(document).ready(function () {
  */
 function loadEvents() {
 
-    $("button[name=Show]").click(function () {
+    $(document).on("click","button[name=Show]",function () {
         renderModal("plates/" + $(this).val());
     });
-    $("button[name=Edit]").click(function () {
+    $(document).on("click","button[name=Edit]",function () {
         var submitEdit = getSubmit("plates/" + $(this).val(), "PUT")
         rowClicked = $(this).parent().parent();
         renderModal("plates/" + $(this).val() + "/edit", submitEdit);
     });
-    $("button[name=Delete]").click(function () {
+    $(document).on("click","button[name=Delete]",function () {
         remove($(this).val(), $(this).closest('tr'));
     });
 }
@@ -74,13 +74,15 @@ function getSubmit(url, method) {
         ajaxRequest(url, method, data, function (response) {
             alertify.success(response.message);
             closeModal($('#modalBox'));
-            ren_spinner(false);       
-            if (method == "PUT") {
+            ren_spinner(false);      
+            updateTable(response.html); 
+         /*   if (method == "PUT") {
                 updateRow(rowClicked, response.html);
             } else {
-                $("tbody").append(response.html)
+               
+                updateTable(response.html);
                 loadEvents();
-            }
+            }*/
         });
 
     }

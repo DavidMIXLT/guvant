@@ -9,6 +9,7 @@ Route::get('/panel', function () {
 })->name('panel');
 
 Route::post('panel/NumberOfItems','PaginationController@setNumberOfItems');
+
 Route::post('panel/filter','PaginationController@filter');
 
 //--------------------------------------------------------------------------------------------------------------------//
@@ -18,13 +19,14 @@ Route::post('panel/filter','PaginationController@filter');
 Route::get('panel/products/entrada', 'ProductController@printIncomingProductOrders')->name('entradaProducto');
 
 Route::post('panel/products/masDel', 'ProductController@massiveElimination');
+
 Route::resource('/panel/products', 'ProductController');
 
 
 
 //--------------------------------------------------------------------------------------------------------------------//
 /**
- * Products Plates
+ *  Plates
  */
 Route::resource('/panel/plates', 'PlateController');
 //--------------------------------------------------------------------------------------------------------------------//
@@ -35,3 +37,11 @@ Route::resource('/panel/categories', 'CategoryController');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//--------------------------------------------------------------------------------------------------------------------//
+/**
+ *  Menus
+ */
+Route::resource('/panel/menus', 'MenusController');
+//--------------------------------------------------------------------------------------------------------------------//

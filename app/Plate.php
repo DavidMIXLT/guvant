@@ -30,4 +30,8 @@ class Plate extends Model
         }
         return $a;
     }
+    public function menu()
+    {
+        return $this->belongsToMany(Menu::class);
+    }
 }
