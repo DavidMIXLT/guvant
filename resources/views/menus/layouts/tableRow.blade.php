@@ -6,9 +6,9 @@
         </div>
     </td>
     <td class="Id">{{$menu->id}}</td>
-    <td class="Name">{{$menu->name}}</a>
+    <td class="Name">{{$menu->name}}
     </td>
-    <td class="Price">{{$menu->price}}</a>
+    <td class="Price">{{$menu->price}}
     </td>
     <td>
         <div class="container">

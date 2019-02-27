@@ -110,8 +110,31 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id,Request $request)
     {
-        //
+        if ($id == -1) {
+            $decode = json_decode($request->getContent(), true);
+            Menu::destroy($decode['listofid']);
+
+        } else {
+            Menu::destroy($id);
+        }
+
+        return response()->json([
+            'message' => __('messages.deleted'),
+
+        ],200);
+    }
+
+
+    public function newGroup(Request $request){
+        if($request->ajax()){
+            
+            $html = view('menus.layouts.groups',['title' => $request->id])->render();
+            return response()->json([
+                'html' => $html,
+
+            ],200);
+        }
     }
 }

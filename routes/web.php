@@ -43,5 +43,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 /**
  *  Menus
  */
+Route::post('/panel/menus/newGroup', 'MenusController@newGroup');
 Route::resource('/panel/menus', 'MenusController');
 //--------------------------------------------------------------------------------------------------------------------//

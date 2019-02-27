@@ -65,12 +65,11 @@
             @endforeach
         </tbody>
     </table>
-    
-   {{-- Paginacion  --}}
-    <div class="container pagination">
+</div>
+  {{-- Paginacion  --}}
+  <div class="container pagination">
         @include('layouts.pagination',['object' => $products])
     </div>
  
-</div>
     @include("layouts.actions")
 @endsection

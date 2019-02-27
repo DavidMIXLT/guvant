@@ -4,7 +4,7 @@
 @section('title','Crear Menu')
 
 @section('content')
-   
+    
         @include('menus.form.inputs')
     
 @endsection
