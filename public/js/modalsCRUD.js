@@ -301,7 +301,7 @@ function renderModal(url, submit_Func, success_func) {
 }
 //-----------------------------------------------------------------------------------//
 /**
- * Obtiene todos los IDS de los checkbox selecionados en productos.index
+ * Obtiene todos los IDS de los checkbox selecionados
  *
  * @return Response AJAX
  */
