@@ -58,7 +58,8 @@ class ProductController extends Controller
             return response()->json([
                 'html' => $a,
                 'paginationHTML' => $paginationHTML,
-
+                'products' => $products,
+ 
             ], 200);
 
         } else {

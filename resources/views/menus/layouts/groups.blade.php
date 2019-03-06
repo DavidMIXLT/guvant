@@ -18,11 +18,11 @@
     </div>
     <div id="collapse{{$title}}" class="collapse" aria-labelledby="heading{{$title}}" data-parent="#accordion">
         <table class="table table-striped">
-            <thead class="thead-dark">
+            <thead class="thead">
                 <tr>
-                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
                     <th scope="col">Nombre</th>
-                    <th scope="col"><button type="button" class="btn btn-success btn-sm">Añadir</button></th>
+                    <th scope="col"><button name="addItems" type="button" class="btn btn-success btn-sm">Añadir</button></th>
                 </tr>
             </thead>
             <tbody>
