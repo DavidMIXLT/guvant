@@ -5,6 +5,7 @@
   </div>
 </div>
 <button name="CreateGroup" type="button" class="btn btn-success m-3">Crear grupo</button>
+
 <div id="accordion" class="mb-3">
   {{-----------------------------------------------------------------------------------------------------}}
  @include('menus.layouts.groups',["title" => "Entrantes"])

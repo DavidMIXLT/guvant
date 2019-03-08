@@ -137,4 +137,17 @@ class MenusController extends Controller
             ],200);
         }
     }
+
+    public function searchModal(Request $request){
+        if($request->ajax()){
+            
+            $html = view('menus.layouts.search',["id" => 'ModalSearch'])->render();
+            return response()->json([
+                'html' => $html,
+
+            ],200);
+        }else{
+            return "No permission";
+        }
+    }
 }

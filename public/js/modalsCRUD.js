@@ -4,21 +4,46 @@ var MaxItemsTable = 5;
 var animationsDelay = 50;
 var animationTimeOut = 50;
 var filterActive = false;
+var NumberOfModals = 0;
+var zIndex = 2000;
+var LastModalID;
+var selectorPagination = "tbody";
+//-----------------------------------------------------------------------------------//
+
+/**
+ * Evento que se dispara al canviar de pagina en el paginator
+ */
+var eventChangePage = document.createEvent('Event');
+eventChangePage.initEvent('ChangePage', true, true);
+
 
 //-----------------------------------------------------------------------------------//
 $(document).ready(function () {
+
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar, #content').toggleClass('active');
+        $('.collapse.in').toggleClass('in');
+        $('a[aria-expanded=true]').attr('aria-expanded', 'false');
+    });
+
+    $(document).on('click', "button[name=closeModal]", function () {
+
+        closeModal($(this).parents().eq(3));
+    });
+
     $("#SelectAll").click(function () {
         selectAll();
     });
     $(document).on("hidden.bs.modal", function () {
-        $("#modalBox").remove();
+
+        $('.modal-backdrop').css('z-index', 100);
     });
 
 
     //-----------------------------------------------------------------------------------//
     if (getCookie("NumberOfItems") > 0) {
         $("#NumberOfElements").val(getCookie("NumberOfItems"));
-    }else{
+    } else {
         $("#NumberOfElements").val(5)
     }
 
@@ -156,10 +181,11 @@ function updateNumberOfRows() {
  * @param {Filas que envia el servidor} html 
  */
 function updateTable(html) {
+
     console.log("Updating table")
     updateNumberOfRows();
     if (numberOfItems < MaxItemsTable && html != null) {
-        $("tbody").append(html);
+        $(selectorPagination).append(html);
         fadeInAll();
     } else if (numberOfItems >= 5) {
         nextPage();
@@ -177,15 +203,23 @@ function updateTable(html) {
  * Canvia la pagina de la tabla
  * @param {URL para obtener los items de la nueva pagina} url 
  */
-function changePageTable(url) {
+
+
+function changePageTable(url, selector) {
+
 
     EmptyContent();
     ajaxRequest(url, 'GET', null, function (res) {
-        emptyTable();
-        $("tbody").append(res.html);
+        if (selectorPagination == "#AvaibleList") {
+            renderItemsSearchBox(res);
+        } else {
+            emptyTable();
+            $(selectorPagination).append(res.html);
+        }
         updatePaginationLinks(res.paginationHTML);
         fadeInAll();
         ren_spinner(false);
+        document.dispatchEvent(eventChangePage);
     });
 }
 
@@ -236,10 +270,13 @@ function previusPage() {
  * Vacia todo el contenido de las filas de la tabla
  */
 function EmptyContent() {
-    $('ProductID').html('');
-    $('ProductName').html('');
-    $('ProductDescription').html('');
-    $('ProductDate').html('');
+    if (selectorPagination == 'tbody') {
+
+        $('ProductID').html('');
+        $('ProductName').html('');
+        $('ProductDescription').html('');
+        $('ProductDate').html('');
+    }
 }
 
 
@@ -286,12 +323,28 @@ function ren_spinner($ren) {
  * @param {Funcion ejecutada cuando el Modal a sido renderizado} success_func
  */
 
-function renderModal(url, submit_Func, success_func) {
+
+function renderModal(url, submit_Func, success_func, id) {
+
+    if (id === undefined) {
+        id = "#modalBox";
+    }
+
     ajaxRequest(url, "GET", null, function (response) {
+        NumberOfModals++;
+        console.log("Numero de modals " + NumberOfModals);
+        LastModalID = id;
+
         $("body").append(response.html);
-        $("#modalBox").modal("show");
+        console.log(id)
+        $(id).modal("show");
         ren_spinner(false);
 
+        if (NumberOfModals > 1) {
+            zIndex += 10;
+            $('.modal-backdrop').first().css('z-index', zIndex);
+            $(id).css('z-index', zIndex + 10);
+        }
         if (success_func != null) {
             success_func(response);
         }
@@ -353,7 +406,7 @@ function ajaxRequest(url, type, data, success) {
         data: data,
         success: success,
         error: function (xhr) {
-            alertify.alert("Error", "<pre style='height:400px'>"+xhr.responseText+"</pre>");
+            alertify.alert("Error", "<pre style='height:400px'>" + xhr.responseText + "</pre>");
             closeModal($("#modalBox"));
             console.log("---AJAX Error---");
             console.log(xhr.responseText);
@@ -370,11 +423,6 @@ function ajaxRequest(url, type, data, success) {
  */
 
 function addEventListernerModal(submit_Func) {
-    $("button[name=closeModal]").click(function () {
-     
-        closeModal($("#modalBox"));
-    });
-
     $("button[name=submitEdit]").click(function () {
         console.log("Sending")
         submit_Func();
@@ -386,12 +434,21 @@ function addEventListernerModal(submit_Func) {
  *  @param Modal modal
  */
 function closeModal(Modal) {
-    console.log("Closing")
+
     Modal.modal("hide");
-    Modal.remove();
-    $('body').removeClass('modal-open');
-    $('body').removeAttr("style");
-    $('.modal-backdrop').remove();
+
+    Modal.find('.modal-backdrop ')
+    setTimeout(() => {
+        Modal.remove();
+    }, 1000);
+    NumberOfModals--;
+    console.log("Numero de modals CLOSE " + NumberOfModals);
+    if (NumberOfModals == 0) {
+        $('body').removeClass('modal-open');
+        $('body').removeAttr("style");
+    }
+
+
 }
 //-----------------------------------------------------------------------------------//
 /**
