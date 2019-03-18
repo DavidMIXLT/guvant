@@ -4,18 +4,11 @@ namespace AlaCartaYa;
 
 use Illuminate\Database\Eloquent\Model;
 
+
 class Menu extends Model
 {
     
-    public function plates()
-    {
-        return $this->belongsToMany(Plate::class);
-    }
-    
-    public function products()
-    {
-        return $this->belongsToMany(Product::class);
-    }
+
 
     public function groups()
     {

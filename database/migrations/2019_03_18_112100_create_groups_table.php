@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoryMenuPlate extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateCategoryMenuPlate extends Migration
      */
     public function up()
     {
-        Schema::create('menu_plate', function (Blueprint $table) {
-            $table->integer('menu_id')->unsigned()->references('id')->on('category')->onDelete('cascade');
-            $table->integer('plate_id')->unsigned()->references('id')->on('products')->onDelete('cascade');
+        Schema::create('groups', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateCategoryMenuPlate extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menu_plate');
+        Schema::dropIfExists('groups');
     }
 }

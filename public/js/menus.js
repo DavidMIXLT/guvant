@@ -8,7 +8,7 @@ $(document).ready(function () {
      * Evento ejecutado al hacer clic en el boton create
      */
     $("button[name=Create]").click(function () {
-        renderModal("menus/create", submit);
+        renderModal("menus/create", submit, null);
 
     });
     /**
@@ -20,14 +20,14 @@ $(document).ready(function () {
     /**
      * Evento dentro del modal que hace que se elimine un grupo
      */
-    $(document).on('click', 'button[name=Delete]', function () {
+    $("tbody").on('click', 'button[name=Delete]', function () {
         remove($(this).parent().parent().parent().find(".Id").text());
 
     });
     /**
      * 
      */
-    $(document).on('click', 'button[name=Edit]', function () {
+    $("tbody").on('click', 'button[name=Edit]', function () {
         var url = "menus/" + $(this).parent().parent().parent().find(".Id").text() + "/edit";
 
 
@@ -59,7 +59,7 @@ $(document).ready(function () {
 
     $(document).on('click', 'button[name=addItems]', function () {
         Groupid = "#" + $(this).closest('div').attr('id');
-        renderModal('menus/searchModal', saveItemsSearchModal, loadEventSearchBox, '#ModalSearch');
+        renderModal('menus/searchModal', saveItemsSearchModal, null, '#ModalSearch');
         loadIDs(Groupid);
     });
 
@@ -74,7 +74,11 @@ $(document).ready(function () {
         backButton();
     })
 
-
+    $(document).on('click','button[name=Edit]',function(){
+        var url = 'menus/' + $(this).parents('tr').find('.Id').html() + '/edit';
+        console.log(url) 
+        renderModal(url);
+    });
     console.log("----- Menus.js Loaded -----");
 
 
@@ -166,6 +170,51 @@ var loadEventSearchBox = function () {
 }
 var submit = function () {
 
+    var GroupName;
+    var Groups = new Array;
+    var PlatesID;
+    var ProductsID;
+    var Menu = new Object();
+
+
+    $('#accordion').children('.accordion').each(function () {
+        GroupName = $(this).find('.btn.btn-link').html().trim();
+        PlatesID = new Array;
+        ProductsID = new Array;
+        var Group = new Object();
+        console.log("GroupName " + GroupName);
+
+        $(this).find('tbody').children('tr').each(function () {
+            console.log("Hola")
+            switch ($(this).data('type')) {
+                case "products":
+                    ProductsID.push($(this).data('id'));
+                    break;
+
+                case "plates":
+                    PlatesID.push($(this).data('id'))
+                    break;
+            }
+        });
+
+        Group.name = GroupName.trim();
+        Group.PlatesID = PlatesID;
+        Group.ProductsID = ProductsID;
+        Groups.push(Group);
+
+    });
+
+    Menu.name = $('#name').val();
+    console.log($('#name').val())
+    Menu.price = $('#price').val();
+    Menu.groups = Groups;
+    console.log("aaa")
+    ajaxRequest('menus','post',JSON.stringify(Menu),function(res){
+ 
+        closeModal($('#modalBox'));
+        ren_spinner(false);
+        updateTable(res.html)
+    });
 }
 
 function EndEditGroup(id) {

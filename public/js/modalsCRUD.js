@@ -361,7 +361,7 @@ function renderModal(url, submit_Func, success_func, id) {
         NumberOfModals++;
         console.log("Numero de modals " + NumberOfModals);
         LastModalID = id;
-
+        console.log("TEST: " + response.test)
         $("body").append(response.html);
         console.log(id)
         $(id).modal("show");
@@ -462,7 +462,7 @@ function addEventListernerModal(submit_Func) {
  */
 function closeModal(Modal) {
 
-    Modal.modal("hide");
+    Modal.modal("toggle");
 
     Modal.find('.modal-backdrop ')
     setTimeout(() => {
@@ -471,8 +471,13 @@ function closeModal(Modal) {
     NumberOfModals--;
     console.log("Numero de modals CLOSE " + NumberOfModals);
     if (NumberOfModals == 0) {
+        console.log("CERRAR TODO")
         $('body').removeClass('modal-open');
         $('body').removeAttr("style");
+    }else{
+        setTimeout(function(){
+            $('body').addClass('modal-open');
+          }, 500);
     }
 
 

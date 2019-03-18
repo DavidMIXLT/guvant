@@ -2,8 +2,11 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
+use AlaCartaYa\Group;
 use AlaCartaYa\Menu;
 use AlaCartaYa\Pagination;
+use AlaCartaYa\Plate;
+use AlaCartaYa\Product;
 use Illuminate\Http\Request;
 
 class MenusController extends Controller
@@ -50,10 +53,11 @@ class MenusController extends Controller
         if ($request->ajax()) {
 
             $view = view('menus.create', compact('products'))->render();
+
             return response()->json([
                 'status' => 'success',
                 'html' => $view,
-    
+
             ]);
         }
 
@@ -67,7 +71,36 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $decode = json_decode($request->getContent(), true);
+
+        $menu = new Menu();
+
+        $menu->name = $decode['name'];
+        $menu->price = $decode['price'];
+
+        $menu->save();
+
+        foreach ($decode['groups'] as $group) {
+            $newGroup = new Group();
+            $newGroup->name = $group['name'];
+            $newGroup->save();
+
+            $Products = Product::find($group['ProductsID']);
+            $Plates = Plate::find($group['PlatesID']);
+            $newGroup->plates()->attach($Plates);
+            $newGroup->products()->attach($Products);
+
+            $menu->groups()->attach($newGroup);
+        }
+        $html = view("menus.layouts.tableRow",compact('menu'))->render();
+
+        return response()->json([
+            'status' => 'success',
+            'html' => $html,
+            'message' =>  __('messages.successfullyCreated', ["Object" => $menu->name])
+
+        ]);
     }
 
     /**
@@ -87,9 +120,16 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Menu $menu)
     {
-        //
+        $groups = $menu->groups();
+        $html = view("menus.edit",compact('menu'))->render();
+
+        return response()->json([
+            'status' => 'success',
+            'html' => $html,
+
+        ]);
     }
 
     /**
@@ -110,43 +150,52 @@ class MenusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,Request $request)
+    public function destroy($id, Request $request)
     {
         if ($id == -1) {
             $decode = json_decode($request->getContent(), true);
-            Menu::destroy($decode['listofid']);
+            $menus = Menu::find($decode['listofid']);
+            foreach ($menus as $menu) {
+              $menu->groups()->delete();
+              $menu->delete();
+            }
+         
 
         } else {
-            Menu::destroy($id);
+            $menu = Menu::find($id);
+            $menu->groups()->delete();
+            $menu->delete();
+
         }
 
         return response()->json([
             'message' => __('messages.deleted'),
 
-        ],200);
+        ], 200);
     }
 
+    public function newGroup(Request $request)
+    {
+        if ($request->ajax()) {
 
-    public function newGroup(Request $request){
-        if($request->ajax()){
-            
-            $html = view('menus.layouts.groups',['title' => $request->id])->render();
+            $html = view('menus.layouts.groups', ['title' => $request->id])->render();
             return response()->json([
                 'html' => $html,
 
-            ],200);
+            ], 200);
         }
     }
 
-    public function searchModal(Request $request){
-        if($request->ajax()){
-            
-            $html = view('menus.layouts.search',["id" => 'ModalSearch'])->render();
+    public function searchModal(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $html = view('menus.layouts.search', ["id" => 'ModalSearch'])->render();
             return response()->json([
                 'html' => $html,
 
-            ],200);
-        }else{
+            ], 200);
+        } else {
             return "No permission";
         }
     }

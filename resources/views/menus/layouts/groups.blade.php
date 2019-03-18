@@ -1,14 +1,14 @@
-<div id="accordion{{$title}}" class="card m-1 accordion">
+<div id="accordion{{preg_replace('/\s+/', '', $title)}}" class="card m-1 accordion">
     <div class="card-header" id="headingTwo">
         <h5 class="mb-0">
             <div class="container edit d-none">
-                <input class="form-control d-inline" placeholder="Introduce el titulo del grupo" type="text" value="{{$title}}">
+                <input class="form-control d-inline" placeholder="Introduce el titulo del grupo" type="text" value="{{preg_replace('/\s+/', '', $title)}}">
                 <button name="send" type="button" class="btn btn-success btn-small mt-2 float-right">✓</button>
             </div>
             <div class="noEdit">
 
-                <button class="btn btn-link collapsed collapseButton" data-toggle="collapse" data-target="#collapse{{$title}}" aria-expanded="false"
-                    aria-controls="collapseTwo">
+                <button class="btn btn-link collapsed collapseButton" data-toggle="collapse" data-target="#collapse{{preg_replace('/\s+/', '', $title)}}"
+                    aria-expanded="false" aria-controls="collapseTwo">
                     {{$title}}
                 </button>
                 <button name="editGroup" type="button" class="btn btn-primary btn-small float-right">Editar</button>
@@ -16,7 +16,8 @@
             </div>
         </h5>
     </div>
-    <div id="collapse{{$title}}" class="collapse" aria-labelledby="heading{{$title}}" data-parent="#accordion">
+    <div id="collapse{{preg_replace('/\s+/', '', $title)}}" class="collapse" aria-labelledby="heading{{preg_replace('/\s+/', '', $title)}}"
+        data-parent="#accordion">
         <table class="table table-striped">
             <thead class="thead">
                 <tr>
@@ -26,7 +27,19 @@
                 </tr>
             </thead>
             <tbody>
-
+                @isset($group) @foreach ($group->plates as $plate)
+                <tr data-type="plates" data-id="{{$plate->id}}">
+                    <td>{{$plate->id}}</td>
+                    <td>{{$plate->name}}</td>
+                    <td></td>
+                </tr>
+                @endforeach @foreach ($group->products as $product)
+                <tr data-type="products" data-id="{{$product->id}}">
+                    <td>{{$product->id}}</td>
+                    <td>{{$product->name}}</td>
+                    <td></td>
+                </tr>
+                @endforeach @endisset
             </tbody>
         </table>
 
