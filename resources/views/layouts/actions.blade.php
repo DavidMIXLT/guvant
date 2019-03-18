@@ -1,4 +1,4 @@
-<div class="container pb-5">
+<div class="container pb-5 float-left">
     <div class="dropdown m-2 d-inline">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">

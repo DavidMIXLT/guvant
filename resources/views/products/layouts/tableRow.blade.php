@@ -1,9 +1,10 @@
 <tr class="DataRow invisible">
     <td>
-        <div class="form-check ">
-            <input type="checkbox" class="form-check-input" name="checkBoxActionDelete" value="{{$product->id}}">
-            <label class="form-check-label" for="checkBoxAction"></label>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" name="checkBoxActionDelete" class="custom-control-input" id="customCheck{{$product->id}}" value="{{$product->id}}">
+            <label class="custom-control-label" for="customCheck{{$product->id}}"></label>
         </div>
+        
     </td>
     <td class="ProductID">{{$product->id}}</td>
     <td class="ProductName">{{$product->name}}</a>

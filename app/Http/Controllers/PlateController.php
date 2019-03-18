@@ -28,6 +28,7 @@ class PlateController extends Controller
             return response()->json([
                 'html' => $a,
                 'paginationHTML' => $paginationHTML,
+                'items' => $plates,
 
             ], 200);
         } else {

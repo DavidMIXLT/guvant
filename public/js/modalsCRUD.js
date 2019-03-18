@@ -5,7 +5,7 @@ var animationsDelay = 50;
 var animationTimeOut = 50;
 var filterActive = false;
 var NumberOfModals = 0;
-var zIndex = 2000;
+var zIndex = 1500;
 var LastModalID;
 var selectorPagination = "tbody";
 //-----------------------------------------------------------------------------------//
@@ -19,28 +19,40 @@ eventChangePage.initEvent('ChangePage', true, true);
 
 //-----------------------------------------------------------------------------------//
 $(document).ready(function () {
-
+    /**
+     * Evento que oculta la barra de navegacion de la izquierda
+     */
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar, #content').toggleClass('active');
         $('.collapse.in').toggleClass('in');
         $('a[aria-expanded=true]').attr('aria-expanded', 'false');
     });
-
+    /**
+     * Cierra el modal al que se le haya hecho clic en el boton closeModal
+     */
     $(document).on('click', "button[name=closeModal]", function () {
 
         closeModal($(this).parents().eq(3));
     });
-
+    /**
+     * Evento encargado de selecionar todas las  checkbox
+     */
     $("#SelectAll").click(function () {
         selectAll();
     });
+    /**
+     * Evento encargado de cuando el modal de boostrap se ha ocultado haciendo clic fuera de colocarle un z-index correcto
+     */
     $(document).on("hidden.bs.modal", function () {
 
-        $('.modal-backdrop').css('z-index', 100);
+        $('.modal-backdrop').css('z-index', 1000);
     });
 
 
     //-----------------------------------------------------------------------------------//
+    /**
+     * Encagado de obtener la cookie sobre el numero maximo de elemento en las tablas y colocarlo en el dropdown 
+     */
     if (getCookie("NumberOfItems") > 0) {
         $("#NumberOfElements").val(getCookie("NumberOfItems"));
     } else {
@@ -48,7 +60,9 @@ $(document).ready(function () {
     }
 
     //-----------------------------------------------------------------------------------//
-
+    /**
+     * Evento encargado de las Cards de boostrap de pasar los elementos a los que se le haga clic de una lista a la otra
+     */
     $(document).on("click", ".Item", function () {
         console.log(
             $(this)
@@ -60,11 +74,17 @@ $(document).ready(function () {
                 .parent()
                 .attr("id") == "AvaibleList"
         ) {
-            $(this).appendTo("#SelectedList");
+            $(this).prependTo("#SelectedList");
         } else {
-            $(this).appendTo("#AvaibleList");
+            $(this).prependTo("#AvaibleList");
         }
     });
+
+    //-----------------------------------------------------------------------------------//
+
+    /**
+     * Encargado de limitar el numero de elementos que devuelve laravel para
+     */
     $("#NumberOfElements").change(function () {
         MaxItemsTable = $(this).val();
 
@@ -84,7 +104,10 @@ $(document).ready(function () {
     fadeInAll();
 });
 
-
+/**
+ * Funcion que sube a laravel el numero de Elementos por pagina
+ * @param {*} number 
+ */
 function PostNumberofItems(number) {
     var data = "NumberOfItems=" + number;
     var url = "./NumberOfItems";
@@ -96,6 +119,10 @@ function PostNumberofItems(number) {
         console.log(r.message)
     });
 }
+/**
+ * Funcion encargada de actualizar las paginas
+ * @param {*} url 
+ */
 function updatePage(url) {
     if (!filterActive) {
         console.log("CHANGE")
@@ -211,7 +238,7 @@ function changePageTable(url, selector) {
     EmptyContent();
     ajaxRequest(url, 'GET', null, function (res) {
         if (selectorPagination == "#AvaibleList") {
-            renderItemsSearchBox(res);
+            renderItemsSearchBox(res, type);
         } else {
             emptyTable();
             $(selectorPagination).append(res.html);

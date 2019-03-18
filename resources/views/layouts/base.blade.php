@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{ asset('css/base.css')}}">
-
     <script src="{{asset('js/libraries/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('js/libraries/bootstrap.bundle.min.js')}}"></script>
     @yield('header')
@@ -23,7 +22,7 @@
             <div class="sidebar-header">
                 <img class="img-fluid" src="{{asset('img/logo.png')}}">
                 <form class="form-inline pt-2">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
                 </form>
             </div>
 
@@ -33,14 +32,12 @@
 
                 <li class="active">
                     <a href="{{route('products.index')}}" aria-expanded="false">Productos</a>
-
                 </li>
                 <li>
-                    <a href="#">About</a>
+                    <a class="nav-link" href="{{route('orders.index')}}">Pedidos</a>
                 </li>
                 <li>
-                    <a href="{{route('menus.index')}}" aria-expanded="false" class="dropdown-toggle">Menus</a>
-
+                    <a href="{{route('menus.index')}}" aria-expanded="false">Menus</a>
                 </li>
                 <li>
                     <a href="{{route('plates.index')}}">Platos</a>
@@ -51,19 +48,14 @@
             </ul>
 
             <ul class="list-unstyled CTAs">
-                <li>
-                    <a href="https://bootstrapious.com/tutorial/files/sidebar.zip" class="download">Download source</a>
-                </li>
-                <li>
-                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" class="article">Back to article</a>
-                </li>
+          
             </ul>
         </nav>
 
         <!-- Page Content  -->
         <div id="content">
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -93,7 +85,8 @@
                     </div>
                 </div>
             </nav>
-            <h1 class="m-b-5">@yield('subtitle')</h1>
+
+
             @yield('content')
         </div>
 

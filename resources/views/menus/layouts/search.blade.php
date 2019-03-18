@@ -18,6 +18,8 @@
                         Platos >
                     </li>
                 </div>
+                <li id="pagination" class="list-group-item"> </li>
+                <li class="list-group-item"> <button name="back" class="btn btn-primary">Volver Atras </button> </li>
             </ul>
         </div>
     </div>

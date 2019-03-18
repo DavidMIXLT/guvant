@@ -2,7 +2,7 @@
 @section('title','Productos') 
 @section('subtitle') Gestion de productos
 @endsection
-    
+ 
 @section('header')
 <script src="{{asset('js/modalsCRUD.js')}}"></script>
 <script src="{{asset('js/products.js')}}"></script>
@@ -16,13 +16,11 @@
 @section('content')
 
 
-<br/>
-
-    {{--  Botones con las opciones  --}}
-<div class="d-flex">
-    <button name="Create" class="btn btn-success m-1">@lang('products/index.createProduct')</button>
+<br/> {{-- Botones con las opciones --}}
+<div class="d-flex ButtonBar mb-4">
+    <button name="Create" class="btn m-1">@lang('products/index.createProduct')</button>
     <div id="dropDown_CAT" class="dropdown m-1">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true"
+        <button class="btn btn-light dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
               Categorias
             </button>
@@ -31,7 +29,7 @@
             <div class="dropCat ml-2 custom-control custom-checkbox">
                 <input name="categoryCheckBox" type="checkbox" class="custom-control-input" id="{{$category->id}}">
                 <label class="custom-control-label" for="{{$category->id}}">{{$category->name}}</label>
-                
+
             </div>
             @endforeach
             <button type="button" name="applyFilter" class="btn btn-primary float-right mt-3 mr-2">Aplicar Filtro</button>
@@ -40,11 +38,11 @@
 </div>
 
 
-      {{-- INICIO - Tabla productos  --}}
+{{-- INICIO - Tabla productos --}}
 
 <div class="table-responsive">
     <table class="table" id="productTable">
-        <thead class="thead-dark">
+        <thead>
             <tr>
                 <th scope="col">
                     <div class="spinner-border invisible" role="status">
@@ -61,15 +59,13 @@
         </thead>
         <tbody>
             @foreach ($products as $product)
-                 @include('products.layouts.tablerow',["product" => $product,"categories" => $product->categories])
+    @include('products.layouts.tablerow',["product" => $product,"categories" => $product->categories])
             @endforeach
         </tbody>
     </table>
 </div>
-  {{-- Paginacion  --}}
-  <div class="container pagination">
-        @include('layouts.pagination',['object' => $products])
-    </div>
- 
-    @include("layouts.actions")
+    @include("layouts.actions") {{-- Paginacion --}}
+<div class="container pagination">
+    @include('layouts.pagination',['object' => $products])
+</div>
 @endsection

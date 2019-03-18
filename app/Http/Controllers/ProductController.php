@@ -58,7 +58,7 @@ class ProductController extends Controller
             return response()->json([
                 'html' => $a,
                 'paginationHTML' => $paginationHTML,
-                'products' => $products,
+                'items' => $products,
  
             ], 200);
 
