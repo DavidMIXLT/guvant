@@ -110,7 +110,7 @@ var submit = function () {
 
 
     var menu = modalGetData();
-    ajaxRequest('menus', 'post', JSON.stringify(Menu), function (res) {
+    ajaxRequest('menus', 'post', JSON.stringify(menu), function (res) {
 
         closeModal($('#modalBox'));
         ren_spinner(false);
