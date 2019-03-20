@@ -1,4 +1,4 @@
-<div id="accordion{{preg_replace('/\s+/', '', $title)}}" class="card m-1 accordion">
+<div data-groupid="@isset($group) {{$group->id}}@endisset" id="accordion{{preg_replace('/\s+/', '', $title)}}" class="card m-1 accordion">
     <div class="card-header" id="headingTwo">
         <h5 class="mb-0">
             <div class="container edit d-none">

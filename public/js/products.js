@@ -180,20 +180,5 @@ function loadTableSortEvents() {
 }
 
 
-//-----------------------------------------------------------------------------------//
-/**
-  * Actualiza las columnas con los nuevos datos
-  *  @param OldRow Columna actual renderiza en la tabla
-  *  @param newRow Nueva columna con los datos actualizados
-  */
-function updateRow(OldRow, newRow) {
-  $(newRow).insertBefore(OldRow);
-  OldRow.remove();
-  fadeInLeft($('.DataRow.invisible'));
-
-
-}
-//-----------------------------------------------------------------------------------//
-
 
 

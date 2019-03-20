@@ -93,12 +93,12 @@ class MenusController extends Controller
 
             $menu->groups()->attach($newGroup);
         }
-        $html = view("menus.layouts.tableRow",compact('menu'))->render();
+        $html = view("menus.layouts.tableRow", compact('menu'))->render();
 
         return response()->json([
             'status' => 'success',
             'html' => $html,
-            'message' =>  __('messages.successfullyCreated', ["Object" => $menu->name])
+            'message' => __('messages.successfullyCreated', ["Object" => $menu->name]),
 
         ]);
     }
@@ -123,7 +123,7 @@ class MenusController extends Controller
     public function edit(Menu $menu)
     {
         $groups = $menu->groups();
-        $html = view("menus.edit",compact('menu'))->render();
+        $html = view("menus.edit", compact('menu'))->render();
 
         return response()->json([
             'status' => 'success',
@@ -141,7 +141,48 @@ class MenusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $decode = json_decode($request->getContent(), true);
+
+        $menu = Menu::find($id);
+
+        $menu->name = $decode['name'];
+        $menu->price = $decode['price'];
+
+        $menu->save();
+
+        foreach ($decode['groups'] as $group) {
+            $groupF = Group::where('id', '=', $group['GroupID'])->first();
+            if ($groupF === null) {
+                $newGroup = new Group();
+                $newGroup->name = $group['name'];
+                $newGroup->save();
+    
+                $Products = Product::find($group['ProductsID']);
+                $Plates = Plate::find($group['PlatesID']);
+                $newGroup->plates()->attach($Plates);
+                $newGroup->products()->attach($Products);
+    
+                $menu->groups()->attach($newGroup);
+            } else {
+                $groupF->name = $group['name'];
+                $groupF->save();
+                $Products = Product::find($group['ProductsID']);
+                $Plates = Plate::find($group['PlatesID']);
+                $groupF->plates()->sync($Plates);
+                $groupF->products()->sync($Products);
+
+                $menu->groups()->sync($groupF);
+            }
+
+        }
+        $html = view("menus.layouts.tableRow", compact('menu'))->render();
+
+        return response()->json([
+            'status' => 'success',
+            'html' => $html,
+            'message' => __('messages.successfullyCreated', ["Object" => $menu->name]),
+
+        ]);
     }
 
     /**
@@ -156,10 +197,9 @@ class MenusController extends Controller
             $decode = json_decode($request->getContent(), true);
             $menus = Menu::find($decode['listofid']);
             foreach ($menus as $menu) {
-              $menu->groups()->delete();
-              $menu->delete();
+                $menu->groups()->delete();
+                $menu->delete();
             }
-         
 
         } else {
             $menu = Menu::find($id);

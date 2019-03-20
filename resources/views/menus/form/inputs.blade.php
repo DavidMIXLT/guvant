@@ -9,7 +9,7 @@
 <div id="accordion" class="mb-3">
   @if (isset($menu))
     @foreach ($menu->groups as $group)
-      @include('menus.layouts.groups',["title" => $group->name,"group" => $group])
+      @include('menus.layouts.groups',["title" => $group->name, "group" => $group])
     @endforeach
   @else
     @include('menus.layouts.groups',["title" => "Entrantes"])

@@ -1,6 +1,13 @@
 var id = 1
 var Groupid;
 var GroupItemsId = [];
+//-----------------------------------------------------------------------------------//
+/**
+  * Variable usada para guardar la ultima columna que el usuario a hecho click
+  */
+ var RowClicked;
+//-----------------------------------------------------------------------------------//
+
 $(document).ready(function () {
     alertify.set('notifier', 'position', 'top-right');
 
@@ -29,7 +36,7 @@ $(document).ready(function () {
      */
     $("tbody").on('click', 'button[name=Edit]', function () {
         var url = "menus/" + $(this).parent().parent().parent().find(".Id").text() + "/edit";
-
+        RowClicked = $(this).parent().parent().parent();
 
     });
 
@@ -74,15 +81,45 @@ $(document).ready(function () {
         backButton();
     })
 
-    $(document).on('click','button[name=Edit]',function(){
+    $(document).on('click', 'button[name=Edit]', function () {
         var url = 'menus/' + $(this).parents('tr').find('.Id').html() + '/edit';
-        console.log(url) 
-        renderModal(url);
+        id = $(this).parents('tr').find('.Id').html();
+        renderModal(url, edit);
     });
     console.log("----- Menus.js Loaded -----");
 
 
 })
+
+var edit = function () {
+
+    var Menu = modalGetData();
+    ajaxRequest('menus/' + id, 'PUT', JSON.stringify(Menu), function (res) {
+
+        closeModal($('#modalBox'));
+        ren_spinner(false);
+        updateRow(RowClicked,res.html);
+    });
+
+}
+
+var loadEventSearchBox = function () {
+
+}
+var submit = function () {
+
+
+    var menu = modalGetData();
+    ajaxRequest('menus', 'post', JSON.stringify(Menu), function (res) {
+
+        closeModal($('#modalBox'));
+        ren_spinner(false);
+        updateTable(res.html)
+    });
+}
+
+
+
 
 function backButton() {
     clearSearchBox();
@@ -161,19 +198,13 @@ function renderItemsSearchBox(response) {
     clearExistingItems();
 }
 
-var loadEventSearchBox = function () {
 
-
-
-
-
-}
-var submit = function () {
-
+function modalGetData() {
     var GroupName;
     var Groups = new Array;
     var PlatesID;
     var ProductsID;
+    var GroupID;
     var Menu = new Object();
 
 
@@ -181,8 +212,9 @@ var submit = function () {
         GroupName = $(this).find('.btn.btn-link').html().trim();
         PlatesID = new Array;
         ProductsID = new Array;
+        GroupID = $(this).data('groupid');
         var Group = new Object();
-        console.log("GroupName " + GroupName);
+        console.log("GroupID " + GroupID);
 
         $(this).find('tbody').children('tr').each(function () {
             console.log("Hola")
@@ -200,6 +232,7 @@ var submit = function () {
         Group.name = GroupName.trim();
         Group.PlatesID = PlatesID;
         Group.ProductsID = ProductsID;
+        Group.GroupID = GroupID;
         Groups.push(Group);
 
     });
@@ -208,15 +241,9 @@ var submit = function () {
     console.log($('#name').val())
     Menu.price = $('#price').val();
     Menu.groups = Groups;
-    console.log("aaa")
-    ajaxRequest('menus','post',JSON.stringify(Menu),function(res){
- 
-        closeModal($('#modalBox'));
-        ren_spinner(false);
-        updateTable(res.html)
-    });
-}
 
+    return Menu
+}
 function EndEditGroup(id) {
     $(id).find('.collapseButton').html($(id).find('input').val());
     $(id).find('.edit').addClass('d-none');

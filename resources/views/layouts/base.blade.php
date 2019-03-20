@@ -30,19 +30,19 @@
 
             <ul class="list-unstyled components">
 
-                <li class="active">
+                <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" aria-expanded="false">Productos</a>
                 </li>
-                <li>
+                <li class="{{ Request::routeIs('orders.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('orders.index')}}">Pedidos</a>
                 </li>
-                <li>
+                <li class="{{ Request::routeIs('menus.index') ? 'active' : '' }}">
                     <a href="{{route('menus.index')}}" aria-expanded="false">Menus</a>
                 </li>
-                <li>
+                <li class="{{ Request::routeIs('plates.index') ? 'active' : '' }}">
                     <a href="{{route('plates.index')}}">Platos</a>
                 </li>
-                <li>
+                <li class="{{ Request::routeIs('categories.index') ? 'active' : '' }}">
                     <a href="{{route('categories.index')}}">Categorias</a>
                 </li>
             </ul>
