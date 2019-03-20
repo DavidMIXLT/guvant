@@ -508,7 +508,6 @@ function selectAll() {
     });
 }
 //-----------------------------------------------------------------------------------//
-//-----------------------------------------------------------------------------------//
 /**
   * Actualiza las columnas con los nuevos datos
   *  @param OldRow Columna actual renderiza en la tabla

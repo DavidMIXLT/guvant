@@ -26,6 +26,9 @@ $(document).ready(function () {
 /**
  * Carga los eventos o refresca los mismos  de los boton de mostrar,editar y eliminar
  */
+
+
+ // ------------------------ CRUD ----------------------------
 function loadEvents() {
 
     $(document).on("click","button[name=Show]",function () {

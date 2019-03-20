@@ -71,30 +71,51 @@ class MenusController extends Controller
      */
     public function store(Request $request)
     {
-
+        /**
+         * Descodifica la peticion AJAX
+         */
         $decode = json_decode($request->getContent(), true);
-
+//----------------------------------------------------------------------------\\
+        /**
+         * Se crea un menu vacio y despues se cargan los datos pasados por el AJAX
+         */
         $menu = new Menu();
 
         $menu->name = $decode['name'];
         $menu->price = $decode['price'];
 
         $menu->save();
-
+//----------------------------------------------------------------------------\\
+        /**
+         * Se recorre el array de grupos y luego se van creando
+         */
         foreach ($decode['groups'] as $group) {
             $newGroup = new Group();
             $newGroup->name = $group['name'];
             $newGroup->save();
-
+            //----------------------------------------------------------------------------\\
+            /**
+             * Se buscan los productos pasados y los platos y despues se hace un attach()
+             */
             $Products = Product::find($group['ProductsID']);
             $Plates = Plate::find($group['PlatesID']);
             $newGroup->plates()->attach($Plates);
             $newGroup->products()->attach($Products);
-
+            //----------------------------------------------------------------------------\\
+            /**
+             * Se hace un attach por ultimo al menu del grupo creado
+             */
             $menu->groups()->attach($newGroup);
+            //----------------------------------------------------------------------------\\
         }
+//----------------------------------------------------------------------------\\
+        /**
+         * RENDER
+         */
         $html = view("menus.layouts.tableRow", compact('menu'))->render();
-
+        /**
+         * RETURN
+         */
         return response()->json([
             'status' => 'success',
             'html' => $html,
@@ -147,7 +168,7 @@ class MenusController extends Controller
 
         $menu->name = $decode['name'];
         $menu->price = $decode['price'];
-   
+
         $menu->save();
 
         foreach ($decode['groups'] as $group) {
@@ -156,12 +177,12 @@ class MenusController extends Controller
                 $newGroup = new Group();
                 $newGroup->name = $group['name'];
                 $newGroup->save();
-    
+
                 $Products = Product::find($group['ProductsID']);
                 $Plates = Plate::find($group['PlatesID']);
                 $newGroup->plates()->attach($Plates);
                 $newGroup->products()->attach($Products);
-    
+
                 $menu->groups()->attach($newGroup);
             } else {
                 $groupF->name = $group['name'];

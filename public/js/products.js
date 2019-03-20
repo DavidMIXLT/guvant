@@ -13,6 +13,68 @@ $(document).ready(function () {
   loadEvents();
   console.log("----- Products.js Loaded -----");
 });
+
+//----------------------------------------------------------------------------\\
+/**
+ *  -----------------------CRUD-----------------------
+ */
+
+/**
+ * CRUD ejecutado para eliminar producto
+ */
+var remove = function (id) {
+
+  var ListOfID = new Array();
+  ListOfID.push(id);
+  console.log(ListOfID);
+  ajaxRequest("products/" + id, 'DELETE', null, function (response) {
+    console.log(response);
+    alertify.warning(response.message);
+    ren_RemoveRow(RowClicked);
+    ren_spinner(false);
+  });
+};
+
+
+/**
+ * CRUD ejecutado para editar producto
+ */
+var edit = function () {
+  var id = RowClicked.find(".ProductID").text();
+  ajaxRequest("products/" + id, 'PUT', serializeForm(), function (response) {
+    alertify.success(response.message);
+    updateRow(RowClicked, response.html);
+    closeModal($('#modalBox'));
+
+    ren_spinner(false);
+  });
+};
+
+/**
+ * CRUD ejecutado para crear un nuevo producto
+ */
+
+
+var submit = function () {
+
+  if (validateForm($("#modalForm"))) {
+
+    ajaxRequest("products", "POST", serializeForm(), function (response) {
+      alertify.success(response.message);
+
+      updateTable(response.html);
+      /**
+       * Cierra el modal y desactiva el spinner y actualiza el numero de Productos que hay en la tabla
+       */
+
+      closeModal($('#modalBox'));
+      ren_spinner(false);
+    });
+  }
+};
+//-----------------------------------------------------------------------------------//
+
+
 //-----------------------------------------------------------------------------------//
 /**
  * Carga los eventos de productos
@@ -51,31 +113,11 @@ function loadButtonTableEvents() {
   });
 
 }
-//-----------------------------------------------------------------------------------//
+//-----------------------------------------------------------------------------------\\
 /**
- * CRUD ejecutado para crear un nuevo producto
+ * De parametro requiere un formulario y lo valida
+ * @param Form form formulario a validar
  */
-
-
-var submit = function () {
-
-  if (validateForm($("#modalForm"))) {
-
-    ajaxRequest("products", "POST", serializeForm(), function (response) {
-      alertify.success(response.message);
-
-      updateTable(response.html);
-      /**
-       * Cierra el modal y desactiva el spinner y actualiza el numero de Productos que hay en la tabla
-       */
-
-      closeModal($('#modalBox'));
-      ren_spinner(false);
-    });
-  }
-};
-//-----------------------------------------------------------------------------------//
-
 function validateForm(form) {
   var valid = true;
   var name = $(form).find('input[name=name]').val().trim();
@@ -99,7 +141,14 @@ function validateForm(form) {
 
   return valid;
 }
-
+//-----------------------------------------------------------------------------------\\
+/**
+ * Muestra los errores del formulario
+ * @param {*} selectorInv 
+ * @param {*} selectorInput 
+ * @param {*} valid 
+ * @param {*} form 
+ */
 function displayFormErrors(selectorInv, selectorInput, valid, form) {
   if (!valid) {
     $(form).find(selectorInv).removeClass('invisible');
@@ -114,7 +163,11 @@ function displayFormErrors(selectorInv, selectorInput, valid, form) {
   }
 
 }
-
+//-----------------------------------------------------------------------------------\\
+/**
+ * Serializa el formulario del Modal Create de productos y lo devuelve
+ * 
+ */
 function serializeForm() {
   var CategoryList = new Array;
   $('#SelectedList').children().each(function () {
@@ -123,38 +176,8 @@ function serializeForm() {
   var data = $("#modalForm").serialize() + "&CategoryList=" + CategoryList;
   return data;
 }
-/**
- * CRUD ejecutado para eliminar producto
- */
-var remove = function (id) {
 
-  var ListOfID = new Array();
-  ListOfID.push(id);
-  console.log(ListOfID);
-  ajaxRequest("products/" + id, 'DELETE', null, function (response) {
-    console.log(response);
-    alertify.warning(response.message);
-    ren_RemoveRow(RowClicked);
-    ren_spinner(false);
-  });
-};
-
-//-----------------------------------------------------------------------------------//
-/**
- * CRUD ejecutado para editar producto
- */
-var edit = function () {
-  var id = RowClicked.find(".ProductID").text();
-  ajaxRequest("products/" + id, 'PUT', serializeForm(), function (response) {
-    alertify.success(response.message);
-    updateRow(RowClicked, response.html);
-    closeModal($('#modalBox'));
-
-    ren_spinner(false);
-  });
-};
-//-----------------------------------------------------------------------------------//
-
+//-----------------------------------------------------------------------------------\\
 /**
   * Carga los eventos para ordenar la tabla al pulsar en las cabecera
   */
@@ -178,6 +201,7 @@ function loadTableSortEvents() {
   });
 
 }
+//-----------------------------------------------------------------------------------\\
 
 
 

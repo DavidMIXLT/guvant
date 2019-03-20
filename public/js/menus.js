@@ -10,86 +10,98 @@ var GroupItemsId = [];
 
 $(document).ready(function () {
     alertify.set('notifier', 'position', 'top-right');
-
-    /**
-     * Evento ejecutado al hacer clic en el boton create
-     */
-    $("button[name=Create]").click(function () {
-        renderModal("menus/create", submit, null);
-
-    });
-    /**
-     * Evento ejecutado al hacer clic en el boton delete
-     */
-    $("button[name=delete]").click(function () {
-        renderModal("menus/create");
-    });
-    /**
-     * Evento dentro del modal que hace que se elimine un grupo
-     */
-    $("tbody").on('click', 'button[name=Delete]', function () {
-        remove($(this).parent().parent().parent().find(".Id").text());
-
-    });
-    /**
-     * 
-     */
-    $("tbody").on('click', 'button[name=Edit]', function () {
-        var url = "menus/" + $(this).parent().parent().parent().find(".Id").text() + "/edit";
-        RowClicked = $(this).parent().parent().parent();
-
-    });
-
-
+   
+   
     $("#MassiveDeleteButton").click(function () {
         massiveElimination("menus/-1");
     });
-    /**
-     * Evento boton dentro del modal de crear de Menus encargado de ejecutarse cuando se le da a crear un nuevo grupo
-     */
-    $(document).on('click', 'button[name=CreateGroup]', function () {
-        createGroup();
-
-    })
-    /**
-     * Evento encargado de editar un grupo cuando se le hace clic
-     */
-    $(document).on('click', 'button[name=editGroup]', function () {
-        EditGroup("#" + $(this).parents().eq(3).attr('id'), false)
-    })
-    /**
-     * Evento encargado de eliminar un grupo cuando se hace clic en eliminar
-     */
-    $(document).on('click', 'button[name=deleteGroup]', function () {
-        deleteGroup("#" + $(this).parents().eq(3).attr('id'), false)
-    })
 
     $(document).on('click', 'button[name=addItems]', function () {
         Groupid = "#" + $(this).closest('div').attr('id');
         renderModal('menus/searchModal', saveItemsSearchModal, null, '#ModalSearch');
         loadIDs(Groupid);
     });
+//----------------------------------------------------------------------------\\
+/**
+ * Eventos de dentro de modalSearch
+ */
 
+    //Ejecutado al hacer clic en productos
     $(document).on('click', '#Products', function () {
         loadItems('products');
 
     })
+    //Ejecutado al hacer clic en platos
     $(document).on('click', '#Plates', function () {
         loadItems('plates');
     })
+    //Ejecutado al hacer clic
     $(document).on('click', 'button[name=back]', function () {
         backButton();
     })
+ 
+//----------------------------------------------------------------------------\\
+    /**
+     * Eventos CRUD -- Modelo: Menu 
+     */
 
+     /**
+      * EDIT --- Evento ejecutado al hacer clic en el boton delete
+      */
     $(document).on('click', 'button[name=Edit]', function () {
         var url = 'menus/' + $(this).parents('tr').find('.Id').html() + '/edit';
         id = $(this).parents('tr').find('.Id').html();
         renderModal(url, edit);
     });
+     /**
+     * CREATE --- Evento ejecutado al hacer clic en el boton create
+     */
+    $("button[name=Create]").click(function () {
+        renderModal("menus/create", submit, null);
+
+    });
+    /**
+     * DELETE --- Evento ejecutado al hacer clic en el boton delete de la tabla
+     */
+    $("tbody").on('click', 'button[name=Delete]', function () {
+        remove($(this).parent().parent().parent().find(".Id").text());
+
+    });
+//----------------------------------------------------------------------------\\
+    /**
+     * Eventos CRUD -- Modelo: Group
+     */
+
+    /**
+     * CREATE --- Evento boton dentro del modal de crear de Menus encargado 
+     *            de ejecutarse cuando se le da a crear un nuevo grupo
+     */
+    $(document).on('click', 'button[name=CreateGroup]', function () {
+        createGroup();
+
+    })
+
+    /**
+     * EDIT --- Evento encargado de editar un grupo cuando se le hace clic
+     */
+    $(document).on('click', 'button[name=editGroup]', function () {
+        EditGroup("#" + $(this).parents().eq(3).attr('id'), false)
+    })
+
+    /**
+     * DELETE --- Evento encargado de eliminar un grupo cuando se hace clic en eliminar
+     */
+    $(document).on('click', 'button[name=deleteGroup]', function () {
+        deleteGroup("#" + $(this).parents().eq(3).attr('id'), false)
+    })
+//----------------------------------------------------------------------------\\
     console.log("----- Menus.js Loaded -----");
-
-
 })
+
+//----------------------------------------------------------------------------\\
+/**
+ *  -----------------------CRUD-----------------------
+ */
 
 var edit = function () {
 
@@ -103,9 +115,7 @@ var edit = function () {
 
 }
 
-var loadEventSearchBox = function () {
 
-}
 var submit = function () {
 
 
@@ -118,6 +128,14 @@ var submit = function () {
     });
 }
 
+function remove(id) {
+    ajaxRequest("menus/" + id, "DELETE", null, function (res) {
+        alertify.success(res.message);
+        updateTable();
+        ren_spinner(false);
+    });
+}
+//----------------------------------------------------------------------------\\
 
 
 
@@ -282,13 +300,7 @@ function createGroup() {
     });
 }
 
-function remove(id) {
-    ajaxRequest("menus/" + id, "DELETE", null, function (res) {
-        alertify.success(res.message);
-        updateTable();
-        ren_spinner(false);
-    });
-}
+
 
 function clearExistingItems() {
     console.log("Limpiar duplicados")

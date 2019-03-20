@@ -21,18 +21,33 @@ class PlateController extends Controller
   
     public function index(Request $request)
     {
-
+//----------------------------------------------------------------------------\\
+/**
+ * Generamos el paginate
+ */
         $plates = Plate::paginate(Pagination::getNumberofItems($request));
+//----------------------------------------------------------------------------\\
         if ($request->ajax()) {
-            $a = Plate::renderRows($plates);
+            /**
+             * Se renderizan las filas de la tabla y se renderiza tambien el pagination
+             */
+            $html = Plate::renderRows($plates);
+            
             $paginationHTML = view('layouts.pagination', ['object' => $plates])->render();
+//----------------------------------------------------------------------------\\
+            /**
+             * RETURN
+             */
             return response()->json([
-                'html' => $a,
+                'html' => $html,
                 'paginationHTML' => $paginationHTML,
                 'items' => $plates,
 
             ], 200);
         } else {
+            /**
+             * RETURN
+             */
             return view('plates.index', compact('plates'));
         }
 
