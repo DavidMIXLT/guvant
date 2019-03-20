@@ -7,11 +7,17 @@ m12 proyecto
 Añadir autentificacion de usuarios<br>
     -Roles(Admin,Camarero)<br>
 Crear Sistema de pedidos<br>
-    -Crear Carta<br>
+    -Crear Carta... En progreso<br>
     -Crear pedidos<br>
 Traduccions<br>
     -Español(50%)<br>
     -Ingles(0%)<br>
 
 Arreglar validaciones<br>
-Detectar cuando se intenta hacer un create o edit manualmente desde la url
+Crear gestion de usuarios
+    -Crear,editar,borrar,modificar<br>
+    
+    
+Documentacion<br>
+-Base de datos<br>
+![alt text](https://raw.githubusercontent.com/DavidMIXLT/guvant/master/Documentacion/Base%20de%20Datos/DiagramaBaseDeDatosV1.png)
