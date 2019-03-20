@@ -52,7 +52,7 @@ class MenusController extends Controller
         //
         if ($request->ajax()) {
 
-            $view = view('menus.create', compact('products'))->render();
+            $view = view('menus.create')->render();
 
             return response()->json([
                 'status' => 'success',
@@ -147,7 +147,7 @@ class MenusController extends Controller
 
         $menu->name = $decode['name'];
         $menu->price = $decode['price'];
-
+   
         $menu->save();
 
         foreach ($decode['groups'] as $group) {

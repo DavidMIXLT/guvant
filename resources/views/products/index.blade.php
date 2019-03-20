@@ -20,8 +20,7 @@
 <div class="d-flex ButtonBar mb-4">
     <button name="Create" class="btn m-1">@lang('products/index.createProduct')</button>
     <div id="dropDown_CAT" class="dropdown m-1">
-        <button class="btn btn-light dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true"
-            aria-expanded="false">
+        <button class="btn btn-light dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Categorias
             </button>
         <div id="dropDown_Items" class="dropdown-menu" aria-labelledby="categories">
