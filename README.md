@@ -10,7 +10,8 @@ Crear Sistema de pedidos<br>
     -Crear Carta... En progreso<br>
     -Crear pedidos<br>
 Traduccions<br>
-    -Español(50%)<br>
+    Editar las vistas y empezar a generar los @lang
+    -Español(0%)<br>
     -Ingles(0%)<br>
 
 Arreglar validaciones<br>
