@@ -148,9 +148,9 @@ function loadItems(url) {
     type = url;
     selectorPagination = "#AvaibleList";
     $('#menu').addClass('d-none');
-    ajaxRequest(url, 'GET', null, function (r) {
+    ajaxRequest(url, 'GET', null, function (response) {
         ren_spinner(false);
-        renderItemsSearchBox(r, url);
+        renderItemsSearchBox(response, url);
     });
 }
 
