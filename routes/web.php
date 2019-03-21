@@ -14,7 +14,7 @@ Route::post('panel/filter','PaginationController@filter');
 
 //--------------------------------------------------------------------------------------------------------------------//
 /**
- * Products Routes
+ * Products Routess
  */
 Route::get('panel/products/entrada', 'ProductController@printIncomingProductOrders')->name('entradaProducto');
 
