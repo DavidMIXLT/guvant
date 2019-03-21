@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <title>A la carta ya - @yield('title')</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
@@ -27,7 +28,7 @@
             </div>
 
 
-
+              <!-- Menu izquierda -->
             <ul class="list-unstyled components">
 
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
@@ -48,13 +49,13 @@
             </ul>
 
             <ul class="list-unstyled CTAs">
-          
+
             </ul>
         </nav>
 
-        <!-- Page Content  -->
-        <div id="content">
 
+        <div id="content">
+            <!-- TOP BAR -->
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
 
@@ -86,7 +87,7 @@
                 </div>
             </nav>
 
-
+            <!-- Contenido -->
             @yield('content')
         </div>
 
