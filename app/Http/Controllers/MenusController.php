@@ -165,45 +165,51 @@ class MenusController extends Controller
         $decode = json_decode($request->getContent(), true);
 
         $menu = Menu::find($id);
+        if (!is_null($menu)) {
+            $menu->name = $decode['name'];
+            $menu->price = $decode['price'];
+            $menu->save();
 
-        $menu->name = $decode['name'];
-        $menu->price = $decode['price'];
+            foreach ($decode['groups'] as $group) {
+                $groupF = Group::where('id', '=', $group['GroupID'])->first();
+                if ($groupF === null) {
+                    $newGroup = new Group();
+                    $newGroup->name = $group['name'];
+                    $newGroup->save();
 
-        $menu->save();
+                    $Products = Product::find($group['ProductsID']);
+                    $Plates = Plate::find($group['PlatesID']);
+                    $newGroup->plates()->attach($Plates);
+                    $newGroup->products()->attach($Products);
 
-        foreach ($decode['groups'] as $group) {
-            $groupF = Group::where('id', '=', $group['GroupID'])->first();
-            if ($groupF === null) {
-                $newGroup = new Group();
-                $newGroup->name = $group['name'];
-                $newGroup->save();
+                    $menu->groups()->attach($newGroup);
+                } else {
+                    $groupF->name = $group['name'];
+                    $groupF->save();
+                    $Products = Product::find($group['ProductsID']);
+                    $Plates = Plate::find($group['PlatesID']);
+                    $groupF->plates()->sync($Plates);
+                    $groupF->products()->sync($Products);
 
-                $Products = Product::find($group['ProductsID']);
-                $Plates = Plate::find($group['PlatesID']);
-                $newGroup->plates()->attach($Plates);
-                $newGroup->products()->attach($Products);
+                    $menu->groups()->sync($groupF);
+                }
 
-                $menu->groups()->attach($newGroup);
-            } else {
-                $groupF->name = $group['name'];
-                $groupF->save();
-                $Products = Product::find($group['ProductsID']);
-                $Plates = Plate::find($group['PlatesID']);
-                $groupF->plates()->sync($Plates);
-                $groupF->products()->sync($Products);
-
-                $menu->groups()->sync($groupF);
             }
+            $html = view("menus.layouts.tableRow", compact('menu'))->render();
+            return response()->json([
+                'status' => 'success',
+                'html' => $html,
+                'message' => __('messages.successfullyCreated', ["Object" => $menu->name]),
+    
+            ]);
 
+          
         }
-        $html = view("menus.layouts.tableRow", compact('menu'))->render();
-
         return response()->json([
-            'status' => 'success',
-            'html' => $html,
-            'message' => __('messages.successfullyCreated', ["Object" => $menu->name]),
+            'message' => __('messages.error'),
 
-        ]);
+
+        ],200);
     }
 
     /**

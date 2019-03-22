@@ -1,4 +1,5 @@
 var id = 1
+var idSelectedMenu;
 var Groupid;
 var GroupItemsId = [];
 //-----------------------------------------------------------------------------------//
@@ -50,7 +51,9 @@ $(document).ready(function () {
       */
     $(document).on('click', 'button[name=Edit]', function () {
         var url = 'menus/' + $(this).parents('tr').find('.Id').html() + '/edit';
+        RowClicked =  $(this).parents('tr');
         id = $(this).parents('tr').find('.Id').html();
+        idSelectedMenu = id;
         renderModal(url, edit);
     });
      /**
@@ -106,10 +109,11 @@ $(document).ready(function () {
 var edit = function () {
 
     var Menu = modalGetData();
-    ajaxRequest('menus/' + id, 'PUT', JSON.stringify(Menu), function (res) {
+    ajaxRequest('menus/' + idSelectedMenu, 'PUT', JSON.stringify(Menu), function (res) {
 
         closeModal($('#modalBox'));
         ren_spinner(false);
+        alertify.warning(res.message);
         updateRow(RowClicked,res.html);
     });
 
@@ -224,7 +228,7 @@ function modalGetData() {
     var ProductsID;
     var GroupID;
     var Menu = new Object();
-
+    var id ;
 
     $('#accordion').children('.accordion').each(function () {
         GroupName = $(this).find('.btn.btn-link').html().trim();
@@ -232,7 +236,6 @@ function modalGetData() {
         ProductsID = new Array;
         GroupID = $(this).data('groupid');
         var Group = new Object();
-        console.log("GroupID " + GroupID);
 
         $(this).find('tbody').children('tr').each(function () {
             console.log("Hola")
@@ -256,10 +259,10 @@ function modalGetData() {
     });
 
     Menu.name = $('#name').val();
-    console.log($('#name').val())
+    
     Menu.price = $('#price').val();
     Menu.groups = Groups;
-
+    console.log(JSON.stringify(Menu))
     return Menu
 }
 function EndEditGroup(id) {
