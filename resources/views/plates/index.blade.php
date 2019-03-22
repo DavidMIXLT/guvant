@@ -13,7 +13,10 @@
 @endsection
  
 @section('content')
-<button name="Create" type="button" class="btn btn-success m-1">Crear Plato</button>
+<div class="d-flex ButtonBar mb-4">
+  <button name="Create" class="btn m-1">Crear plato</button>
+</div>
+
 <table class="table">
   <thead class="thead-dark">
     <tr>

@@ -313,3 +313,16 @@ table thead {
   border: #a6b8ce;
   font-weight: bold;
 }
+button[name="Edit"],button[name='editGroup']{
+  color:white ; 
+  background-color: #a6b8ce;
+  border: #a6b8ce;
+  font-weight: bold;
+}
+button[name="Delete"],button[name='deleteGroup']{
+  background-color: #e33735;
+  border: #e33735;
+  color: black;
+  padding-left: 0.560em;
+  font-weight: bold;
+}
