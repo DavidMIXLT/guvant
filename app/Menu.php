@@ -9,7 +9,16 @@ class Menu extends Model
 {
     
 
+    public function validate($request)
+    {
+        $request->validate([
+            'name' => 'required|max:191',
+            'price' => 'required|numeric|max:5',
+        
+        ]);
 
+        
+    }
     public function groups()
     {
         return $this->belongsToMany(Group::class);

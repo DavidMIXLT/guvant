@@ -11,7 +11,7 @@ class Category extends Model
     public function validate($request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|max:191',
         ]);
     }
 

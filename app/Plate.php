@@ -11,8 +11,8 @@ class Plate extends Model
     public function validate($request)
     {
         $request->validate([
-            'name' => 'required',
-            'description' => 'required',
+            'name' => 'required|max:191',
+            'description' => 'required|max:191',
             'ListProducts.*' => 'required|integer',
         ]);
     }
