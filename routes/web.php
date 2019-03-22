@@ -6,7 +6,7 @@ Route::get('/', function () {
 
 Route::get('/panel', function () {
     return view('panel');
-})->name('panel');
+})->name('panel')->middleware('auth');
 //--------------------------------------------------------------------------------------------------------------------//
 /**
  * Functions
