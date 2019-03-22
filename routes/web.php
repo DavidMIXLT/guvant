@@ -7,23 +7,20 @@ Route::get('/', function () {
 Route::get('/panel', function () {
     return view('panel');
 })->name('panel');
-
+//--------------------------------------------------------------------------------------------------------------------//
+/**
+ * Functions
+ */
 Route::post('panel/NumberOfItems','PaginationController@setNumberOfItems');
-
 Route::post('panel/filter','PaginationController@filter');
 
 //--------------------------------------------------------------------------------------------------------------------//
 /**
- * Products Routess
+ * Products Routes
  */
 Route::get('panel/products/entrada', 'ProductController@printIncomingProductOrders')->name('entradaProducto');
-
 Route::post('panel/products/masDel', 'ProductController@massiveElimination');
-
 Route::resource('/panel/products', 'ProductController');
-
-
-
 //--------------------------------------------------------------------------------------------------------------------//
 /**
  *  Plates
@@ -31,14 +28,10 @@ Route::resource('/panel/products', 'ProductController');
 Route::resource('/panel/plates', 'PlateController');
 //--------------------------------------------------------------------------------------------------------------------//
 Route::resource('/panel/orders', 'OrderController');
-
+/**
+ * Categories
+ */
 Route::resource('/panel/categories', 'CategoryController');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-
 //--------------------------------------------------------------------------------------------------------------------//
 /**
  *  Menus
@@ -47,3 +40,8 @@ Route::post('/panel/menus/newGroup', 'MenusController@newGroup');
 Route::get('/panel/menus/searchModal','MenusController@searchModal');
 Route::resource('/panel/menus', 'MenusController');
 //--------------------------------------------------------------------------------------------------------------------//
+/**
+ * AUTH
+ */
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
