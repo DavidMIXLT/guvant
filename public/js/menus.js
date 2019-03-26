@@ -1,18 +1,22 @@
+//Id que se va incrementando para los nuevos grupos
 var id = 1
+//Se guarda el id del ultimo grupo que se ha seleccionado
 var idSelectedMenu;
+//Se guarda el ultimo id del grupo seleccionado
 var Groupid;
+//Array que se guardan los id del grupo usado para evitar duplicados dentro de la SearchBox
 var GroupItemsId = [];
 //-----------------------------------------------------------------------------------//
 /**
   * Variable usada para guardar la ultima columna que el usuario a hecho click
   */
- var RowClicked;
+var RowClicked;
 //-----------------------------------------------------------------------------------//
 
 $(document).ready(function () {
     alertify.set('notifier', 'position', 'top-right');
-   
-   
+
+
     $("#MassiveDeleteButton").click(function () {
         massiveElimination("menus/-1");
     });
@@ -22,10 +26,10 @@ $(document).ready(function () {
         renderModal('menus/searchModal', saveItemsSearchModal, null, '#ModalSearch');
         loadIDs(Groupid);
     });
-//----------------------------------------------------------------------------\\
-/**
- * Eventos de dentro de modalSearch
- */
+    //----------------------------------------------------------------------------\\
+    /**
+     * Eventos de dentro de modalSearch
+     */
 
     //Ejecutado al hacer clic en productos
     $(document).on('click', '#Products', function () {
@@ -40,25 +44,25 @@ $(document).ready(function () {
     $(document).on('click', 'button[name=back]', function () {
         backButton();
     })
- 
-//----------------------------------------------------------------------------\\
+
+    //----------------------------------------------------------------------------\\
     /**
      * Eventos CRUD -- Modelo: Menu 
      */
 
-     /**
-      * EDIT --- Evento ejecutado al hacer clic en el boton delete
-      */
+    /**
+     * EDIT --- Evento ejecutado al hacer clic en el boton delete
+     */
     $(document).on('click', 'button[name=Edit]', function () {
         var url = 'menus/' + $(this).parents('tr').find('.Id').html() + '/edit';
-        RowClicked =  $(this).parents('tr');
+        RowClicked = $(this).parents('tr');
         id = $(this).parents('tr').find('.Id').html();
         idSelectedMenu = id;
         renderModal(url, edit);
     });
-     /**
-     * CREATE --- Evento ejecutado al hacer clic en el boton create
-     */
+    /**
+    * CREATE --- Evento ejecutado al hacer clic en el boton create
+    */
     $("button[name=Create]").click(function () {
         renderModal("menus/create", submit, null);
 
@@ -70,7 +74,7 @@ $(document).ready(function () {
         remove($(this).parent().parent().parent().find(".Id").text());
 
     });
-//----------------------------------------------------------------------------\\
+    //----------------------------------------------------------------------------\\
     /**
      * Eventos CRUD -- Modelo: Group
      */
@@ -97,7 +101,15 @@ $(document).ready(function () {
     $(document).on('click', 'button[name=deleteGroup]', function () {
         deleteGroup("#" + $(this).parents().eq(3).attr('id'), false)
     })
-//----------------------------------------------------------------------------\\
+
+    /**
+     * Evento encargado de eliminar un item de dentro de un grupo
+     */
+    $(document).on('click','button[name=DeleteGroupItem]',function(){
+        $(this).closest("tr").remove();
+      
+    });
+    //----------------------------------------------------------------------------\\
     console.log("----- Menus.js Loaded -----");
 })
 
@@ -114,7 +126,7 @@ var edit = function () {
         closeModal($('#modalBox'));
         ren_spinner(false);
         alertify.warning(res.message);
-        updateRow(RowClicked,res.html);
+        updateRow(RowClicked, res.html);
     });
 
 }
@@ -125,7 +137,7 @@ var submit = function () {
 
     var menu = modalGetData();
     ajaxRequest('menus', 'post', JSON.stringify(menu), function (res) {
-
+        alertify.success(res.message);
         closeModal($('#modalBox'));
         ren_spinner(false);
         updateTable(res.html)
@@ -142,12 +154,19 @@ function remove(id) {
 //----------------------------------------------------------------------------\\
 
 
-
+/**
+ * Boton dentro de Modal Search para poder retroceder a la selecion de Productos y latos
+ */
 function backButton() {
     clearSearchBox();
     $("#menu").removeClass("d-none");
 }
 
+
+/**
+ * Carga los items dentro de #AvaibleList de una url especificada
+ * @param {*} url 
+ */
 function loadItems(url) {
     type = url;
     selectorPagination = "#AvaibleList";
@@ -174,7 +193,6 @@ function loadIDs(Groupid) {
 
         GroupItemsId.push(newItem)
     });
-    console.log("Ids tabla " + GroupItemsId);
 }
 
 /**
@@ -189,26 +207,33 @@ function loadSelectedProducts() {
         var html = '<li data-id=" ' + id + '" class="list-group-item ">' + Name + '</li>'
     });*/
 }
-
+/**
+ * Funcion usada para cuando el usuario acabado de seleccionar los productos/platos guardarlos en la tabla del grupo
+ */
 var saveItemsSearchModal = function () {
 
     $('#SelectedList').children('li').each(function () {
         var id = $(this).data('id');
         var Name = $(this).html();
         var type = $(this).data('type');
-        $(Groupid + " tbody").prepend("<tr  data-type='" + type + "' data-id='" + id + "'><td>" + id + "</td><td>" + Name + "</td><td></td></tr>");
+        $(Groupid + " tbody").prepend("<tr  data-type='" + type + "' data-id='" + id + "'><td>" + id + "</td><td>" + Name + '</td><td><button name="DeleteGroupItem" class="btn btn-danger btn-light-warning">X</button></td></tr>');
 
     })
     closeModal($('#ModalSearch'));
 }
-
+/**
+ * Limpia todos los items de la SearchBox
+ */
 function clearSearchBox() {
     $('#AvaibleList .list-group-item.Item').remove();
     $('.pagination').remove();
 }
 
+/**
+ * Usada para renderizar dentro de #AvaibleList los items que se han pasado
+ * y en la variable type se guarda de que tipo son (Productos o Platos)
+ */
 var type;
-
 function renderItemsSearchBox(response) {
     clearSearchBox();
 
@@ -220,7 +245,9 @@ function renderItemsSearchBox(response) {
     clearExistingItems();
 }
 
-
+/**
+ * Funcion que serializa toda la informacion y la transforma en JSON para ser enviada
+ */
 function modalGetData() {
     var GroupName;
     var Groups = new Array;
@@ -228,7 +255,7 @@ function modalGetData() {
     var ProductsID;
     var GroupID;
     var Menu = new Object();
-    var id ;
+    var id;
 
     $('#accordion').children('.accordion').each(function () {
         GroupName = $(this).find('.btn.btn-link').html().trim();
@@ -238,7 +265,7 @@ function modalGetData() {
         var Group = new Object();
 
         $(this).find('tbody').children('tr').each(function () {
-            console.log("Hola")
+    
             switch ($(this).data('type')) {
                 case "products":
                     ProductsID.push($(this).data('id'));
@@ -259,20 +286,27 @@ function modalGetData() {
     });
 
     Menu.name = $('#name').val();
-    
+
     Menu.price = $('#price').val();
     Menu.groups = Groups;
-    console.log(JSON.stringify(Menu))
+
     return Menu
 }
+/**
+ * Funcion ejecutada cuando el usuario hace clic en el boton de finalizar un grupo
+ * @param {*} id 
+ */
 function EndEditGroup(id) {
     $(id).find('.collapseButton').html($(id).find('input').val());
     $(id).find('.edit').addClass('d-none');
     $(id).find('.noEdit').removeClass('d-none');
 }
-
+/**
+ * Funcion que sirve para editar el nombre de un grupo
+ * @param {*} id 
+ * @param {*} newGroup 
+ */
 function EditGroup(id, newGroup = true) {
-    console.log(id)
     EditingGroup = true;
     if (newGroup) {
         $(id).find('input').focus().val('');
@@ -281,17 +315,22 @@ function EditGroup(id, newGroup = true) {
     $(id).find('.noEdit').addClass('d-none');
     $(id).find('button[name=send]').click(function () {
         EndEditGroup(id)
-        console.log($(id))
     });
 
 
 
 }
 
-
+/**
+ * Elimina el grupo correspondiente 
+ * @param {*} id 
+ */
 function deleteGroup(id) {
     $(id).remove();
 }
+/**
+ * Crea un nuevo grupo y activa su edicion 
+ */
 function createGroup() {
 
     id++;
@@ -304,14 +343,15 @@ function createGroup() {
 }
 
 
-
+/**
+ * Limpia los items duplicados al pasar de pagina ya sea porque estan selecionados dentro de la Search Box
+ * o porque ya estan guardados dentro del grupo
+ */
 function clearExistingItems() {
-    console.log("Limpiar duplicados")
+
     $('#AvaibleList').children('li').each(function () {
         var item = $(this);
         for (let i = 0; i < GroupItemsId.length; i++) {
-            console.log("aaaa")
-            console.log(GroupItemsId)
             if (item.data('id') == GroupItemsId[i][0] && item.data('type') == GroupItemsId[i][1]) {
 
                 item.remove();

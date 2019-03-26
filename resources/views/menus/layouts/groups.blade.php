@@ -31,13 +31,13 @@
                 <tr data-type="plates" data-id="{{$plate->id}}">
                     <td>{{$plate->id}}</td>
                     <td>{{$plate->name}}</td>
-                    <td></td>
+                    <td><button name="DeleteGroupItem" class="btn btn-danger btn-light-warning">X</button></td>
                 </tr>
                 @endforeach @foreach ($group->products as $product)
                 <tr data-type="products" data-id="{{$product->id}}">
                     <td>{{$product->id}}</td>
                     <td>{{$product->name}}</td>
-                    <td></td>
+                    <td><button name="DeleteGroupItem" class="btn btn-danger btn-light-warning">X</button></td>
                 </tr>
                 @endforeach @endisset
             </tbody>
