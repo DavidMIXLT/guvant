@@ -14,7 +14,7 @@ var RowClicked;
 //-----------------------------------------------------------------------------------//
 
 $(document).ready(function () {
-    alertify.set('notifier', 'position', 'top-right');
+   
 
 
     $("#MassiveDeleteButton").click(function () {

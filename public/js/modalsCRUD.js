@@ -19,6 +19,7 @@ eventChangePage.initEvent('ChangePage', true, true);
 
 //-----------------------------------------------------------------------------------//
 $(document).ready(function () {
+    alertify.set('notifier', 'position', 'top-right');
     /**
      * Evento que oculta la barra de navegacion de la izquierda
      */

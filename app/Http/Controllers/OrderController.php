@@ -2,26 +2,53 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
-use AlaCartaYa\Order;
-use AlaCartaYa\Product;
+use AlaCartaYa\Menu;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
     public function __construct()
     {
+
         $this->middleware('auth');
     }
+
+    public function getMenuModal($id, Request $request)
+    {
+        $menu = Menu::find($id);
+        $id = $request->session()->get('AccordionId', 1);
+        $id++;
+        $request->session()->put('AccordionId', $id);
+        $html = view('orders.layouts.addMenu', ['id' => "modalAddMenu", 'menu' => $menu, 'id' => $request->session()->get('AccordionId', 1)])->render();
+        return response()->json([
+            'html' => $html,
+            'message' => "hola",
+        ], 200);
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
 
-        return view("orderViews.orders");
+        if ($request->ajax()) {
+
+            //$paginationHTML = view('layouts.pagination', ['object' => $menus])->render();
+            return response()->json([
+                'html' => null,
+                'paginationHTML' => null,
+
+            ], 200);
+
+        } else {
+
+            return view("orders.index");
+        }
+
     }
 
     /**
@@ -29,9 +56,19 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $menus = Menu::all();
+            $request->session()->put('AccordionId', 0);
+            $view = view('orders.create', compact('menus'))->render();
+
+            return response()->json([
+                'status' => 'success',
+                'html' => $view,
+
+            ]);
+        }
 
     }
 

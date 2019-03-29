@@ -32,7 +32,6 @@ class MenusController extends Controller
             return response()->json([
                 'html' => $a,
                 'paginationHTML' => $paginationHTML,
-
             ], 200);
 
         } else {
