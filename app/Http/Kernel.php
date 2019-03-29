@@ -63,6 +63,8 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'isAdmin' => \AlaCartaYa\Http\Middleware\isAdmin::class,
         'isWaiter' => \AlaCartaYa\Http\Middleware\isWaiter::class,
+        'isChef' => \AlaCartaYa\Http\Middleware\isChef::class,
+        'isCustomer' => \AlaCartaYa\Http\Middleware\isCustomer::class,
     ];
 
     /**
