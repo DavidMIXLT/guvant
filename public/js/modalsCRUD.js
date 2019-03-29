@@ -238,6 +238,7 @@ function changePageTable(url, selector) {
     EmptyContent();
     ajaxRequest(url, 'GET', null, function (res) {
         if (selectorPagination == "#AvaibleList") {
+            
             renderItemsSearchBox(res, type);
         } else {
             emptyTable();
