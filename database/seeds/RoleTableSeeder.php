@@ -14,7 +14,7 @@ class RoleTableSeeder extends Seeder
         //administrador, camarero, cocinero, cliente.
         $role = new Role();
         $role->name='admin';
-        $role->description="Administrator";
+        $role->description="Administrator/Administrador";
         $role->save();
 
         $role=new Role();
