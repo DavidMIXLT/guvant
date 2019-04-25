@@ -16,7 +16,7 @@
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                Lista productos
+                @lang('plates.list')
             </div>
             <ul id="AvaibleList" class="list-group list-group-flush">
 
@@ -32,7 +32,8 @@
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                Productos seleccionados
+                    @lang('plates.selectproducts')
+           
             </div>
             <ul id="SelectedList" class="list-group list-group-flush">
                 @isset($SelectedProducts) @foreach ($SelectedProducts->products as $product)

@@ -14,7 +14,7 @@
  
 @section('content')
 <div class="d-flex ButtonBar mb-4">
-  <button name="Create" class="btn m-1">Crear plato</button>
+<button name="Create" class="btn m-1">@lang('plates.createPlate')</button>
 </div>
 
 <table class="table">
@@ -22,14 +22,14 @@
     <tr>
       <th scope="col">
         <div class="spinner-border invisible" role="status">
-          <span class="sr-only">Loading...</span>
+          <span class="sr-only">@lang('plates.loading')</span>
         </div>
       </th>
       <th scope="col">ID</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Descripcion</th>
-      <th scope="col">Ingredientes</th>
-      <th scope="col">Acciones</th>
+      <th scope="col">@lang('plates.name')</th>
+      <th scope="col">@lang('plates.description')</th>
+      <th scope="col">@lang('plates.ingredients')</th>
+      <th scope="col">@lang('plates.actions')</th>
     </tr>
   </thead>
   <tbody>
