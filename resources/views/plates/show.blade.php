@@ -10,5 +10,5 @@
 
 
 @section('footer')
-<button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>   
+<button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal">>@lang('plates.close')</button>   
 @endsection
