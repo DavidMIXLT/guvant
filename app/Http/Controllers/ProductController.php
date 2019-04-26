@@ -46,6 +46,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
+       
         //Usado para Obtener el numero de productos que se va a devolver
         $NumberOfItems = Pagination::getNumberofItems($request);
         //Obtiene los objetos de los productos de la base de datos y como parametro se le pasa el numero de Items
