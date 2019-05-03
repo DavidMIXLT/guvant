@@ -1,18 +1,15 @@
+
 <tr class="DataRow invisible">
         <td>
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" name="checkBoxActionDelete" class="custom-control-input" id="customCheck{{$order->id}}" value="{{$product->id}}">
-                <label class="custom-control-label" for="customCheck{{$order->id}}"></label>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="checkBoxActionDelete" value="{{$user->id}}">
+                <label class="form-check-label" for="checkBoxAction"></label>
             </div>
-            
         </td>
-        <td class="ProductID">{{$order->id}}</td>
-        <td class="ProductName">{{$order->name}}</a>
-        </td>
-        <td>
-            <div class="container">
-                <button name="Delete" class="btn btn-danger btn-light-warning">Borrar</button>
-                <button name="Edit" class="btn btn-primary btn-light ">Editar</button>
-            </div>
+        <td class="ID">{{$user->id}}</td>
+        <td class="Name">{{$user->name}}</td>
+        <td class="Actions">
+            <button value="{{$user->id}}" name="Delete" class="btn btn-danger ">@lang('products/index.delete')</button>
+            <button value="{{$user->id}}" name="Edit" class="btn btn-primary ">@lang('products/index.edit')</button>
         </td>
     </tr>

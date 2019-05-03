@@ -1,9 +1,17 @@
 @extends('layouts.base')
 
+
+
 @section('title','Productos')
+
+
 
 @section('subtitle') Gestion de usuarios
 @endsection
+
+
+
+
 
 
 
@@ -14,6 +22,10 @@
 <link rel="stylesheet" href="{{ asset('css/alertify.css')}}">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
+
+
+
+
 
 
 
@@ -30,24 +42,24 @@
 {{-- INICIO - Tabla productos --}}
 
 <div class="table-responsive">
-    <table class="table" id="productTable">
+    
+<table class="table">
         <thead>
-            <tr>
-                <th scope="col">
-                    <div class="spinner-border invisible" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
-                </th>
-                <th scope="col" id="id">Nombre de usuario</th>
-                <th scope="col" id="name">rol</th>
-
-            </tr>
+          <tr>
+            <th scope="col">
+              <div class="spinner-border invisible" role="status">
+                <span class="sr-only">Loading...</span>
+              </div>
+            </th>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Acciones</th>
+          </tr>
         </thead>
         <tbody>
-            @foreach ($users as $user)
-    @include('users.layouts.tablerow',["product" => $user])
-            @endforeach
+          @each('users.layouts.tableRow', $users, 'user')
         </tbody>
+      </table>
     </table>
 </div>
     @include("layouts.actions") {{-- Paginacion --}}
