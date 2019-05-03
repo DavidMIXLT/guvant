@@ -3,9 +3,16 @@
 namespace AlaCartaYa\Http\Controllers;
 
 use Illuminate\Http\Request;
+use AlaCartaYa\Pagination;
+use AlaCartaYa\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -21,6 +28,29 @@ class UserController extends Controller
     public function index()
     {
         //
+          //Usado para Obtener el numero de productos que se va a devolver
+          $NumberOfItems = Pagination::getNumberofItems($request);
+          //Obtiene los objetos de los productos de la base de datos y como parametro se le pasa el numero de Items
+          $users = User::paginate($NumberOfItems);
+          if ($request->ajax()) {
+            //Se renderizan las filas de la tabla
+            $html = User::renderRows($users);
+            //Objeto pagination se renderiza
+            $paginationHTML = view('layouts.pagination', ['object' => $users])->render();
+            return response()->json([
+                'html' => $html,
+                'paginationHTML' => $paginationHTML,
+                'items' => $users,
+
+            ], 200);
+
+        } else {
+            /**
+             * Si la peticion no es ajax significa que es la primera vez que entra a la web se renderiza toda
+             */
+     
+            return view('users.index', compact('users'));
+        }
     }
 
     /**
@@ -81,7 +111,12 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        $view = view('users.edit', compact('user'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+        ]);
     }
 
     /**
@@ -108,9 +143,19 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         try{
             $user->delete();
-            return redirect('/usuaris')->with('status', 'Usuario borrado correctament.');
+          
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.deleted'),
+
+        ]);
         }catch(\Exception $e){
-            return redirect("/usuaris")->with('status',"Usuario no se ha podido borrar.");
+          
+        return response()->json([
+            'status' => 'success',
+            'message' => "error",
+
+        ]);
         }
     }
 }

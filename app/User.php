@@ -72,4 +72,13 @@ class User extends Authenticatable
         return false;
     }
 
+    public static function renderRows($users)
+    {
+        $a = array();
+        foreach ($users as $user) {
+            $a[] = view("users.layouts.tableRow", compact('user'))->render();
+        }
+        return $a;
+    }
+
 }
