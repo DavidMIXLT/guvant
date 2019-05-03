@@ -47,6 +47,11 @@ Route::get('/panel/menus/searchModal','MenusController@searchModal');
 Route::resource('/panel/menus', 'MenusController');
 //--------------------------------------------------------------------------------------------------------------------//
 /**
+ * Users
+ */
+Route::resource('/panel/users', 'UserController');
+//--------------------------------------------------------------------------------------------------------------------//
+/**
  * AUTH
  */
 Auth::routes();
