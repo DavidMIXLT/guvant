@@ -6,7 +6,7 @@
 
 @section('content')
 <form id="modalForm">
-    @include('users.form.inputs')
+    @include('users.forms.inputs')
 </form>
 @endsection
 

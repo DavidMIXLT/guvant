@@ -9,7 +9,7 @@
         <td class="ID">{{$user->id}}</td>
         <td class="Name">{{$user->name}}</td>
         <td class="Actions">
-            <button value="{{$user->id}}" name="Delete" class="btn btn-danger ">@lang('products/index.delete')</button>
-            <button value="{{$user->id}}" name="Edit" class="btn btn-primary ">@lang('products/index.edit')</button>
+            <button data-id="{{$user->id}}" name="Delete" class="btn btn-danger ">@lang('products/index.delete')</button>
+            <button data-id="{{$user->id}}" name="Edit" class="btn btn-primary ">@lang('products/index.edit')</button>
         </td>
     </tr>
