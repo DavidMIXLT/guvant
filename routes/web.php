@@ -31,6 +31,8 @@ Route::resource('/panel/plates', 'PlateController');
  * Orders
  */
 Route::get('/panel/orders/MenuModal/{id}', 'OrderController@getMenuModal');
+Route::get('/panel/orders/addProducts', 'OrderController@getProductsModal');
+Route::get('/panel/orders/addPlates','OrderController@getPlatesModal');
 Route::resource('/panel/orders', 'OrderController');
 /**
  * Categories

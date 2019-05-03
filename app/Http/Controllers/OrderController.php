@@ -1,8 +1,11 @@
 <?php
 
 namespace AlaCartaYa\Http\Controllers;
-
+use AlaCartaYa\Pagination;
 use AlaCartaYa\Menu;
+use AlaCartaYa\Order;
+use AlaCartaYa\Plate;
+use AlaCartaYa\Product;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -13,6 +16,23 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
+    public function getProductsModal()
+    {
+
+        $html = view('orders.layouts.addProduct', ["id" => "ModalAddProducts"])->render();
+        return response()->json([
+            'html' => $html,
+            'message' => "hola",
+        ], 200);
+    }
+    public function getPlatesModal()
+    {
+        $html = view('orders.layouts.addPlate', ["id" => "ModalAddPlate"])->render();
+        return response()->json([
+            'html' => $html,
+            'message' => "hola",
+        ], 200);
+    }
     public function getMenuModal($id, Request $request)
     {
         $menu = Menu::find($id);
@@ -34,19 +54,21 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         //
-
+        $orders = Order::paginate(Pagination::getNumberofItems($request));
         if ($request->ajax()) {
 
-            //$paginationHTML = view('layouts.pagination', ['object' => $menus])->render();
+              $html = Order::renderRows($orders); 
+            $paginationHTML = view('layouts.pagination', ['object' => $orders])->render();
             return response()->json([
-                'html' => null,
-                'paginationHTML' => null,
+                'html' => $html,
+                'paginationHTML' => $paginationHTML,
 
             ], 200);
 
         } else {
-
-            return view("orders.index");
+        
+         
+            return view("orders.index",['orders' => $orders]);
         }
 
     }
@@ -80,7 +102,26 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $decode = $request->json()->all();
+        $Order = new Order();
+        $Order->name = $decode['name'];
+        $Order->save();
+
+        foreach ($decode['products'] as $key => $value) {
+            $product = Product::find($value['id']);
+            $Order->products()->save($product, array('quantity' => $value['quantity']));
+        }
+        foreach ($decode['plates'] as $key => $value) {
+            $plate = Plate::find($value['id']);
+            $Order->plates()->save($plate, array('quantity' => $value['quantity']));
+        }
+
+        $view = view('orders.layouts.tableRow',['order' => $Order])->render();
+        return response()->json([
+            'message' => __("messages.successfullyCreated", ['Object' => $Order->name]),
+            'html' => $view,
+
+        ], 200);
     }
 
     /**
@@ -91,8 +132,13 @@ class OrderController extends Controller
      */
     public function show($id)
     {
-        //
-        return "hola";
+        $order = Order::find($id);
+        
+        $view = view('orders.show', compact('order'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+        ]);
     }
 
     /**
@@ -126,6 +172,12 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Order::destroy($id);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.deleted'),
+
+        ]);
     }
 }

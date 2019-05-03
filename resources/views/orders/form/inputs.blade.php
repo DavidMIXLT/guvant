@@ -12,3 +12,5 @@
 </select>
 
 <button name="AddMenu" class="btn btn-primary btn-light">Añadir menu</button>
+<button name="AddProduct" class="btn btn-primary btn-light">Añadir producto</button>
+<button name="AddPlate" class="btn btn-primary btn-light">Añadir Plato</button>

@@ -4,8 +4,7 @@ var id = 1
 var idSelectedMenu;
 //Se guarda el ultimo id del grupo seleccionado
 var Groupid;
-//Array que se guardan los id del grupo usado para evitar duplicados dentro de la SearchBox
-var GroupItemsId = [];
+
 //-----------------------------------------------------------------------------------//
 /**
   * Variable usada para guardar la ultima columna que el usuario a hecho click
@@ -15,8 +14,6 @@ var RowClicked;
 
 $(document).ready(function () {
    
-
-
     $("#MassiveDeleteButton").click(function () {
         massiveElimination("menus/-1");
     });
@@ -163,37 +160,6 @@ function backButton() {
 }
 
 
-/**
- * Carga los items dentro de #AvaibleList de una url especificada
- * @param {*} url 
- */
-function loadItems(url) {
-    type = url;
-    selectorPagination = "#AvaibleList";
-    $('#menu').addClass('d-none');
-    ajaxRequest(url, 'GET', null, function (response) {
-        ren_spinner(false);
-        renderItemsSearchBox(response, url);
-    });
-}
-
-
-
-
-/**
- * Carga los id del grupo que se le a dado al boton añadir 
- */
-function loadIDs(Groupid) {
-    GroupItemsId = [];
-
-    $(Groupid + " tbody").children('tr').each(function () {
-        var newItem = new Array();
-        newItem[0] = $(this).data('id');
-        newItem[1] = $(this).data('type')
-
-        GroupItemsId.push(newItem)
-    });
-}
 
 /**
  * Carrega
@@ -229,21 +195,7 @@ function clearSearchBox() {
     $('.pagination').remove();
 }
 
-/**
- * Usada para renderizar dentro de #AvaibleList los items que se han pasado
- * y en la variable type se guarda de que tipo son (Productos o Platos)
- */
-var type;
-function renderItemsSearchBox(response) {
-    clearSearchBox();
 
-    for (let index = 0; index < response.items['data'].length; index++) {
-        var html = '  <li data-type="' + type + '" data-id="' + response.items['data'][index]['id'] + '" class="list-group-item Item"> ' + response.items['data'][index]['name'] + '  </li>'
-        $('#AvaibleList').prepend(html)
-    }
-    $('#pagination').prepend(response.paginationHTML)
-    clearExistingItems();
-}
 
 /**
  * Funcion que serializa toda la informacion y la transforma en JSON para ser enviada
@@ -343,31 +295,7 @@ function createGroup() {
 }
 
 
-/**
- * Limpia los items duplicados al pasar de pagina ya sea porque estan selecionados dentro de la Search Box
- * o porque ya estan guardados dentro del grupo
- */
-function clearExistingItems() {
 
-    $('#AvaibleList').children('li').each(function () {
-        var item = $(this);
-        for (let i = 0; i < GroupItemsId.length; i++) {
-            if (item.data('id') == GroupItemsId[i][0] && item.data('type') == GroupItemsId[i][1]) {
-
-                item.remove();
-
-                return true;
-            }
-        }
-        $('#SelectedList').children('li').each(function () {
-
-            if (item.data('id') == $(this).data('id') && item.data('type') == $(this).data('type')) {
-                item.remove();
-                return true;
-            }
-        })
-    });
-}
 
 /**
  * Encargado de mirar en el searchModal de eliminar de la lista AvaibleItems los items que esten en la lista de SelectedItems

@@ -35,6 +35,7 @@ $(document).ready(function () {
 
         closeModal($(this).parents().eq(3));
     });
+
     /**
      * Evento encargado de selecionar todas las  checkbox
      */
@@ -45,7 +46,7 @@ $(document).ready(function () {
      * Evento encargado de cuando el modal de boostrap se ha ocultado haciendo clic fuera de colocarle un z-index correcto
      */
     $(document).on("hidden.bs.modal", function () {
-
+     
         $('.modal-backdrop').css('z-index', 1000);
     });
 
@@ -239,7 +240,7 @@ function changePageTable(url, selector) {
     EmptyContent();
     ajaxRequest(url, 'GET', null, function (res) {
         if (selectorPagination == "#AvaibleList") {
-            
+
             renderItemsSearchBox(res, type);
         } else {
             emptyTable();
@@ -363,7 +364,7 @@ function renderModal(url, submit_Func, success_func, id) {
         NumberOfModals++;
         console.log("Numero de modals " + NumberOfModals);
         LastModalID = id;
-        console.log("TEST: " + response.test)
+
         $("body").append(response.html);
         console.log(id)
         $(id).modal("show");
@@ -472,14 +473,15 @@ function closeModal(Modal) {
     }, 1000);
     NumberOfModals--;
     console.log("Numero de modals CLOSE " + NumberOfModals);
-    if (NumberOfModals == 0) {
+  
+    if (NumberOfModals <= 0) {
         console.log("CERRAR TODO")
         $('body').removeClass('modal-open');
         $('body').removeAttr("style");
-    }else{
-        setTimeout(function(){
+    } else {
+        setTimeout(function () {
             $('body').addClass('modal-open');
-          }, 500);
+        }, 500);
     }
 
 
@@ -515,13 +517,104 @@ function selectAll() {
   *  @param OldRow Columna actual renderiza en la tabla
   *  @param newRow Nueva columna con los datos actualizados
   */
- function updateRow(OldRow, newRow) {
+function updateRow(OldRow, newRow) {
     $(newRow).insertBefore(OldRow);
     OldRow.remove();
     fadeInLeft($('.DataRow.invisible'));
-  
-  
-  }
-  //-----------------------------------------------------------------------------------//
-  
-  
+
+
+}
+//-----------------------------------------------------------------------------------//
+
+/**
+ * Funciones para las searchBox
+ */
+
+//-----------------------------------------------------------------------------------//
+//Array que se guardan los id del grupo usado para evitar duplicados dentro de la SearchBox
+var GroupItemsId = [];
+/**
+* Usada para renderizar dentro de #AvaibleList los items que se han pasado
+* y en la variable type se guarda de que tipo son (Productos o Platos)
+*/
+var type;
+function renderItemsSearchBox(response) {
+    clearSearchBox();
+
+    for (let index = 0; index < response.items['data'].length; index++) {
+        var html = '  <li data-type="' + type + '" data-id="' + response.items['data'][index]['id'] + '" class="list-group-item Item"> ' + response.items['data'][index]['name'] + '  </li>'
+        $('#AvaibleList').prepend(html)
+    }
+    $('#pagination').prepend(response.paginationHTML)
+    clearExistingItems();
+}
+
+
+/**
+ * Carga los items dentro de #AvaibleList de una url especificada
+ * @param {*} url 
+ */
+function loadItems(url) {
+    type = url;
+    selectorPagination = "#AvaibleList";
+    $('#menu').addClass('d-none');
+    ajaxRequest(url, 'GET', null, function (response) {
+        ren_spinner(false);
+        renderItemsSearchBox(response, url);
+    });
+
+
+}
+/**
+* Limpia los items duplicados al pasar de pagina ya sea porque estan selecionados dentro de la Search Box
+* o porque ya estan guardados dentro del grupo
+*/
+function clearExistingItems() {
+
+    $('#AvaibleList').children('li').each(function () {
+        var item = $(this);
+        for (let i = 0; i < GroupItemsId.length; i++) {
+            if (item.data('id') == GroupItemsId[i][0] && item.data('type') == GroupItemsId[i][1]) {
+
+                item.remove();
+
+                return true;
+            }
+        }
+        $('#SelectedList').children('li').each(function () {
+
+            if (item.data('id') == $(this).data('id') && item.data('type') == $(this).data('type')) {
+                item.remove();
+                return true;
+            }
+        })
+    });
+}
+
+
+
+
+/**
+ * Encargado de mirar en el searchModal de eliminar de la lista AvaibleItems los items que esten en la lista de SelectedItems
+ */
+document.addEventListener('ChangePage', function () {
+    clearExistingItems();
+});
+
+
+
+/**
+ * Carga los id del grupo que se le a dado al boton añadir 
+ */
+function loadIDs(Groupid) {
+    GroupItemsId = [];
+
+    $(Groupid + " tbody").children('tr').each(function () {
+        var newItem = new Array();
+        newItem[0] = $(this).data('id');
+        newItem[1] = $(this).data('type')
+
+        GroupItemsId.push(newItem)
+    });
+}
+
