@@ -53,7 +53,12 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $view = view('users.create')->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+
+        ]);
     }
 
     /**
@@ -64,7 +69,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json([
+            'status' => 'success',
+        
+
+        ]);
     }
 
     /**
@@ -113,9 +122,19 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         try{
             $user->delete();
-            return redirect('/usuaris')->with('status', 'Usuario borrado correctament.');
+          
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.deleted'),
+
+        ]);
         }catch(\Exception $e){
-            return redirect("/usuaris")->with('status',"Usuario no se ha podido borrar.");
+          
+        return response()->json([
+            'status' => 'success',
+            'message' => "error",
+
+        ]);
         }
     }
 }
