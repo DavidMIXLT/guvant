@@ -18,6 +18,15 @@ class User extends Authenticatable
         'name', 'email', 'password',
     ];
 
+    public function validate($request)
+    {
+        $request->validate([
+            'name' => 'required|max:191',
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *

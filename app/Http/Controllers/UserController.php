@@ -11,6 +11,13 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     public function index()
     {
         //
@@ -24,6 +31,12 @@ class UserController extends Controller
     public function create()
     {
         //
+        $view = view('users.create')->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+
+        ]);
     }
 
     /**
@@ -34,7 +47,19 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User();
+        $user->validate($request);
+        $user->fill($request->all());
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        $view = view("users.layouts.tablerow", compact("user"))->render();
+        return response()->json([
+            "status" => "success",
+            'html' => $view,
+            'message' => __('messages.successfullyCreated', ["Object" => $category->name]),
+        ]);
+
     }
 
     /**
