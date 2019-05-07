@@ -17,7 +17,11 @@
 <body>
 
 
+
+
+
     <div class="wrapper">
+
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
@@ -26,7 +30,7 @@
                     <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
                 </form>
             </div>
-
+            @auth
 
             <!-- Menu izquierda -->
             <ul class="list-unstyled components">
@@ -50,7 +54,21 @@
                     <a href="{{route('users.index')}}">Usuario</a>
                 </li>
             </ul>
+            @endauth
 
+            @guest
+            <ul class="list-unstyled components">
+                <li class="{{ Request::routeIs('home') ? 'active' : '' }}">
+                    <a href="{{route('home')}}" aria-expanded="false">Inici</a>
+                </li>
+                <li class="{{ Request::routeIs('register') ? 'active' : '' }}">
+                    <a href="{{route('register')}}" aria-expanded="false">Registrarse</a>
+                </li>
+                <li class="{{ Request::routeIs('login') ? 'active' : '' }}">
+                    <a href="{{route('login')}}" aria-expanded="false">Iniciar Sessio</a>
+                </li>
+            </ul>
+            @endguest
             <ul class="list-unstyled CTAs">
 
             </ul>

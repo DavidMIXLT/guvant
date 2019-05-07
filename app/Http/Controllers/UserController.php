@@ -13,10 +13,8 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-  
 
-
-    public function index()
+    public function index(Request $request)
     {
         //
           //Usado para Obtener el numero de productos que se va a devolver
