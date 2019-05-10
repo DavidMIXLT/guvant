@@ -56,7 +56,6 @@ class UserController extends Controller
         return response()->json([
             'status' => 'success',
             'html' => $view,
-
         ]);
     }
 
@@ -78,7 +77,7 @@ class UserController extends Controller
         return response()->json([
             "status" => "success",
             'html' => $view,
-            'message' => __('messages.successfullyCreated', ["Object" => $category->name]),
+            'message' => __('messages.successfullyCreated', ["Object" => $user->name]),
         ]);
 
     }
