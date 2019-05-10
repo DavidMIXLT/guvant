@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-    //
+    
     public function plates()
     {
-        return $this->belongsToMany(Plate::class)->withPivot('quantity', 'quantity');;
+        return $this->belongsToMany(Plate::class)->withPivot('quantity', 'status');;
     }
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity', 'quantity');
+        return $this->belongsToMany(Product::class)->withPivot('quantity', 'status');
     }
     public static function renderRows($orders)
     {

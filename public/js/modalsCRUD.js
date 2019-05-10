@@ -20,9 +20,11 @@ eventChangePage.initEvent('ChangePage', true, true);
 //-----------------------------------------------------------------------------------//
 $(document).ready(function () {
     alertify.set('notifier', 'position', 'top-right');
+
     /**
      * Evento que oculta la barra de navegacion de la izquierda
      */
+    
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar, #content').toggleClass('active');
         $('.collapse.in').toggleClass('in');
@@ -314,7 +316,7 @@ function EmptyContent() {
  * Obtiene el html de la paginacion
  */
 function getPaginationLinks() {
-    console.log("AAAAAAAAAAAAAAAAAAAAAAAAAa")
+
     numberOfItems = $('tr').length - 1;
     ajaxRequest('./pagination', 'GET', null, function (res) {
         updatePaginationLinks(res.paginationHTML)
@@ -471,7 +473,7 @@ function closeModal(Modal) {
     setTimeout(() => {
         Modal.remove();
     }, 1000);
-    NumberOfModals--;
+  
     console.log("Numero de modals CLOSE " + NumberOfModals);
   
     if (NumberOfModals <= 0) {
@@ -483,7 +485,7 @@ function closeModal(Modal) {
             $('body').addClass('modal-open');
         }, 500);
     }
-
+    NumberOfModals--;
 
 }
 //-----------------------------------------------------------------------------------//

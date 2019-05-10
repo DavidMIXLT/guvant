@@ -19,6 +19,7 @@ class CreateOrderPlatesTable extends Migration
             $table->integer('plate_id')->unsigned();
             $table->foreign('plate_id')->references('id')->on('products')->onDelete('cascade');
             $table->integer('quantity');
+            $table->integer('status')->default(0);
         });
     }
 
