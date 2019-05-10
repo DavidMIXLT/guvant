@@ -2,9 +2,10 @@
 
 namespace AlaCartaYa\Http\Controllers;
 
-use Illuminate\Http\Request;
 use AlaCartaYa\Pagination;
+use AlaCartaYa\Role;
 use AlaCartaYa\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -13,15 +14,14 @@ class UserController extends Controller
         $this->middleware('auth');
     }
 
-
     public function index(Request $request)
     {
         //
-          //Usado para Obtener el numero de productos que se va a devolver
-          $NumberOfItems = Pagination::getNumberofItems($request);
-          //Obtiene los objetos de los productos de la base de datos y como parametro se le pasa el numero de Items
-          $users = User::paginate($NumberOfItems);
-          if ($request->ajax()) {
+        //Usado para Obtener el numero de productos que se va a devolver
+        $NumberOfItems = Pagination::getNumberofItems($request);
+        //Obtiene los objetos de los productos de la base de datos y como parametro se le pasa el numero de Items
+        $users = User::paginate($NumberOfItems);
+        if ($request->ajax()) {
             //Se renderizan las filas de la tabla
             $html = User::renderRows($users);
             //Objeto pagination se renderiza
@@ -37,7 +37,7 @@ class UserController extends Controller
             /**
              * Si la peticion no es ajax significa que es la primera vez que entra a la web se renderiza toda
              */
-     
+
             return view('users.index', compact('users'));
         }
     }
@@ -67,10 +67,13 @@ class UserController extends Controller
     {
         $user = new User();
         $user->validate($request);
-        $user->fill($request->all());
+        $user->name = $request->name;
         $user->password = bcrypt($request->password);
+        $user->email = $request->email;
+        $rol = Role::where("id", $request->rol)->first();
         $user->save();
-
+        $user->roles()->attach($rol);
+        
         $view = view("users.layouts.tablerow", compact("user"))->render();
         return response()->json([
             "status" => "success",
@@ -116,7 +119,13 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->password = bcrypt($request->password);
+        $user->email = $request->email;
+        $rol = Role::where("id", $request->rol)->first();
+        $user->save();
+        $user->roles()->sync($rol);
     }
 
     /**
@@ -127,23 +136,23 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
+
         $user = User::findOrFail($id);
-        try{
+        try {
             $user->delete();
-          
-        return response()->json([
-            'status' => 'success',
-            'message' => __('messages.deleted'),
 
-        ]);
-        }catch(\Exception $e){
-          
-        return response()->json([
-            'status' => 'success',
-            'message' => "error",
+            return response()->json([
+                'status' => 'success',
+                'message' => __('messages.deleted'),
 
-        ]);
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'success',
+                'message' => "error",
+
+            ]);
         }
     }
 }
