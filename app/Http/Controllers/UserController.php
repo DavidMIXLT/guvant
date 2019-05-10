@@ -16,7 +16,7 @@ class UserController extends Controller
   
 
 
-    public function index()
+    public function index(Request $request)
     {
         //
           //Usado para Obtener el numero de productos que se va a devolver
