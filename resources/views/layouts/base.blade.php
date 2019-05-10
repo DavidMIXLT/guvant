@@ -58,9 +58,6 @@
 
             @guest
             <ul class="list-unstyled components">
-                <li class="{{ Request::routeIs('home') ? 'active' : '' }}">
-                    <a href="{{route('home')}}" aria-expanded="false">Inici</a>
-                </li>
                 <li class="{{ Request::routeIs('register') ? 'active' : '' }}">
                     <a href="{{route('register')}}" aria-expanded="false">Registrarse</a>
                 </li>
@@ -81,13 +78,14 @@
                 <div class="container-fluid">
 
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        <span>Toggle Sidebar</span>
+                            &#9776;
+                    
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fas fa-align-justify"></i>
+                        <span>&#9776;</span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">

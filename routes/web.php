@@ -1,11 +1,12 @@
 <?php
-
+use AlaCartaYa\Order;
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/panel', function () {
-    return view('panel');
+    $order = Order::all();
+    return view('panel',['orders' => $order]);
 })->name('panel')->middleware('auth');
 //--------------------------------------------------------------------------------------------------------------------//
 /**
@@ -55,4 +56,7 @@ Route::resource('/panel/users', 'UserController');
  * AUTH
  */
 Auth::routes();
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function () {
+    $order = Order::all();
+    return view('panel',['orders' => $order]);
+})->name('panel')->middleware('auth');

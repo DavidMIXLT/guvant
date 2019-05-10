@@ -1,11 +1,11 @@
-<div class="modal fade"  id="@php
+<div  data-backdrop="static" data-keyboard="false" class="modal fade modalBR"  id="@php
     if(isset($id)){
         echo $id;
     }else{
         echo "modalBox";
     }
 @endphp" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-lg modalBox" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">@yield('title')</h5>

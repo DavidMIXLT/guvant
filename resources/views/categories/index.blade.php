@@ -17,7 +17,7 @@
   <button name="Create" class="btn m-1">Crear categoria</button>
 </div>
 <table class="table">
-  <thead class="thead-dark">
+  <thead>
     <tr>
       <th scope="col">
         <div class="spinner-border invisible" role="status">

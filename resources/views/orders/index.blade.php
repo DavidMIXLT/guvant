@@ -41,6 +41,7 @@
             @each('orders.layouts.tableRow', $orders, 'order')
          </tbody>
       </table>
+   </div>
       <div class="container pagination">
    @include('layouts.pagination',['object' => $orders])
       </div>

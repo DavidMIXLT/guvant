@@ -16,6 +16,7 @@ class Orders extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
