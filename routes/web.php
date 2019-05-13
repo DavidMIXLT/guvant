@@ -33,6 +33,7 @@ Route::resource('/panel/plates', 'PlateController');
  */
 Route::get('panel/orders/last', 'OrderController@getLastOrder');
 Route::get('panel/orders/accept/{id}', 'OrderController@accept');
+Route::get('panel/orders/complete/{id}', 'OrderController@completeOrder');
 Route::get('/panel/orders/MenuModal/{id}', 'OrderController@getMenuModal');
 Route::get('/panel/orders/addProducts', 'OrderController@getProductsModal');
 Route::get('/panel/orders/addPlates','OrderController@getPlatesModal');

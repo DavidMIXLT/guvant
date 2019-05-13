@@ -18,22 +18,38 @@ class OrderController extends Controller
         $this->middleware('auth');
     }
 
+    public function completeOrder($id)
+    {
+        $order = Order::find($id);
+
+        $order->status = 2;
+        $order->save();
+
+        DB::table('orderStatus')->truncate();
+        DB::table('orderStatus')->insert(
+            ['globalStatus' => $order->name . $order->status]
+        );
+        
+        return response()->json([
+            'update' => $order->name . $order->status,
+
+        ], 200);
+    }
     public function getLastOrder()
     {
 
         $status = DB::table('orderStatus')->first();
-        
-        if(!is_null($status)){
+
+        if (!is_null($status)) {
             return response()->json([
                 'update' => $status->globalStatus,
             ], 200);
-        }else{
+        } else {
             return response()->json([
-                'error' => "No object"
+                'error' => "No object",
             ], 200);
         }
-     
-       
+
     }
     public function accept($id)
     {
@@ -49,7 +65,6 @@ class OrderController extends Controller
         $view = Order::renderRows(Order::all());
 
         return response()->json([
-            'message' => __("messages.successfullyCreated", ['Object' => $order->name]),
             'html' => $view,
             'update' => $order->name . $order->status,
 
@@ -230,11 +245,10 @@ class OrderController extends Controller
         $name = $order->name;
         Order::destroy($id);
 
-        
         return response()->json([
             'status' => 'success',
-            'message' => __('messages.successfullyDeleted',['Object' => $name]),
-            'update' =>  $order->name . 5,
+            'message' => __('messages.successfullyDeleted', ['Object' => $name]),
+            'update' => $order->name . 5,
 
         ]);
     }

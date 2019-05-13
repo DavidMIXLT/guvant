@@ -15,18 +15,13 @@
 </head>
 
 <body>
-
-
-
-
-
     <div class="wrapper">
 
         <!-- Sidebar  -->
         <nav id="sidebar">
             <div class="sidebar-header">
                 <img class="img-fluid" src="{{asset('img/logo.png')}}">
-            <form method="POST" action="{{route('searchBox')}}" class="form-inline pt-2">
+                <form method="POST" action="{{route('searchBox')}}" class="form-inline pt-2">
                     @csrf
                     <input name="search" class="form-control" type="search" placeholder="Buscar" aria-label="Search">
                 </form>
@@ -78,9 +73,9 @@
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
 
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                            &#9776;
-                    
+                    <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                        &#9776;
+
                     </button>
                     <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
                         data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"

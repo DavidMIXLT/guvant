@@ -15,6 +15,14 @@ $(document).ready(function () {
         });
     })
 
+    $(document).on('click', 'button[name=Complete]', function (e) {
+
+        ajaxRequest("orders/complete/" + $(this).data('id'), "GET", null, function (res) {
+            updateTa();
+            lastOrder = res.update;
+        });
+    })
+
     $("button[name=Create]").click(function () {
         renderModal("orders/create", submit, null);
     });
@@ -245,4 +253,7 @@ function remove(id) {
 
     });
 }
+
+
+
 

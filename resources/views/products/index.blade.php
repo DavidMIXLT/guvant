@@ -31,7 +31,7 @@
 
             </div>
             @endforeach
-            <button type="button" name="applyFilter" class="btn btn-primary float-right mt-3 mr-2">Aplicar Filtro</button>
+            <button type="button" name="applyFilter" class="btn btn-primary float-right mt-3 mr-2 btn-info">Aplicar Filtro</button>
         </div>
     </div>
 </div>

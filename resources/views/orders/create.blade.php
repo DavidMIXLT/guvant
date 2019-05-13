@@ -48,6 +48,6 @@
 @endsection
  
 @section('footer')
-<button name="submitEdit" type="button" class="btn btn-primary">Guardar</button>
+<button name="submitEdit" type="button" class="btn btn-info">Guardar</button>
 <button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
 @endsection
