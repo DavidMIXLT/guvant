@@ -13,6 +13,7 @@
 <script src="{{asset('js/libraries/alertify.min.js')}}"></script>
 <link rel="stylesheet" href="{{ asset('css/alertify.css')}}">t>
 <meta name="csrf-token" content="{{ csrf_token() }}">
+<meta name="last-order" content="{{ $lastOrder }}">
 @endsection
 
 
@@ -42,10 +43,8 @@
          </tbody>
       </table>
    </div>
-      <div class="container pagination">
-   @include('layouts.pagination',['object' => $orders])
-      </div>
-   @include("layouts.actions")
+
+
    </div>
 </div>
 @endsection

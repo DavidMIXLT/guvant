@@ -3,7 +3,7 @@
 
 
 
-@section('title',"Pedido : " . $order->name)
+@section('title', $order->name)
 
 
 

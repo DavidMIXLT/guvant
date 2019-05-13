@@ -28,7 +28,7 @@ var submit = function(){
 }
 
  var edit = function() {
-    ajaxRequest("users" + id + "/edit", "POST", $("#modalForm").serialize(), function (response) {
+    ajaxRequest("users/" + lastID + "", "PUT", $("#modalForm").serialize(), function (response) {
         alertify.success(response.message);
         closeModal($('#modalBox'));
      

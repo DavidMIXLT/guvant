@@ -327,6 +327,14 @@ button[name="Delete"],button[name='deleteGroup']{
   font-weight: bold;
 }
 
-.selected{
-  
+.status0{
+  background-color: #a3d4e2;
+}
+
+.status1{
+  background-color: #ffaa56;
+}
+
+.status2{
+  background-color: #7df442;
 }

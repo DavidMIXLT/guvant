@@ -438,7 +438,7 @@ function ajaxRequest(url, type, data, success) {
         data: data,
         success: success,
         error: function (xhr) {
-            alertify.alert("Error", "<pre style='height:400px'>" + xhr.responseText + "</pre>");
+            
             closeModal($("#modalBox"));
             console.log("---AJAX Error---");
             console.log(xhr.responseText);

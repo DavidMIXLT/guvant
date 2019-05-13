@@ -19,7 +19,7 @@ Route::post('panel/filter','PaginationController@filter');
 /**
  * Products Routes
  */
-Route::get('panel/products/entrada', 'ProductController@printIncomingProductOrders')->name('entradaProducto');
+
 Route::post('panel/products/masDel', 'ProductController@massiveElimination');
 Route::resource('/panel/products', 'ProductController');
 //--------------------------------------------------------------------------------------------------------------------//
@@ -31,6 +31,8 @@ Route::resource('/panel/plates', 'PlateController');
 /**
  * Orders
  */
+Route::get('panel/orders/last', 'OrderController@getLastOrder');
+Route::get('panel/orders/accept/{id}', 'OrderController@accept');
 Route::get('/panel/orders/MenuModal/{id}', 'OrderController@getMenuModal');
 Route::get('/panel/orders/addProducts', 'OrderController@getProductsModal');
 Route::get('/panel/orders/addPlates','OrderController@getPlatesModal');

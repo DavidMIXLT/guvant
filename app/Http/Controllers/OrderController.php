@@ -1,12 +1,14 @@
 <?php
 
 namespace AlaCartaYa\Http\Controllers;
-use AlaCartaYa\Pagination;
+
 use AlaCartaYa\Menu;
 use AlaCartaYa\Order;
+use AlaCartaYa\Pagination;
 use AlaCartaYa\Plate;
 use AlaCartaYa\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -14,6 +16,44 @@ class OrderController extends Controller
     {
 
         $this->middleware('auth');
+    }
+
+    public function getLastOrder()
+    {
+
+        $status = DB::table('orderStatus')->first();
+        
+        if(!is_null($status)){
+            return response()->json([
+                'update' => $status->globalStatus,
+            ], 200);
+        }else{
+            return response()->json([
+                'error' => "No object"
+            ], 200);
+        }
+     
+       
+    }
+    public function accept($id)
+    {
+        $order = Order::find($id);
+
+        $order->status = 1;
+        $order->save();
+
+        DB::table('orderStatus')->truncate();
+        DB::table('orderStatus')->insert(
+            ['globalStatus' => $order->name . $order->status]
+        );
+        $view = Order::renderRows(Order::all());
+
+        return response()->json([
+            'message' => __("messages.successfullyCreated", ['Object' => $order->name]),
+            'html' => $view,
+            'update' => $order->name . $order->status,
+
+        ], 200);
     }
 
     public function getProductsModal()
@@ -57,7 +97,7 @@ class OrderController extends Controller
         $orders = Order::paginate(Pagination::getNumberofItems($request));
         if ($request->ajax()) {
 
-              $html = Order::renderRows($orders); 
+            $html = Order::renderRows($orders);
             $paginationHTML = view('layouts.pagination', ['object' => $orders])->render();
             return response()->json([
                 'html' => $html,
@@ -66,9 +106,9 @@ class OrderController extends Controller
             ], 200);
 
         } else {
-        
-         
-            return view("orders.index",['orders' => $orders]);
+
+            $status = DB::table('orderStatus')->first();
+            return view("orders.index", ['orders' => $orders, 'lastOrder' => $status->globalStatus]);
         }
 
     }
@@ -102,9 +142,11 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+
         $decode = $request->json()->all();
         $Order = new Order();
         $Order->name = $decode['name'];
+        $Order->status = 0;
         $Order->save();
 
         foreach ($decode['products'] as $key => $value) {
@@ -116,10 +158,17 @@ class OrderController extends Controller
             $Order->plates()->save($plate, array('quantity' => $value['quantity']));
         }
 
-        $view = view('orders.layouts.tableRow',['order' => $Order])->render();
+        $view = view('orders.layouts.tableRow', ['order' => $Order])->render();
+
+        DB::table('orderStatus')->truncate();
+        DB::table('orderStatus')->insert(
+            ['globalStatus' => $Order->name . $Order->status]
+        );
+
         return response()->json([
             'message' => __("messages.successfullyCreated", ['Object' => $Order->name]),
             'html' => $view,
+            'update' => $Order->name . $Order->status,
 
         ], 200);
     }
@@ -133,7 +182,7 @@ class OrderController extends Controller
     public function show($id)
     {
         $order = Order::find($id);
-        
+
         $view = view('orders.show', compact('order'))->render();
         return response()->json([
             'status' => 'success',
@@ -172,11 +221,20 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
+        $order = Order::find($id);
+
+        DB::table('orderStatus')->truncate();
+        DB::table('orderStatus')->insert(
+            ['globalStatus' => $order->name . 5]);
+
+        $name = $order->name;
         Order::destroy($id);
 
+        
         return response()->json([
             'status' => 'success',
-            'message' => __('messages.deleted'),
+            'message' => __('messages.successfullyDeleted',['Object' => $name]),
+            'update' =>  $order->name . 5,
 
         ]);
     }

@@ -1,9 +1,20 @@
-let   RowClicked;
+let RowClicked;
+let numOrder = -1;
+let lastOrder
+let interval;
 $(document).ready(function () {
+    lastOrder = $('meta[name=last-order]').attr("content");
 
-    /**
-     * Crud -- Add menu
-     */
+    waitForChanges();
+
+    $(document).on('click', 'button[name=Accept]', function (e) {
+
+        ajaxRequest("orders/accept/" + $(this).data('id'), "GET", null, function (res) {
+            updateTa();
+            lastOrder = res.update;
+        });
+    })
+
     $("button[name=Create]").click(function () {
         renderModal("orders/create", submit, null);
     });
@@ -45,18 +56,47 @@ $(document).ready(function () {
 
 
     $(document).on('click', 'button[name=deleteItem]', function () {
-       
+
         $(this).parent().remove()
     })
     $(document).on('click', 'button[name=Delete]', function () {
         remove($(this).data('id'))
         $(this).parent().parent().remove()
-      
+
     })
     console.log('----- orders.js Ready ------')
+
 });
 
 
+function waitForChanges(){
+    interval = setInterval(function () {
+
+        ajaxRequest("orders/last", "GET", null, function (res) {
+
+            console.log(lastOrder + " - " + res.update)
+            ren_spinner(false)
+            if (lastOrder != res.update) {
+                console.log("ACTUALIZAR")
+                lastOrder = res.update;
+                updateTa();
+            }
+
+        });
+    }, 3000);
+}
+
+function updateTa() {
+    ajaxRequest("orders", "GET", null, function (res) {
+        $('tbody tr').remove();
+        console.log(res)
+        res.html.forEach(element => {
+            $('tbody').append(element)
+        });
+        ren_spinner(false);
+        fadeInAll();
+    });
+}
 
 function renderMenu(url) {
 
@@ -106,14 +146,18 @@ var submit = function () {
     }
 
     var data = JSON.stringify(order)
-    console.log(data)
     ajaxRequest("./orders", "POST", data, function (response) {
-        console.log(response.html)
- 
-        updateTable(response.html)
-      ren_spinner(false)
+        clearInterval(interval)
+        $("tbody").append(response.html);
+        fadeInAll();
+        ren_spinner(false)
         alertify.success(response.message)
         closeModal($('#modalBox'));
+        lastOrder = response.update;
+        waitForChanges();
+ 
+        
+        console.log(lastOrder + " la")
     })
 
 
@@ -192,9 +236,12 @@ var submitPlates = function () {
 
 function remove(id) {
     ajaxRequest("orders/" + id, 'DELETE', null, function (response) {
+        clearInterval(interval)
         alertify.warning(response.message);
         console.log(response)
         ren_spinner(false);
+        lastOrder = response.update;
+        waitForChanges();
 
     });
 }
