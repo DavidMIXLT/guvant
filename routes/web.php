@@ -62,3 +62,8 @@ Route::get('/home', function () {
     $order = Order::all();
     return view('panel',['orders' => $order]);
 })->name('panel')->middleware('auth');
+//--------------------------------------------------------------------------------------------------------------------//
+/**
+ * SearchBox
+ */ 
+Route::post('/panel/search', 'SearchBox@search')->name('searchBox');

@@ -24,7 +24,7 @@ $(document).ready(function () {
     /**
      * Evento que oculta la barra de navegacion de la izquierda
      */
-    
+
     $('#sidebarCollapse').on('click', function () {
         $('#sidebar, #content').toggleClass('active');
         $('.collapse.in').toggleClass('in');
@@ -48,7 +48,7 @@ $(document).ready(function () {
      * Evento encargado de cuando el modal de boostrap se ha ocultado haciendo clic fuera de colocarle un z-index correcto
      */
     $(document).on("hidden.bs.modal", function () {
-     
+
         $('.modal-backdrop').css('z-index', 1000);
     });
 
@@ -438,7 +438,7 @@ function ajaxRequest(url, type, data, success) {
         data: data,
         success: success,
         error: function (xhr) {
-            
+
             closeModal($("#modalBox"));
             console.log("---AJAX Error---");
             console.log(xhr.responseText);
@@ -472,20 +472,21 @@ function closeModal(Modal) {
     Modal.find('.modal-backdrop ')
     setTimeout(() => {
         Modal.remove();
-    }, 1000);
-  
-    console.log("Numero de modals CLOSE " + NumberOfModals);
-  
-    if (NumberOfModals <= 0) {
-        console.log("CERRAR TODO")
-        $('body').removeClass('modal-open');
-        $('body').removeAttr("style");
-    } else {
-        setTimeout(function () {
-            $('body').addClass('modal-open');
-        }, 500);
-    }
-    NumberOfModals--;
+
+        console.log("Numero de modals CLOSE " + NumberOfModals);
+
+        if (NumberOfModals <= 0) {
+            console.log("CERRAR TODO")
+            $('body').removeClass('modal-open');
+            $('body').removeAttr("style");
+        } else {
+            setTimeout(function () {
+                $('body').addClass('modal-open');
+            }, 500);
+        }
+        NumberOfModals--;
+    }, 500);
+
 
 }
 //-----------------------------------------------------------------------------------//

@@ -25,5 +25,10 @@ class UserTableSeeder extends Seeder
         $user->password=bcrypt('admin');
         $user->save();
         $user->roles()->attach($role_admin);
+
+        DB::table('orderStatus')->insert([
+            'globalStatus' => 'Clean',
+
+        ]);
     }
 }

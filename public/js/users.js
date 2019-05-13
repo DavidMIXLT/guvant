@@ -19,8 +19,7 @@ $(document).ready(function () {
 var submit = function(){
     ajaxRequest("users", "POST", $("#modalForm").serialize(), function (response) {
         alertify.success(response.message);
-        closeModal($('#modalBox'));
-     
+        closeModal($('#modalBox'));  
         updateTable(response.html);
         ren_spinner(false);
       

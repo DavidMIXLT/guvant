@@ -26,8 +26,9 @@
         <nav id="sidebar">
             <div class="sidebar-header">
                 <img class="img-fluid" src="{{asset('img/logo.png')}}">
-                <form class="form-inline pt-2">
-                    <input class="form-control" type="search" placeholder="Buscar" aria-label="Search">
+            <form method="POST" action="{{route('searchBox')}}" class="form-inline pt-2">
+                    @csrf
+                    <input name="search" class="form-control" type="search" placeholder="Buscar" aria-label="Search">
                 </form>
             </div>
             @auth
