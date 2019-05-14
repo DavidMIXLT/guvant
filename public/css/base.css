@@ -370,7 +370,7 @@ textarea.form-control {
   background-color: #fadc9e;
 }
 
-.modal-header,.row{
+.modal-header,.modal .row{
   border-bottom: 1px solid black;
   padding-bottom: 5px;
 }
@@ -404,6 +404,10 @@ input[name="search"]{
 .card-header .btn{
   color : white;
 }
-.card {
+form .card {
   background-color: black;
+}
+
+#accordion td {
+  background-color: #fadc9e;
 }

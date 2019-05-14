@@ -19,7 +19,7 @@
     <div id="collapse{{preg_replace('/\s+/', '', $title)}}" class="collapse" aria-labelledby="heading{{preg_replace('/\s+/', '', $title)}}"
         data-parent="#accordion">
         <table class="table table-striped">
-            <thead class="thead">
+            <thead class="thead-dark">
                 <tr>
                     <th scope="col">Id</th>
                     <th scope="col">Nombre</th>
