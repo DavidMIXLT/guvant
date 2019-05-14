@@ -411,3 +411,12 @@ form .card {
 #accordion td {
   background-color: #fadc9e;
 }
+
+#orderItemsTable td{
+  background-color: white;
+}
+
+#orderItemsTable thead{
+  background-color: #323761;
+  color: white;
+}

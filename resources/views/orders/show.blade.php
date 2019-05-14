@@ -12,7 +12,7 @@
 
 
 <div class="table-responsive">
-        <table class="table" id="productTable">
+        <table class="table" id="orderItemsTable">
                 <thead>
                         <tr>
                                 <th scope="col" id="Name">Nom</th>
