@@ -6,11 +6,11 @@
 <td class="Date">{{$order->created_at}}</td>
     <td class="Actions">
         @if($order->status != 2)
-        <button data-id="{{$order->id}}" name="Delete" class="btn btn-danger btn-light-warning">Cancelar</button>
+        <button data-id="{{$order->id}}" name="Delete" class="btn btn-danger btn-light-warning">@lang('orders.cancel')</button>
         @endif
-        <button data-id="{{$order->id}} " name="ViewOrder" type="button" class="btn btn-info">Mostrar</button>
+        <button data-id="{{$order->id}} " name="ViewOrder" type="button" class="btn btn-info">@lang('orders.show')</button>
         @if ($order->status == 0)
-        <button data-id="{{$order->id}}" name="Accept" class="btn btn-warning">Aceptar</button>         
+        <button data-id="{{$order->id}}" name="Accept" class="btn btn-warning">@lang('orders.toAccept')</button>         
         @endif
         @if ($order->status == 1)
         <button data-id="{{$order->id}}" name="Complete" class="btn btn-success">✓</button>         

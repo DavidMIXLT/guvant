@@ -44,7 +44,7 @@
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
-          <p>@lang('Users.proyectM12')Proyecte M12</p>
+          <p>@lang('Users.proyectM12')</p>
         </div>
       </footer>
     </div>

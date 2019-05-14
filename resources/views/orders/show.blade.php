@@ -15,9 +15,9 @@
         <table class="table" id="orderItemsTable">
                 <thead>
                         <tr>
-                                <th scope="col" id="Name">Nom</th>
-                                <th scope="col" id="Name">Cantidad</th>
-                                <th scope="col" id="Name">Accions</th>
+                                <th scope="col" id="Name">@lang('orders.name')</th>
+                                <th scope="col" id="Name">@lang('orders.quantity')</th>
+                                <th scope="col" id="Name">@lang('orders.actions')</th>
                         </tr>
                 </thead>
                 <tbody>

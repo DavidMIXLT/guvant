@@ -7,7 +7,7 @@
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                Platos Disponible
+                @lang('orders.dishesAvailable') 
             </div>
             <ul id="AvaibleList" class="list-group list-group-flush">
       
@@ -22,7 +22,7 @@
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                Seleccionados
+                @lang('orders.select') 
             </div>
             <ul id="SelectedList" class="list-group list-group-flush">
 
@@ -35,6 +35,6 @@
 @endsection
  
 @section('footer')
-<button name="submitEdit" type="button" class="btn btn-primary">Guardar</button>
-<button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<button name="submitEdit" type="button" class="btn btn-primary">@lang('orders.save')</button>
+<button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal">@lang('orders.close')</button>
 @endsection
