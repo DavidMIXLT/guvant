@@ -1,6 +1,6 @@
 @extends('layouts.base') 
 @section('title','Productos') 
-@section('subtitle') Gestion de productos
+@section('subtitle')@lang('products.productManagement') 
 @endsection
  
 @section('header')
@@ -21,7 +21,7 @@
     <button name="Create" class="btn m-1">@lang('products/index.createProduct')</button>
     <div id="dropDown_CAT" class="dropdown m-1">
         <button class="btn btn-light dropdown-toggle" type="button" id="categories" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Categorias
+            @lang('products.categories') 
             </button>
         <div id="dropDown_Items" class="dropdown-menu" aria-labelledby="categories">
             @foreach ($categories as $category)
@@ -31,7 +31,7 @@
 
             </div>
             @endforeach
-            <button type="button" name="applyFilter" class="btn btn-primary float-right mt-3 mr-2 btn-info">Aplicar Filtro</button>
+            <button type="button" name="applyFilter" class="btn btn-primary float-right mt-3 mr-2 btn-info">@lang('products.applyFilter')</button>
         </div>
     </div>
 </div>
@@ -45,7 +45,7 @@
             <tr>
                 <th scope="col">
                     <div class="spinner-border invisible" role="status">
-                        <span class="sr-only">Loading...</span>
+                        <span class="sr-only">@lang('products.loading')</span>
                     </div>
                 </th>
                 <th scope="col" id="id">@lang('products/index.id') ↕</th>

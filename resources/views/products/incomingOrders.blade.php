@@ -1,7 +1,7 @@
 @extends('layouts.base') 
 @section('title','Pedidos Entrantes') 
 @section('subtitle')
-<h1>Entrar pedidos</h1>
+<h1>@lang('products.enterOrders')</h1>
 @endsection
  
 @section('header')
@@ -17,8 +17,8 @@
         <tr>
             <th scope="col" id="idRow">@lang('products/products.id') ↕</th>
             <th scope="col" id="nameRow">@lang('products/products.name') ↕</th>
-            <th scope="col">Introduce el nuevo stock</th>
-            <th scope="col" id="stockRow"> Total de stock</th>
+            <th scope="col">@lang('products.enterStock')</th>
+            <th scope="col" id="stockRow">@lang('products.totalStock') </th>
         </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
             <td>
                 <input class="inputStock" type="text">
                 <div class="text-danger d-none">
-                    Por favor introduce un numero valido.
+                    @lang('products.enterValidNumber.') 
                 </div>
 
             </td>
@@ -50,5 +50,5 @@
     <input name="stockActualizar" type="hidden" id="hiddenValue" value="">
 </form>
 
-<button id="updateButton" type="button" class="btn btn-primary">Actualiza stock</button>
+<button id="updateButton" type="button" class="btn btn-primary">@lang('products.updateStock') Actualiza stock</button>
 @endsection
