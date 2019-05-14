@@ -7,26 +7,26 @@
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                Disponible
+                @lang('orders.available') 
             </div>
             <ul id="AvaibleList" class="list-group list-group-flush">
                 <div class="container" id="menu">
                     <li id="Products" class="list-group-item ">
-                        Productos >
+                        @lang('orders.products')
                     </li>
                     <li id="Plates" class="list-group-item ">
-                        Platos >
+                        @lang('orders.plates') 
                     </li>
                 </div>
                 <li id="pagination" class="list-group-item"> </li>
-                <li class="list-group-item"> <button name="back" class="btn btn-primary">Volver Atras </button> </li>
+                <li class="list-group-item"> <button name="back" class="btn btn-primary">@lang('orders.goBack') </button> </li>
             </ul>
         </div>
     </div>
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                Seleccionados
+                @lang('orders.select') 
             </div>
             <ul id="SelectedList" class="list-group list-group-flush">
 
@@ -40,6 +40,6 @@
 @endsection
  
 @section('footer')
-<button name="submitEdit" type="button" class="btn btn-primary">Guardar</button>
-<button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+<button name="submitEdit" type="button" class="btn btn-primary"> @lang('orders.save') </button>
+<button type="button" name="closeModal" class="btn btn-secondary" data-dismiss="modal"> @lang('orders.close') </button>
 @endsection
