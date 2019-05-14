@@ -1,6 +1,6 @@
 @extends('layouts.base')
 @section('title','Productos')
-@section('subtitle') Gestion de Categorias
+@section('subtitle')@lang('searchBox.categoryManagement') 
 @endsection
 
 @section('header')
@@ -14,16 +14,16 @@
 
 @section('content')
 <div class="container">
-  <h1>Resultados de la busqueda <b>"{{$search}}"</b> </h1>
+  <h1>@lang('searchBox.searchResults')<b>"{{$search}}"</b> </h1>
   <div class="row">
     @foreach ($products as $product)
     <div class="col-sm">
       <div class="card ml-2 mt-2" style="width: 18rem;">
         <div class="card-body">
-          <h5 class="card-title">Producto: {{$product->name}}</h5>
+          <h5 class="card-title">@lang('searchBox.product') {{$product->name}}</h5>
           <p class="card-text">{{$product->description}}
           </p>
-          <a href="{{route('products.index')}}" class="btn btn-primary">Mostrar</a>
+          <a href="{{route('products.index')}}" class="btn btn-primary">@lang('searchBox.toShow')</a>
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
           <h5 class="card-title">Plato: {{$plate->name}}</h5>
           <p class="card-text">{{$plate->description}}
           </p>
-          <a href="{{route('plates.index')}}" class="btn btn-primary">Mostrar</a>
+          <a href="{{route('plates.index')}}" class="btn btn-primary">@lang('searchBox.toShow')</a>
         </div>
       </div>
     </div>
@@ -46,7 +46,7 @@
         <div class="card-body">
           <h5 class="card-title">Menu: {{$plate->name}}</h5>
      
-          <a href="{{route('plates.index')}}" class="btn btn-primary">Mostrar</a>
+          <a href="{{route('plates.index')}}" class="btn btn-primary">@lang('searchBox.toShow')</a>
         </div>
       </div>
     </div>

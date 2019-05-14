@@ -31,10 +31,6 @@ return [
     'categories'=>'Categorias',
     'applyFilter'=>'Aplicar Filtro',
     'loading'=>'Cargando...',
-    'applyFilter'=>'Aplicar Filtro',
-    'applyFilter'=>'Aplicar Filtro',
-    'applyFilter'=>'Aplicar Filtro',
-    'applyFilter'=>'Aplicar Filtro',
-    'applyFilter'=>'Aplicar Filtro',
+  
 
 ];

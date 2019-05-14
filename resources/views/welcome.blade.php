@@ -27,24 +27,24 @@
         <div class="inner">
           <h3 class="masthead-brand">A la carta ya</h3>
           <nav class="nav nav-masthead justify-content-center">
-            <a class="nav-link active" href="#">Inicio</a>
-          <a class="nav-link" href="{{route('login')}}">Iniciar sesion</a>
-          <a class="nav-link" href="{{route('register')}}">Registrarse</a>
+            <a class="nav-link active" href="#">@lang('Users.Start')</a>
+          <a class="nav-link" href="{{route('login')}}">@lang('Users.log')</a>
+          <a class="nav-link" href="{{route('register')}}">@lang('Users.checkIn')</a>
           </nav>
         </div>
       </header>
 
       <main role="main" class="inner cover">
         <h1 class="cover-heading">A la carta ya</h1>
-        <p class="lead">La aplicacion que necesitas para tu restaurante</p>
+        <p class="lead">>@lang('Users.appilcationYourRestaurant')</p>
         <p class="lead">
-          <a href="#" class="btn btn-lg btn-secondary">Saber mas</a>
+          <a href="#" class="btn btn-lg btn-secondary">@lang('Users.knowMore')</a>
         </p>
       </main>
 
       <footer class="mastfoot mt-auto">
         <div class="inner">
-          <p>Proyecte M12</p>
+          <p>@lang('Users.proyectM12')Proyecte M12</p>
         </div>
       </footer>
     </div>
