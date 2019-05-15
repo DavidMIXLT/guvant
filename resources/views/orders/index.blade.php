@@ -2,7 +2,7 @@
 
 @section('title','Productos')
 
-@section('subtitle') Gestion de Pedidos
+@section('subtitle')@lang('orders.ordersManagement') 
 @endsection
 
 
@@ -20,7 +20,7 @@
 
 @section('content')
 <div class="d-flex ButtonBar mb-4">
-   <button name="Create" class="btn m-1">Crear pedido</button>
+   <button name="Create" class="btn m-1">@lang('orders.createOrder')</button>
 </div>
 <div>
    <div class="table-responsive">
@@ -29,13 +29,13 @@
             <tr>
                <th scope="col">
                   <div class="spinner-border invisible" role="status">
-                     <span class="sr-only">Loading...</span>
+                     <span class="sr-only">@lang('orders.loading')</span>
                   </div>
                </th>
-               <th scope="col">ID</th>
-               <th scope="col">Nombre</th>
-               <th scope="col">Fecha creado</th>
-               <th scope="col">Acciones</th>
+               <th scope="col">@lang('orders.id')</th>
+               <th scope="col">@lang('orders.name')</th>
+               <th scope="col">@lang('orders.dateCreated')</th>
+               <th scope="col">@lang('orders.actions')</th>
             </tr>
          </thead>
          <tbody>

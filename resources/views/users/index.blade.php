@@ -6,7 +6,7 @@
 
 
 
-@section('subtitle') Gestion de usuarios
+@section('subtitle')@lang('Users.userManagement') 
 @endsection
 
 
@@ -34,7 +34,7 @@
 
 <br /> {{-- Botones con las opciones --}}
 <div class="d-flex ButtonBar mb-4">
-    <button name="Create" class="btn m-1">Crear</button>
+    <button name="Create" class="btn m-1">@lang('Users.create')</button>
 
 </div>
 
@@ -48,12 +48,12 @@
           <tr>
             <th scope="col">
               <div class="spinner-border invisible" role="status">
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">@lang('Users.loading')</span>
               </div>
             </th>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Acciones</th>
+            <th scope="col">@lang('Users.id')</th>
+            <th scope="col">@lang('Users.name')</th>
+            <th scope="col">@lang('Users.actions')</th>
           </tr>
         </thead>
         <tbody>

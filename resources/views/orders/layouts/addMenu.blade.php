@@ -6,7 +6,7 @@
             <button name="menuBtn" class="btn btn-link collapsed" data-id="{{$menu->id}}">
                 {{$id}} : {{$menu->name}}
               </button>
-            <button name="deleteGroup" type="button" class=" btn btn-danger btn-small float-right mr-2">Eliminar</button>
+            <button name="deleteGroup" type="button" class=" btn btn-danger btn-small float-right mr-2">@lang('orders.delete')</button>
         </h5>
 </div>
 

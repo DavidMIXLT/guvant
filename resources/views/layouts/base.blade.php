@@ -32,22 +32,22 @@
             <ul class="list-unstyled components">
 
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
-                    <a href="{{route('products.index')}}" aria-expanded="false">Productos</a>
+                    <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.product')</a>
                 </li>
                 <li class="{{ Request::routeIs('orders.index') ? 'active' : '' }}">
-                    <a class="nav-link" href="{{route('orders.index')}}">Pedidos</a>
+                    <a class="nav-link" href="{{route('orders.index')}}">@lang('orders.orders')</a>
                 </li>
                 <li class="{{ Request::routeIs('menus.index') ? 'active' : '' }}">
-                    <a href="{{route('menus.index')}}" aria-expanded="false">Menus</a>
+                    <a href="{{route('menus.index')}}" aria-expanded="false">@lang('orders.menu')</a>
                 </li>
                 <li class="{{ Request::routeIs('plates.index') ? 'active' : '' }}">
-                    <a href="{{route('plates.index')}}">Platos</a>
+                    <a href="{{route('plates.index')}}">@lang('orders.plates')</a>
                 </li>
                 <li class="{{ Request::routeIs('categories.index') ? 'active' : '' }}">
-                    <a href="{{route('categories.index')}}">Categorias</a>
+                    <a href="{{route('categories.index')}}">@lang('orders.category')</a>
                 </li>
                 <li class="{{ Request::routeIs('users.index') ? 'active' : '' }}">
-                    <a href="{{route('users.index')}}">Usuario</a>
+                    <a href="{{route('users.index')}}">@lang('orders.user')</a>
                 </li>
             </ul>
             @endauth
@@ -55,10 +55,10 @@
             @guest
             <ul class="list-unstyled components">
                 <li class="{{ Request::routeIs('register') ? 'active' : '' }}">
-                    <a href="{{route('register')}}" aria-expanded="false">Registrarse</a>
+                    <a href="{{route('register')}}" aria-expanded="false">@lang('orders.register')</a>
                 </li>
                 <li class="{{ Request::routeIs('login') ? 'active' : '' }}">
-                    <a href="{{route('login')}}" aria-expanded="false">Iniciar Sessio</a>
+                    <a href="{{route('login')}}" aria-expanded="false">@lang('orders.logIn')</a>
                 </li>
             </ul>
             @endguest

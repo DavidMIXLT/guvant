@@ -1,6 +1,6 @@
 @extends('layouts.base') 
 @section('title','Productos') 
-@section('subtitle') Gestion de Categorias
+@section('subtitle')@lang('orders.categoryManagement') 
 @endsection
  
 @section('header')
@@ -14,19 +14,19 @@
  
 @section('content')
 <div class="d-flex ButtonBar mb-4">
-  <button name="Create" class="btn m-1">Crear categoria</button>
+  <button name="Create" class="btn m-1">@lang('orders.createCategory')</button>
 </div>
 <table class="table">
   <thead>
     <tr>
       <th scope="col">
         <div class="spinner-border invisible" role="status">
-          <span class="sr-only">Loading...</span>
+          <span class="sr-only">@lang('orders.loading')</span>
         </div>
       </th>
-      <th scope="col">ID</th>
-      <th scope="col">Nombre</th>
-      <th scope="col">Acciones</th>
+      <th scope="col">@lang('orders.id')</th>
+      <th scope="col">@lang('orders.name')</th>
+      <th scope="col">@lang('orders.action')</th>
     </tr>
   </thead>
   <tbody>

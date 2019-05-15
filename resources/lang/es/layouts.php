@@ -11,7 +11,20 @@ return [
     | you want to customize your views to better match your application.
     |
     */
+    'product' => 'Producto' ,
+    'orders' => 'Pedidos',
+    'menu'=>'Menus',
+    'plates' => 'Platos ' ,
+    'category' => 'Categorias' ,
+    'user'=>'Usuario ',      
+    'register'     => 'Registrarse', 
+    'logIn' => 'Iniciar Sesión',
+    
+ 
 
-    'previous' => '&laquo; Anterior',
-    'next'     => 'Siguiente &raquo;',
+
+   
+  
+  
+
 ];
