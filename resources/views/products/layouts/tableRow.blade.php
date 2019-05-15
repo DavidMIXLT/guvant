@@ -19,4 +19,4 @@
             <button name="Edit" class="btn btn-primary btn-light ">@lang('products/index.edit')</button>
         </div>
     </td>
-</tr>S
+</tr>

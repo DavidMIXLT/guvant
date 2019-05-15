@@ -37,7 +37,7 @@ return [
     'dateCreated'=>'Fecha creado ',
     'actions'     => 'Acciones',
     'quantity' => 'Cantidad' ,
-
+    'category' => 'Categorias' ,
    
   
   

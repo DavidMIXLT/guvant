@@ -37,4 +37,7 @@ return [
     'dateCreated'=>'Date created ',
     'actions'     => 'Actions',
     'quantity' => 'Quantity' ,
+    'category' => 'Categories' ,
+    'user' => 'Users' ,
+    'orders' => 'Orders' ,
 ];

@@ -32,7 +32,7 @@
             <ul class="list-unstyled components">
 
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
-                    <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.product')</a>
+                    <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.products')</a>
                 </li>
                 <li class="{{ Request::routeIs('orders.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{route('orders.index')}}">@lang('orders.orders')</a>

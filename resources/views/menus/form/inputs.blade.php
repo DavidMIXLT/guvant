@@ -1,10 +1,10 @@
 <div class="form-group row">
-  <label for="name" class="col-4 col-form-label">@lang('orders.name')</label>
+  <label for="name" class="col-4 col-form-label">@lang('menus.name')</label>
   <div class="col-8">
     <input id="name" name="name" type="text" class="form-control" value="@isset($menu){{$menu->name}}@endisset">
   </div>
 </div>
-<button name="CreateGroup" type="button" class="btn btn-success m-3">@lang('orders.createGroup')</button>
+<button name="CreateGroup" type="button" class="btn btn-success m-3">@lang('menus.createGroup')</button>
 
 <div id="accordion" class="mb-3">
   @if (isset($menu))

@@ -11,8 +11,8 @@
                     aria-expanded="false" aria-controls="collapseTwo">
                     {{$title}}
                 </button>
-                <button name="editGroup" type="button" class="btn btn-primary btn-small float-right">@lang('orders.edit')</button>
-                <button name="deleteGroup" type="button" class=" btn btn-danger btn-small float-right mr-2">@lang('orders.delete')</button>
+                <button name="editGroup" type="button" class="btn btn-primary btn-small float-right">@lang('menus.edit')</button>
+                <button name="deleteGroup" type="button" class=" btn btn-danger btn-small float-right mr-2">@lang('menus.delete')</button>
             </div>
         </h5>
     </div>
@@ -21,9 +21,9 @@
         <table class="table table-striped">
             <thead class="thead-dark">
                 <tr>
-                    <th scope="col">@lang('orders.id')</th>
-                    <th scope="col">@lang('orders.name')</th>
-                    <th scope="col"><button name="addItems" type="button" class="btn btn-success btn-sm">@lang('orders.add')</button></th>
+                    <th scope="col">@lang('menus.id')</th>
+                    <th scope="col">@lang('menus.name')</th>
+                    <th scope="col"><button name="addItems" type="button" class="btn btn-success btn-sm">@lang('menus.add')</button></th>
                 </tr>
             </thead>
             <tbody>

@@ -9,6 +9,8 @@ var RowClicked;
  * Ejecutado cuando la pagina acaba de cargar --- Inicializa la pagina de productos
  */
 $(document).ready(function () {
+ 
+  console.log( $("S S S S S"))
   alertify.set('notifier', 'position', 'top-right');
   loadEvents();
   console.log("----- Products.js Loaded -----");
