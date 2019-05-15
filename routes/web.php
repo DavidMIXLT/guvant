@@ -68,3 +68,11 @@ Route::get('/home', function () {
  * SearchBox
  */ 
 Route::post('/panel/search', 'SearchBox@search')->name('searchBox');
+
+
+Route::get('/locale/{code}', function($code){
+    Session::put('my_locale', $code);
+    
+
+    return redirect()->back();
+})->name('setLocale');

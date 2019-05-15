@@ -115,9 +115,25 @@
                             </li>
                             @endif @else
                             <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        ⛿</span>
+                                    </a>
+    
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('setLocale','es') }}"">
+                                         Español
+                                        </a>
+                                        <a class="dropdown-item" href="{{ route('setLocale','en') }}"">
+                                        English
+                                        </a>
+                                    </div>
+                                </li>
+                            <li class="nav-item dropdown">
+                                
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name}} ({{ Auth::user()->roles()->first()->description}}) <span
+                                    {{ Auth::user()->name}} ({{ Auth::user()->roles()->first()->name}}) <span
                                         class="caret"></span>
                                 </a>
 
@@ -133,6 +149,8 @@
                                     </form>
                                 </div>
                             </li>
+
+                          
                             @endguest
                         </ul>
                     </div>
