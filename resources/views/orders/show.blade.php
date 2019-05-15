@@ -17,7 +17,7 @@
                         <tr>
                                 <th scope="col" id="Name">@lang('orders.name')</th>
                                 <th scope="col" id="Name">@lang('orders.quantity')</th>
-                                <th scope="col" id="Name">@lang('orders.actions')</th>
+                       
                         </tr>
                 </thead>
                 <tbody>
@@ -25,13 +25,13 @@
                         <tr>
                                 <td>{{$product->name}}</td>
                                 <td>{{$product->pivot->quantity}}</td>
-                                <td></td>
+                        
                         </tr>
                         @endforeach
                         @foreach ($order->plates as $plate)
                                 <td>{{$plate->name}}</td>
                                 <td>{{$plate->pivot->quantity}}</td>
-                                <td></td>
+                           
                         </tr>
                         @endforeach
                 </tbody>
