@@ -1,7 +1,7 @@
 
 @extends('layouts.modal')
 
-@section('title','Crear Menu')
+@section('title',__('menus.createMenu'))
 
 @section('content')
     

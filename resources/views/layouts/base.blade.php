@@ -73,10 +73,10 @@
             @guest
             <ul class="list-unstyled components">
                 <li class="{{ Request::routeIs('register') ? 'active' : '' }}">
-                    <a href="{{route('register')}}" aria-expanded="false">@lang('orders.register')</a>
+                    <a href="{{route('register')}}" aria-expanded="false">@lang('layouts.register')</a>
                 </li>
                 <li class="{{ Request::routeIs('login') ? 'active' : '' }}">
-                    <a href="{{route('login')}}" aria-expanded="false">@lang('orders.logIn')</a>
+                    <a href="{{route('login')}}" aria-expanded="false">@lang('layouts.logIn')</a>
                 </li>
             </ul>
             @endguest

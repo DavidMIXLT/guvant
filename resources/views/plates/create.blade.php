@@ -1,6 +1,6 @@
 @extends('layouts.modal')
 
-@section('title','Crear Plato')
+@section('title',__('plates.createPlate'))
 
 @section('content')
     <form id="modalForm">

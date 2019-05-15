@@ -21,7 +21,7 @@ return [
     'name'=>'Name ',
     'action'     => 'Actions ',
     'logIn' => 'Log in ',
-    
+    'categories' => 'Categories'
  
 
 

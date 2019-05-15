@@ -21,7 +21,7 @@ return [
     'name'=>'Nombre ',
     'action'     => 'Acciones',
     'logIn' => 'Iniciar Sesión',
-    
+    'categories' => 'Categorias'
  
 
 

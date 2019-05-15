@@ -1,13 +1,13 @@
 <div class="form-group row">
-    <label for="name" class="col-4 col-form-label">Nombre</label>
+    <label for="name" class="col-4 col-form-label">@lang('plates.name')</label>
     <div class="col-8">
-        <input id="name" name="name" placeholder="Nombre" type="text" class="form-control" value="@isset($SelectedProducts){{$SelectedProducts->name}}@endisset">
+        <input id="name" name="name" placeholder="@lang('plates.name')" type="text" class="form-control" value="@isset($SelectedProducts){{$SelectedProducts->name}}@endisset">
     </div>
 </div>
 <div class="form-group row">
-    <label for="description" class="col-4 col-form-label">Descripcion</label>
+    <label for="description" class="col-4 col-form-label">@lang('plates.description')</label>
     <div class="col-8">
-        <input id="description" name="description" placeholder="Descripcion" type="text" class="form-control" value="@isset($SelectedProducts){{$SelectedProducts->description}}@endisset">
+        <input id="description" name="description" placeholder="@lang('plates.description')" type="text" class="form-control" value="@isset($SelectedProducts){{$SelectedProducts->description}}@endisset">
     </div>
 </div>
 

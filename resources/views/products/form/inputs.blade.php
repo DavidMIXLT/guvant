@@ -1,5 +1,5 @@
 <div class="form-group row">
-    <label for="Nombre" class="col-4 col-form-label">@lang('plates.namef') (*)</label>
+    <label for="Nombre" class="col-4 col-form-label">@lang('products.name') (*)</label>
     <div class="col-8">
         <input value="{{$product->name}}" id="Name" name="name" type="text" class="form-control here" required>
         <small id="nameHelp" class="invisible text-danger text-center">
