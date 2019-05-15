@@ -1,6 +1,6 @@
 @extends('layouts.base') 
 @section('title','Productos') 
-@section('subtitle')@lang('orders.categoryManagement') 
+@section('subtitle')@lang('categories.categoryManagement') 
 @endsection
  
 @section('header')
@@ -14,19 +14,19 @@
  
 @section('content')
 <div class="d-flex ButtonBar mb-4">
-  <button name="Create" class="btn m-1">@lang('orders.createCategory')</button>
+  <button name="Create" class="btn m-1">@lang('categories.createCategory')</button>
 </div>
 <table class="table">
   <thead>
     <tr>
       <th scope="col">
         <div class="spinner-border invisible" role="status">
-          <span class="sr-only">@lang('orders.loading')</span>
+          <span class="sr-only">@lang('categories.loading')</span>
         </div>
       </th>
-      <th scope="col">@lang('orders.id')</th>
-      <th scope="col">@lang('orders.name')</th>
-      <th scope="col">@lang('orders.action')</th>
+      <th scope="col">@lang('categories.id')</th>
+      <th scope="col">@lang('categories.name')</th>
+      <th scope="col">@lang('categories.action')</th>
     </tr>
   </thead>
   <tbody>

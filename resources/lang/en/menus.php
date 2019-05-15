@@ -13,14 +13,14 @@ return [
     */
 
     'edit' => 'Edit',
-    'Create group'=>'Create group',
+    'createGroup'=>'Create group',
     'delete' => 'Delete ' ,
     'id' => 'ID' ,
     'name'=>'Name ',    
     'add'     => 'Add',    
     'available' => 'Available',
-    'products' => 'Products >' ,
-    'plates'=>'Dishes > ',
+    'products' => 'Products' ,
+    'plates'=>'Dishes',
     'goBack'=>'Go back ',
     'select'=> 'Select',
     'save' => 'Save',
@@ -37,9 +37,4 @@ return [
     'dateCreated'=>'Created date ',
     'actions'     => 'Actions',
     'quantity' => 'Quantity' ,
-
-   
-  
-  
-
 ];

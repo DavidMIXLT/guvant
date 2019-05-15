@@ -7,30 +7,28 @@
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                @lang('orders.available') 
+                @lang('menus.available') 
             </div>
             <ul id="AvaibleList" class="list-group list-group-flush">
                 <div class="container" id="menu">
                     <li id="Products" class="list-group-item ">
-                        @lang('orders.products')
+                        @lang('menus.products')
                     </li>
                     <li id="Plates" class="list-group-item ">
-                        @lang('orders.plates') 
+                        @lang('menus.plates') 
                     </li>
                 </div>
                 <li id="pagination" class="list-group-item"> </li>
-                <li class="list-group-item"> <button name="back" class="btn btn-primary">@lang('orders.goBack') </button> </li>
+                <li class="list-group-item"> <button name="back" class="btn btn-primary">@lang('menus.goBack')</button> </li>
             </ul>
         </div>
     </div>
     <div class="flex-even">
         <div class="card">
             <div class="card-header">
-                @lang('orders.select') 
+                @lang('menus.select') 
             </div>
             <ul id="SelectedList" class="list-group list-group-flush">
-
-
 
             </ul>
         </div>
