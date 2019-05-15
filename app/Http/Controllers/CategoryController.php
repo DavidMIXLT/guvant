@@ -66,7 +66,7 @@ class CategoryController extends Controller
         $category->validate($request);
 
         $category->fill($request->all())->save();
-        $view = view("categories.layouts.tablerow", compact("category"))->render();
+        $view = view("categories.layouts.tableRow", compact("category"))->render();
         return response()->json([
             "status" => "success",
             'html' => $view,
