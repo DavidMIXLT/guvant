@@ -3,17 +3,17 @@
 Fichero de traduciones en español de la vista index de productos
  */
 return [
-    'createProduct' => 'Crear producto',
-    'actions' => "Acciones",
-    'delete' => 'Eliminar',
-    'edit' => 'Editar',
+    'createProduct' => 'Create product',
+    'actions' => "Actions",
+    'delete' => 'Delete',
+    'edit' => 'Edit',
     'stock' => 'Stock',
     'id' => 'ID',
-    'deleteSelectedItems' => 'Eliminar elementos seleccionados',
-    'name' => 'Nombre',
-    'description' => "Descripcion",
-    'dateCreated' => 'Fecha creado',
+    'deleteSelectedItems' => 'Delete selected items',
+    'name' => 'Name',
+    'description' => "Description",
+    'dateCreated' => 'Date created',
     'id' => 'ID',
-    'stock' => 'Existencias',
-    'createNewProduct' => 'Crear producto nuevo',
+    'stock' => 'stock',
+    'createNewProduct' => 'Create new product',
 ];
