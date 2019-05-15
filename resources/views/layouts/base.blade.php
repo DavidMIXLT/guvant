@@ -30,7 +30,7 @@
 
             <!-- Menu izquierda -->
             <ul class="list-unstyled components">
-
+                @if (Request::user()->rol = 1)
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.products')</a>
                 </li>
@@ -49,6 +49,24 @@
                 <li class="{{ Request::routeIs('users.index') ? 'active' : '' }}">
                     <a href="{{route('users.index')}}">@lang('orders.user')</a>
                 </li>
+                @endif
+
+                @if (Request::user()->rol >= 2)
+                <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
+                    <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.products')</a>
+                </li>
+                <li class="{{ Request::routeIs('orders.index') ? 'active' : '' }}">
+                    <a class="nav-link" href="{{route('orders.index')}}">@lang('orders.orders')</a>
+                </li>
+                <li class="{{ Request::routeIs('menus.index') ? 'active' : '' }}">
+                    <a href="{{route('menus.index')}}" aria-expanded="false">@lang('orders.menu')</a>
+                </li>
+                <li class="{{ Request::routeIs('plates.index') ? 'active' : '' }}">
+                    <a href="{{route('plates.index')}}">@lang('orders.plates')</a>
+                </li>
+  
+                </li>
+                @endif
             </ul>
             @endauth
 

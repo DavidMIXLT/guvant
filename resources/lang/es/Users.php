@@ -41,7 +41,7 @@ return [
     'checkIn' => 'Registrarse' ,
     'appilcationYourRestaurant'     => 'La aplicacion que necesitas para tu restaurante',
     'knowMore' => 'Saber más' ,
-    'proyectM12'=>'Proyecto M12 ',
+    'proyectM12'=>'Proyecto M12',
   
   
 
