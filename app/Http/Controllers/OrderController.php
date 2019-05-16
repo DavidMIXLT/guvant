@@ -108,8 +108,8 @@ class OrderController extends Controller
      */
     public function index(Request $request)
     {
-        //
-        $orders = Order::paginate(Pagination::getNumberofItems($request));
+        
+        $orders = DB::table('orders')->orderBy('created_at', 'desc')->paginate(Pagination::getNumberofItems($request));
         if ($request->ajax()) {
 
             $html = Order::renderRows($orders);

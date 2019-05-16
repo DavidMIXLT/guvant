@@ -38,7 +38,7 @@ return [
     'actions'     => 'Acciones',
     'quantity' => 'Cantidad' ,
     'category' => 'Categorias' ,
-   
+    'newOrder' => 'Nuevo pedido' ,
   
   
 

@@ -1,5 +1,5 @@
 @extends('layouts.modal') 
-@section('title','Nuevo Pedido') 
+@section('title',__('orders.newOrder')) 
 @section('content')
     @include('orders.form.inputs')
 <h3>@lang('orders.menu')</h3>

@@ -40,4 +40,5 @@ return [
     'category' => 'Categories' ,
     'user' => 'Users' ,
     'orders' => 'Orders' ,
+    'newOrder' => 'New Order' ,
 ];

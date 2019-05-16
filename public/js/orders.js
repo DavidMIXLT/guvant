@@ -156,7 +156,7 @@ var submit = function () {
     var data = JSON.stringify(order)
     ajaxRequest("./orders", "POST", data, function (response) {
         clearInterval(interval)
-        $("tbody").append(response.html);
+        $("tbody").prepend(response.html);
         fadeInAll();
         ren_spinner(false)
         alertify.success(response.message)
