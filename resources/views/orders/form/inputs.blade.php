@@ -1,5 +1,5 @@
 <div class="form-group row">
-    <label class="col-4 col-form-label" for="name">>@lang('orders.name')</label>
+    <label class="col-4 col-form-label" for="name">@lang('orders.name')</label>
     <div class="col-8">
         <input id="name" name="name" type="text" class="form-control" required="required"
             value="Pedido #{{str_random(4)}}">
