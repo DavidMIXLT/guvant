@@ -64,7 +64,8 @@ var submit = function () {
     ajaxRequest("products", "POST", serializeForm(), function (response) {
       alertify.success(response.message);
 
-      updateTable(response.html);
+      $("tbody").append(response.html);
+      fadeInAll();
       /**
        * Cierra el modal y desactiva el spinner y actualiza el numero de Productos que hay en la tabla
        */
