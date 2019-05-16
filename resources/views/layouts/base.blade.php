@@ -30,7 +30,7 @@
 
             <!-- Menu izquierda -->
             <ul class="list-unstyled components">
-                @if (Request::user()->rol = 1)
+                @if (Request::user()->hasRole('admin'))
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.products')</a>
                 </li>
@@ -49,9 +49,9 @@
                 <li class="{{ Request::routeIs('users.index') ? 'active' : '' }}">
                     <a href="{{route('users.index')}}">@lang('orders.user')</a>
                 </li>
-                @endif
+                @else
 
-                @if (Request::user()->rol >= 2)
+              
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.products')</a>
                 </li>
@@ -64,7 +64,7 @@
                 <li class="{{ Request::routeIs('plates.index') ? 'active' : '' }}">
                     <a href="{{route('plates.index')}}">@lang('orders.plates')</a>
                 </li>
-  
+
                 </li>
                 @endif
             </ul>
@@ -73,10 +73,10 @@
             @guest
             <ul class="list-unstyled components">
                 <li class="{{ Request::routeIs('register') ? 'active' : '' }}">
-                    <a href="{{route('register')}}" aria-expanded="false">@lang('orders.register')</a>
+                    <a href="{{route('register')}}" aria-expanded="false">@lang('layouts.register')</a>
                 </li>
                 <li class="{{ Request::routeIs('login') ? 'active' : '' }}">
-                    <a href="{{route('login')}}" aria-expanded="false">@lang('orders.logIn')</a>
+                    <a href="{{route('login')}}" aria-expanded="false">@lang('layouts.logIn')</a>
                 </li>
             </ul>
             @endguest
@@ -117,22 +117,40 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name}} ({{ Auth::user()->roles()->first()->description}}) <span
-                                        class="caret"></span>
+                                    ⛿</span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                    <a class="dropdown-item" href="{{ route('setLocale','es') }}"">
+                                         Español
+                                        </a>
+                                        <a class=" dropdown-item" href="{{ route('setLocale','en') }}"">
+                                        English
+                                        </a>
+                                    </div>
+                                </li>
+                            <li class=" nav-item dropdown">
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name}} ({{ Auth::user()->roles()->first()->name}}) <span
+                                                class="caret"></span>
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </div>
                             </li>
+
+
                             @endguest
                         </ul>
                     </div>
@@ -140,6 +158,12 @@
             </nav>
 
             <!-- Contenido -->
+
+
+
+
+
+
             @yield('content')
         </div>
 

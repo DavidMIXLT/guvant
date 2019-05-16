@@ -3,6 +3,7 @@
 namespace AlaCartaYa\Http\Controllers\Auth;
 
 use AlaCartaYa\User;
+use AlaCartaYa\Role;
 use AlaCartaYa\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -63,10 +64,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+      $user =   User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+
+        $role = Role::where('name', 'customer')->first();
+
+   
+        $user->assignRole($role);
+        return $user;
     }
 }

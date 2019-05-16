@@ -21,8 +21,12 @@ return [
     'name'=>'Name ',
     'action'     => 'Actions ',
     'logIn' => 'Log in ',
+<<<<<<< HEAD
     'edit'=>"Edit category",
     
+=======
+    'categories' => 'Categories'
+>>>>>>> 3209efcd1138279af26eba8596cfeaea5426a219
  
 
 

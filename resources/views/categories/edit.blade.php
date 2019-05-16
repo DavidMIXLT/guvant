@@ -1,6 +1,6 @@
 @extends('layouts.modal')
 
-@section('title','Crear Categoria')
+@section('title',__('categories.edit'))
 
 @section('content')
     <form id="modalForm">

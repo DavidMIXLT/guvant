@@ -26,7 +26,7 @@ class Plate extends Model
     {
         $a = array();
         foreach ($plates as $plate) {
-            $a[] = view('plates.layouts.tableRow', compact('plate'))->render();
+            $a[] = view('plates.layouts.tablerow', compact('plate'))->render();
         }
         return $a;
     }

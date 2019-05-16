@@ -4,7 +4,7 @@
     <input id="name" name="name" type="text" class="form-control" value="@isset($menu){{$menu->name}}@endisset">
   </div>
 </div>
-<button name="CreateGroup" type="button" class="btn btn-success m-3">@lang('menus.createGroup')</button>
+<button name="CreateGroup" type="button" class="btn btn-success m-3">@lang('menus.Create group')</button>
 
 <div id="accordion" class="mb-3">
   @if (isset($menu))
@@ -20,7 +20,7 @@
 
 
 <div class="form-group row">
-  <label for="price" class="col-4 col-form-label">Precio</label>
+  <label for="price" class="col-4 col-form-label">@lang('menus.price')</label>
   <div class="col-8">
     <input id="price" name="price" type="text" class="form-control" value="@isset($menu){{$menu->price}}@endisset">
   </div>

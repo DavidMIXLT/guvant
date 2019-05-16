@@ -126,6 +126,11 @@ class UserController extends Controller
         $rol = Role::where("id", $request->rol)->first();
         $user->save();
         $user->roles()->sync($rol);
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.updated'),
+
+        ]);
     }
 
     /**

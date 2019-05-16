@@ -40,6 +40,7 @@ var submit = function(){
 function remove(id) {
     ajaxRequest("users/" + id, 'DELETE', null, function (response) {
         alertify.warning(response.message);
+        updateTable(response.html);
         ren_spinner(false);
    
     });

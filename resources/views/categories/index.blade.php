@@ -1,6 +1,6 @@
 @extends('layouts.base') 
-@section('title','Productos') 
-@section('subtitle')@lang('categories.categoryManagement') 
+@section('title',__('categories.categories')) 
+@section('subtitle')@lang('orders.categoryManagement') 
 @endsection
  
 @section('header')

@@ -20,18 +20,24 @@ function loadEvents() {
         remove($(this).val(), $(this).closest('tr'));
     });
     $(document).on('click','button[name=Edit]',function(){
-        renderModal("categories/edit", getEdit($(this).val()), null);
+        console.log($(this).val())
+        renderModal("categories/"+$(this).val()+"/edit", getEdit($(this).val()), null);
     });
 
 }
 
+
+
 function getEdit(id){
 
     return function(){
-        ajaxRequest("categories/" + id +"/edit", "POST", $("#modalForm").serialize(), function (response) {
+   
+        ajaxRequest("categories/"+id, "PUT", $("#modalForm").serialize(), function (response) {
             alertify.success(response.message);
+            
             closeModal($('#modalBox'));
             ren_spinner(false);
+            updateTable(response.html)
            
         });
     }

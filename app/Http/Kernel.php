@@ -14,11 +14,13 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $middleware = [
+        \Illuminate\Session\Middleware\StartSession::class,
         \AlaCartaYa\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \AlaCartaYa\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \AlaCartaYa\Http\Middleware\TrustProxies::class,
+        \AlaCartaYa\Http\Middleware\Lenguage::class,
        
     ];
 

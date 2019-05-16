@@ -1,7 +1,7 @@
 
 @extends('layouts.modal')
 
-@section('title','Crear Producto')
+@section('title',__('products/index.createProduct'))
 
 @section('content')
     <form id="modalForm">

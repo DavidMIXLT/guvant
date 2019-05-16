@@ -66,7 +66,7 @@ class CategoryController extends Controller
         $category->validate($request);
 
         $category->fill($request->all())->save();
-        $view = view("categories.layouts.tablerow", compact("category"))->render();
+        $view = view("categories.layouts.tableRow", compact("category"))->render();
         return response()->json([
             "status" => "success",
             'html' => $view,
@@ -94,7 +94,12 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        $view = view('categories.edit', compact('category'))->render();
+        return response()->json([
+            'status' => 'success',
+            'html' => $view,
+        ]);
     }
 
     /**
@@ -106,7 +111,15 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $category = Category::find($id);
+        $category->name = $request->name;
+
+        $category->save();
+        return response()->json([
+            'status' => 'success',
+            'message' => __('messages.updated'),
+
+        ]);
     }
 
     /**
