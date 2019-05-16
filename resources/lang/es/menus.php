@@ -13,7 +13,7 @@ return [
     */
 
     'edit' => 'Editar',
-    'Create group'=>'Crear Grupo',
+    'createGroup'=>'Crear Grupo',
     'delete' => 'Eliminar ' ,
     'id' => 'ID' ,
     'name'=>'Nombre ',    
@@ -30,12 +30,9 @@ return [
     'loading'     => 'Cargando...',
     'price'=>'Precio ',
     'actions'     => 'Acciones',
-    
     'plates'=>'Platos ',
     'ordersManagement'     => 'Gestion de Pedidos',
     'createOrder' => 'Crear Pedido' ,
-    
-    
     'name'=>'Nombre ',
     'dateCreated'=>'Fecha creado ',
     'actions'     => 'Acciones',

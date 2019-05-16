@@ -29,7 +29,7 @@ return [
     'loading'     => 'Loading...',
     'id' => 'ID' ,
     'dashboard'=>'Dashboard ',
-    'log'     => 'Logged in',
+    'log'     => 'Log in',
     'mainPanel' => 'Main panel' ,
     'share'=>'Share ',
     'toExport'     => 'Export',
