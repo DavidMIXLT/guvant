@@ -21,6 +21,7 @@ return [
     'name'=>'Name ',
     'action'     => 'Actions ',
     'logIn' => 'Log in ',
+    'edit'=>"Edit category",
     
  
 
