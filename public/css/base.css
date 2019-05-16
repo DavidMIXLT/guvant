@@ -420,3 +420,7 @@ form .card {
   background-color: #323761;
   color: white;
 }
+
+input[name="search"]{
+  max-width: 190px;
+}
