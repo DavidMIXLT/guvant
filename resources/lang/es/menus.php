@@ -13,7 +13,7 @@ return [
     */
 
     'edit' => 'Editar',
-    'Create group'=>'Crear Grupo',
+    'createGroup'=>'Crear Grupo',
     'delete' => 'Eliminar ' ,
     'id' => 'ID' ,
     'name'=>'Nombre ',    
