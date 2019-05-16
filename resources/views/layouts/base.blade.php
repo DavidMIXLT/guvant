@@ -30,7 +30,7 @@
 
             <!-- Menu izquierda -->
             <ul class="list-unstyled components">
-                @if (Request::user()->rol = 1)
+                @if (Request::user()->hasRole('admin'))
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.products')</a>
                 </li>
@@ -49,9 +49,9 @@
                 <li class="{{ Request::routeIs('users.index') ? 'active' : '' }}">
                     <a href="{{route('users.index')}}">@lang('orders.user')</a>
                 </li>
-                @endif
+                @else
 
-                @if (Request::user()->rol >= 2)
+              
                 <li class="{{ Request::routeIs('products.index') ? 'active' : '' }}">
                     <a href="{{route('products.index')}}" aria-expanded="false">@lang('orders.products')</a>
                 </li>
@@ -64,7 +64,7 @@
                 <li class="{{ Request::routeIs('plates.index') ? 'active' : '' }}">
                     <a href="{{route('plates.index')}}">@lang('orders.plates')</a>
                 </li>
-  
+
                 </li>
                 @endif
             </ul>
@@ -115,42 +115,42 @@
                             </li>
                             @endif @else
                             <li class="nav-item dropdown">
-                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        ⛿</span>
-                                    </a>
-    
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('setLocale','es') }}"">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    ⛿</span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ route('setLocale','es') }}"">
                                          Español
                                         </a>
-                                        <a class="dropdown-item" href="{{ route('setLocale','en') }}"">
+                                        <a class=" dropdown-item" href="{{ route('setLocale','en') }}"">
                                         English
                                         </a>
                                     </div>
                                 </li>
-                            <li class="nav-item dropdown">
-                                
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name}} ({{ Auth::user()->roles()->first()->name}}) <span
-                                        class="caret"></span>
-                                </a>
+                            <li class=" nav-item dropdown">
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                            {{ Auth::user()->name}} ({{ Auth::user()->roles()->first()->name}}) <span
+                                                class="caret"></span>
+                                        </a>
+
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                            <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                                                {{ __('Logout') }}
+                                            </a>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                        style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                                style="display: none;">
+                                                @csrf
+                                            </form>
+                                        </div>
                             </li>
 
-                          
+
                             @endguest
                         </ul>
                     </div>
@@ -158,6 +158,12 @@
             </nav>
 
             <!-- Contenido -->
+
+
+
+
+
+
             @yield('content')
         </div>
 

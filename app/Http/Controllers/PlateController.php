@@ -89,7 +89,7 @@ class PlateController extends Controller
 
         $plate->products()->attach($products);
 
-        $view = view('plates.layouts.tableRow', compact('plate'))->render();
+        $view = view('plates.layouts.tablerow', compact('plate'))->render();
         return response()->json([
             'status' => 'success',
             'message' => __('messages.successfullyCreated', ["Object" => $plate->name]),
@@ -157,7 +157,7 @@ class PlateController extends Controller
         $plate->save();
 
         $plate->products()->sync($products);
-        $view = view('plates.layouts.tableRow', compact('plate'))->render();
+        $view = view('plates.layouts.tablerow', compact('plate'))->render();
         return response()->json([
             'status' => 'success',
             'message' => __("messages.successfullyUpdate", ["Object" => $plate->name]),
